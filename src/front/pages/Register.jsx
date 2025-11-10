@@ -18,7 +18,7 @@ export function Register() {
     password: "",
     telefono: "",
     edad: "",
-    genero: "", // male | female | other
+    genero: "", 
   });
   const [err, setErr] = useState("");
 

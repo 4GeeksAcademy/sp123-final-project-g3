@@ -1,7 +1,6 @@
-
-// Pide email y muestra confirmación (solo UI).
-
+//Pide email y confirmación (solo UI), luego permite meter token o restablecer contraseña
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import AuthShell from "../components/AuthShell";
 import TextInput from "../components/TextInput";
 
@@ -9,6 +8,8 @@ export function Forgot() {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
   const [err, setErr] = useState("");
+  const [token, setToken] = useState("");
+  const nav = useNavigate();
 
   const submit = (e) => {
     e.preventDefault();
@@ -18,18 +19,57 @@ export function Forgot() {
     setSent(true);
   };
 
+  const goWithToken = () => {
+    if (!token) return setErr("Pega tu token para continuar.");
+    setErr("");
+    nav(`/reset/${encodeURIComponent(token)}`);
+  };
+
+  const goWithDemo = () => {
+    setErr("");
+    nav("/reset/demo-token");
+  };
+
   return (
     <AuthShell title="¿Has olvidado tu contraseña?" subtitle="Introduce tu email para enviarte instrucciones">
       {!sent ? (
-        <form onSubmit={submit}>
-          <TextInput name="email" value={email} onChange={(e)=>setEmail(e.target.value)} placeholder="email@example.com" />
+        <form onSubmit={submit} noValidate>
+          <TextInput
+            name="email"
+            value={email}
+            onChange={(e)=>setEmail(e.target.value)}
+            placeholder="email@example.com"
+          />
           {err && <div className="alert alert-danger py-2">{err}</div>}
           <button className="btn btn-accent w-100">Enviar instrucciones</button>
         </form>
       ) : (
-        <div className="alert alert-success" role="alert">
-          Revisa tu correo — te hemos enviado instrucciones de recuperación.
-        </div>
+        <>
+          <div className="alert alert-success" role="alert">
+            Revisa tu correo — te hemos enviado instrucciones de recuperación.
+          </div>
+
+          <div className="small-note mb-2">Si ya tienes el código del email, pégalo aquí:</div>
+          <TextInput
+            name="token"
+            value={token}
+            onChange={(e)=>setToken(e.target.value)}
+            placeholder="Pega tu token aquí"
+            required={false}
+          />
+          <div className="d-grid gap-2">
+            <button type="button" className="btn btn-accent" onClick={goWithToken}>
+              Usar mi token
+            </button>
+            <button type="button" className="btn btn-accent" onClick={goWithDemo}>
+              Restablecer contraseña
+            </button>
+          </div>
+
+          <div className="text-center mt-3">
+            <Link to="/login" className="link-accent">Volver al login</Link>
+          </div>
+        </>
       )}
     </AuthShell>
   );
