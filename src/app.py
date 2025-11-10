@@ -36,6 +36,8 @@ app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
 
 CORS(app)
 
+GOOGLE_MAPS_API_KEY = os.getenv("GOOGLE_MAPS_API_KEY")
+
 jwt = JWTManager(app)
 
 bcrypt = Bcrypt(app)
@@ -191,6 +193,9 @@ def me():
     user = User.query.get(current_user)
     print(user)
     return jsonify(user.serialize()), 200
+
+
+#endPoint completo ACTIVITY ----> GET POST PUT DELETE
 
 
     
