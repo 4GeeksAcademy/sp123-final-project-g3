@@ -7,7 +7,7 @@ import { Layout } from "./pages/Layout";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 import { Forgot } from "./pages/Forgot";
-import { Reset } from "./pages/Reset"; // ⬅️ añade esto
+import { Reset } from "./pages/Reset"; 
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
