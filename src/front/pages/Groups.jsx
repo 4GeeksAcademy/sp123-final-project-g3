@@ -1,49 +1,22 @@
 import React, { useState } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer";
+import { useNavigate } from "react-router-dom"; 
 import "../styles/ProfileGroups.css";
-
-
-const TaskItem = ({ task, onDelete }) => {
-    return (
-        <div className={`task-list-item ${task.completed ? 'completed' : ''}`}>
-            <div>
-                <input 
-                    className="form-check-input" 
-                    type="checkbox" 
-                    defaultChecked={task.completed} 
-                    id={`task-${task.id}`} 
-                />
-                <label className="form-check-label" htmlFor={`task-${task.id}`}>
-                    {task.title}
-                </label>
-            </div>
-           
-            <button 
-                className="btn btn-sm btn-delete-task" 
-                onClick={() => onDelete(task.id)} // Llama a la función onDelete
-                title="Eliminar tarea"
-            >
-                <i className="fas fa-trash"></i>
-            </button>
-        </div>
-    );
-};
 
 export const Groups = () => {
     const { store, dispatch } = useGlobalReducer();
+    const navigate = useNavigate(); 
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showJoinModal, setShowJoinModal] = useState(false);
     
-   
+    // Estados para el modal de Crear
     const [newClanName, setNewClanName] = useState("");
     const [newClanCategory, setNewClanCategory] = useState("");
-    const [newClanDate, setNewClanDate] = useState(""); // NUEVO estado para la fecha
+    const [newClanDate, setNewClanDate] = useState("");
 
     const [joinCode, setJoinCode] = useState("");
-    
     const [showCodeModal, setShowCodeModal] = useState(false);
     const [generatedCode, setGeneratedCode] = useState("");
-    const [newTaskTitle, setNewTaskTitle] = useState("");
 
     
     const handleCreateClan = (e) => {
@@ -55,12 +28,11 @@ export const Groups = () => {
             payload: { 
                 name: newClanName, 
                 category: newClanCategory,
-                created: newClanDate 
+                created: newClanDate
             }
         });
 
         setGeneratedCode(mockCode);
-       
         setNewClanName("");
         setNewClanCategory("");
         setNewClanDate("");
@@ -86,26 +58,17 @@ export const Groups = () => {
         }
     };
 
-    const handleCreateTask = (e) => {
-        e.preventDefault();
-        if (newTaskTitle.trim() === "") return;
-        dispatch({ type: "ADD_TASK_TO_CLAN", payload: { title: newTaskTitle } });
-        setNewTaskTitle("");
-    };
-
-   
-    const handleDeleteTask = (taskId) => {
-      
-        if (window.confirm("¿Eliminar esta tarea?")) {
-            dispatch({ type: "DELETE_CLAN_TASK", payload: { taskId: taskId } });
+    const handleGoToFinances = () => {
+        if (store.activeClanId) {
+            navigate("/finances"); 
+        } else {
+            alert("Por favor, selecciona un clan primero.");
         }
     };
 
-    const activeClanTasks = store.tasks.filter(task => task.clanId === store.activeClanId);
-
     return (
         <div className="container page-container">
-          
+        
             {showCreateModal && (
                 <div className="modal" style={{ display: "block" }}>
                     <div className="modal-dialog modal-dialog-centered">
@@ -115,7 +78,6 @@ export const Groups = () => {
                                 <div className="modal-body">
                                     <div className="mb-3"><label className="form-label">Nombre del Clan</label><input type="text" className="form-control" value={newClanName} onChange={(e) => setNewClanName(e.target.value)} required /></div>
                                     <div className="mb-3"><label className="form-label">Categoría</label><input type="text" className="form-control" value={newClanCategory} onChange={(e) => setNewClanCategory(e.target.value)} placeholder="Ej: Familia, Amigos, Trabajo..." required /></div>
-                                   
                                     <div className="mb-3"><label className="form-label">Fecha de Creación</label><input type="date" className="form-control" value={newClanDate} onChange={(e) => setNewClanDate(e.target.value)} required /></div>
                                 </div>
                                 <div className="modal-footer">
@@ -128,7 +90,6 @@ export const Groups = () => {
                 </div>
             )}
             
-           
             {showCodeModal && (
                 <div className="modal" style={{ display: "block" }}>
                     <div className="modal-dialog modal-dialog-centered">
@@ -146,7 +107,6 @@ export const Groups = () => {
                 </div>
             )}
 
-           
             {showJoinModal && (
                 <div className="modal" style={{ display: "block" }}>
                     <div className="modal-dialog modal-dialog-centered">
@@ -171,11 +131,8 @@ export const Groups = () => {
             
             <div className="main-box">
                 <div className="row">
-                    
-                   
-                    <div className="col-lg-7 clans-column">
+                    <div className="col-lg-12 clans-column">
                         <h2 className="mb-4">Tus Clanes</h2>
-                       
                         <div className="clans-table-wrapper">
                             <div className="clans-table">
                                 <table className="table table-hover align-middle">
@@ -185,6 +142,7 @@ export const Groups = () => {
                                             <th>Categoría</th>
                                             <th>Miembros</th>
                                             <th>Fecha de Creación</th>
+                                            <th>Bote del Clan</th> 
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -198,7 +156,8 @@ export const Groups = () => {
                                                 <td><strong>{clan.name}</strong></td>
                                                 <td>{clan.category}</td>
                                                 <td>{clan.members} integrantes</td>
-                                                <td>{clan.created}</td> 
+                                                <td>{clan.created}</td>
+                                                <td><strong>{(store.commonBote[clan.id] || 0).toFixed(2)} €</strong></td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -206,45 +165,12 @@ export const Groups = () => {
                             </div>
                         </div>
                     </div>
-
                     
-                    <div className="col-lg-5 mt-4 mt-lg-0">
-                        <h2 className="mb-4">Tareas del Clán</h2>
-                        
-                        <div className="detail-box"> 
-                            
-                            <form onSubmit={handleCreateTask} className="d-flex mb-3">
-                                <input 
-                                    type="text" 
-                                    className="form-control me-2" 
-                                    placeholder="Añadir nueva tarea..."
-                                    value={newTaskTitle}
-                                    onChange={(e) => setNewTaskTitle(e.target.value)}
-                                    disabled={!store.activeClanId}
-                                />
-                                <button type="submit" className="btn btn-custom-blue" disabled={!store.activeClanId}>
-                                    <i className="fas fa-plus"></i>
-                                </button>
-                            </form>
-                            <div className="task-list-container">
-                                {activeClanTasks.length > 0 ? (
-                                    activeClanTasks.map(task => (
-                                        <TaskItem 
-                                            key={task.id} 
-                                            task={task} 
-                                            onDelete={handleDeleteTask}
-                                        />
-                                    ))
-                                ) : (
-                                    <p className="text-center text-muted fst-italic mt-4">
-                                        {store.activeClanId ? "No hay tareas para este clan." : "Selecciona un clan para ver sus tareas."}
-                                    </p>
-                                )}
-                            </div>
-                        </div>
-                    </div>
+                    
+
                 </div> 
-               
+
+                
                 <div className="mt-4 d-flex justify-content-between responsive-button-group">
                     <button 
                         className="btn btn-custom-blue btn-lg" 
@@ -258,6 +184,16 @@ export const Groups = () => {
                     >
                         Unirse a un Clan
                     </button>
+                    
+                    
+                    <button 
+                        className="btn btn-custom-blue btn-lg" 
+                        onClick={handleGoToFinances}
+                        disabled={!store.activeClanId}
+                    >
+                        Finanzas del Clan
+                    </button>
+
                     <button 
                         className="btn btn-outline-danger btn-lg"
                         onClick={handleDeleteClan}
@@ -267,7 +203,7 @@ export const Groups = () => {
                     </button>
                 </div>
 
-            </div> 
+            </div>
         </div>
     );
 };
