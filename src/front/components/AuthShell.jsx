@@ -1,7 +1,18 @@
-// Lo he creado para envolver las pantallas de autenticación con un diseño útil
+import bgImg from "../assets/img/background-screensL.png";
+
+
 export default function AuthShell({ children, title, subtitle }) {
   return (
-    <div className="auth-theme">
+    <div
+      className="auth-theme"
+      style={{
+        backgroundImage: `url(${bgImg})`,
+        minHeight: "120vh",
+        backgroundSize: "cover",
+        backgroundPosition: "center"
+      }}
+    >
+
       <div className="auth-shell">
         <div className="auth-card">
           {title && <div className="auth-title">{title}</div>}
