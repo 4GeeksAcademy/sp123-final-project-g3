@@ -1,4 +1,61 @@
+
+/* Ajustes del Logo*/
 .logo {
-    width: 75px;
+    width: 50px;
     height: auto;
+}
+/* Navegación Superior (Navbar) */
+.dashboard-navbar {
+    background-color: rgba(31, 42, 64, 0.6); 
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 20px; 
+}
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 8px 15px;
+}
+.search-bar i {
+    color: #9ab4d1;
+    margin-right: 10px;
+}
+.search-bar input {
+    background: transparent;
+    border: none;
+    color: #e0e6ed;
+    width: 250px;
+    outline: none;
+}
+.search-bar input::placeholder {
+    color: #9ab4d1;
+}
+.navbar-icons i {
+    font-size: 1.2rem;
+    color: #9ab4d1;
+    margin-left: 20px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+.navbar-icons i:hover {
+    color: #1e91ed;
 }

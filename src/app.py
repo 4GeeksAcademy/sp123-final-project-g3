@@ -73,3 +73,9 @@ def serve_any_other_file(path):
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
     app.run(host='0.0.0.0', port=PORT, debug=True)
+
+from api.routesTasks import api_tasks
+app.register_blueprint(api_tasks, url_prefix='/api/users')
+
+from api.routesUser import api_user
+app.register_blueprint(api_user, url_prefix='/api/users')
