@@ -110,6 +110,86 @@ def serve_any_other_file(path):
     return response
 
 
+#REPORTAR USUARIO
+@app.route('/api/report_user/<int:user_id>', methods=['POST'])
+@jwt_required()
+def report_user(user_id):
+    try:
+        current_user_id = get_jwt_identity()
+
+        #evitar auto-reportes
+        if current_user_id == user_id:
+            return jsonify({"msg": "No puedes reportarte a ti mismo"}), 400
+
+        #buscar usuario
+        user = User.query.get(user_id)
+        if not user:
+            return jsonify({"msg": "Usuario no encontrado"}), 404
+
+        #iniciar contador si no existe
+        if not hasattr(user, "reports") or user.reports is None:
+            user.reports = 0
+
+        #incrementa reportes
+        user.reports += 1
+
+        #contador de reportes = mayor o igual a 3 = usuario bloqueado
+        if user.reports >= 3:
+            user.is_blocked = True
+
+        db.session.commit()
+
+        return jsonify({
+            "msg": f"El usuario {user.name} ha sido reportado correctamente.",
+            "reports": user.reports,
+            "is_blocked": user.is_blocked
+        }), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({
+            "msg": "Error al reportar usuario.",
+            "error": str(e)
+        }), 500
+
+
+#BLOQUEAR USUARIO
+@app.route('/api/block_user/<int:user_id>', methods=['POST'])
+@jwt_required()
+def block_user(user_id):
+    try:
+        current_user_id = get_jwt_identity()
+
+        #paso básico a seguir
+        if current_user_id == user_id:
+            return jsonify({"msg": "No puedes bloquearte a ti mismo"}), 400
+
+        #buscar usuario a bloquear
+        user = User.query.get(user_id)
+        if not user:
+            return jsonify({"msg": "Usuario no encontrado"}), 404
+
+        # Ejemplo opcional: si tu modelo tiene un campo is_admin
+        current_user = User.query.get(current_user_id)
+        if hasattr(current_user, "is_admin") and not current_user.is_admin:
+            return jsonify({"msg": "No tienes permisos para bloquear usuarios"}), 403
+
+        # Bloquear usuario
+        user.is_blocked = True
+        db.session.commit()
+
+        return jsonify({
+            "msg": f"El usuario {user.name} ha sido bloqueado correctamente.",
+            "is_blocked": user.is_blocked
+        }), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"msg": "Error al bloquear usuario", "error": str(e)}), 500
+
+
+
+#prueba send-mail
 # prueba send-mail
 @app.route('/api/send-mail', methods=['GET'])
 def send_mail():
@@ -192,8 +272,8 @@ def login():
         return jsonify({'msg': 'User or password incorrect'}), 400
     # crear token
     access_token = create_access_token(identity=str(user.id))
-
-    return jsonify(access_token=access_token)
+    
+    return jsonify({'token' : access_token, "user": user.id})
 
 
 @app.route("/api/me", methods=["GET"])
@@ -207,6 +287,30 @@ def me():
 
 
 # endPoint completo ACTIVITY ----> GET POST PUT DELETE
+
+# Obtener todos los usuarios (GET)
+@app.route('/api/users', methods=['GET'])
+@jwt_required()
+def get_users():
+    users = User.query.all()
+    users_serialized = [user.serialize() for user in users]
+    return jsonify(users_serialized), 200
+    
+# Obtener un usuario por ID (GET)
+@app.route('/api/user/<int:user_id>', methods=['GET'])
+@jwt_required()
+def get_user(user_id):
+    current_user_id = get_jwt_identity()
+    try:
+        current_user_id = int(current_user_id)
+    except (TypeError, ValueError):
+        return jsonify({'msg': 'Token inválido'}), 401
+
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({'msg': 'Usuario no encontrado'}), 404
+
+    return jsonify(user.serialize()), 200
 
 # Editar usuario (PUT)
 @app.route('/api/user/<int:user_id>', methods=['PUT'])

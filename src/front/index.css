@@ -5,8 +5,8 @@
   --card: #1a2740;
   --muted: #a3b1c6;
   --text: #e8eef7;
-  --accent: #ff6b4a;
-  --accent-hover: #ff5832;
+  --accent: #EE6C4D !important;
+  --accent-hover: #ea5029;
   --input: #0e1a2a;
   --radius: 22px;
 
@@ -21,7 +21,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f7eded;
+  
 }
 
 .auth-theme .auth-card {
@@ -125,4 +125,10 @@
   color: var(--text);
   border-color: rgba(255, 255, 255, 0.15);
   box-shadow: 0 0 0 3px rgba(255, 107, 74, 0.15);
+}
+
+body {
+  background-color: #F7F4F3; 
+  margin: 0;                 
+  min-height: 100vh;         
 }

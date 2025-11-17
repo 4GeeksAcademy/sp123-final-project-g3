@@ -1,0 +1,42 @@
+.home-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  background-color: #20232D; 
+  color: #ffffff;
+  padding-top: 8rem; 
+  text-align: center;
+}
+
+.home-logo {
+  width: 250px;
+  height: 250px;
+  margin-bottom: 2rem;
+}
+
+.home-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.home-title-highlight {
+  color: #817DF9;
+}
+
+.home-text {
+  font-size: 1.2rem;
+  color: #E3FE18; 
+  margin-bottom: 2rem;
+  max-width: 600px;
+}
+
+.home-message {
+  font-size: 1rem;
+  color: #ccc;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1rem 2rem;
+  border-radius: 8px;
+}

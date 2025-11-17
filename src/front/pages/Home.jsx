@@ -1,45 +1,50 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { Container, Button } from "react-bootstrap";
+import React, { useEffect } from "react";
+import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import "./Home.css"; 
+import logo from "../assets/img/logo.svg"; 
 
 export const Home = () => {
-  const navigate = useNavigate();
+  const { store, dispatch } = useGlobalReducer();
+
+  const loadMessage = async () => {
+    try {
+      const backendUrl = import.meta.env.VITE_BACKEND_URL;
+      if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined in .env file");
+
+      const response = await fetch(backendUrl + "/api/hello");
+      const data = await response.json();
+
+      if (response.ok) dispatch({ type: "set_hello", payload: data.message });
+
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    loadMessage();
+  }, []);
 
   return (
-    <Container
-      fluid
-      className="vh-100 d-flex flex-column justify-content-center align-items-center bg-dark text-center text-light"
-    >
-      {/* Logo */}
-      <div className="mb-4">
-        <img
-          src="https://res.cloudinary.com/drv35m83m/image/upload/v1762508774/logo_MeetFit_transparente_arl18c.png"
-          alt="MeetFit Logo"
-          style={{ width: "140px", height: "140px" }}
-        />
-      </div>
+    <div className="home-page">
+      <img src={logo} alt="MeetFit Logo" className="home-logo" />
 
-      {/* Título */}
-      <h1 className="fw-bold" style={{ color: "#f97316" }}>
-        MeetFit
-      </h1>
+      <h1 className="home-title">Bienvenido a <span className="home-title-highlight">MeetFit</span></h1>
 
-      {/* Botón de Login */}
-      <div className="mt-5 w-100 px-5">
-        <Button
-          variant="warning"
-          className="w-100 py-2 fw-bold"
-          style={{
-            backgroundColor: "#f97316",
-            border: "none",
-            color: "white",
-            borderRadius: "10px",
-          }}
-          onClick={() => navigate("/login")}
-        >
-          Login
-        </Button>
+      <p className="home-text">
+        Conecta, entrena y crece junto a personas que comparten tu pasión por el deporte.
+      </p>
+
+      <div className="home-message">
+        {store.message ? (
+          <span>{store.message}</span>
+        ) : (
+          <span className="text-muted">
+            Loading message from the backend...
+          </span>
+        )}
       </div>
-    </Container>
+    </div>
   );
 };

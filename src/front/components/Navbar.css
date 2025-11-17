@@ -1,0 +1,88 @@
+
+.custom-navbar {
+  background-color: #EE6C4D !important;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s ease;
+}
+
+.navbar-logo {
+  display: block;
+ 
+  transform: translateY(4px); 
+}
+
+
+.meetfit-text {
+  color: #817DF9 !important;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 2.9rem;
+  padding: 0.4rem 1rem;
+  background-color: transparent;
+  transition: all 0.3s ease;
+  letter-spacing: 1px;
+}
+
+
+.meetfit-text {
+  font-weight: 700;
+  font-size: 2.5rem;
+  color: #817DF9; 
+  letter-spacing: 1px;
+  transition: color 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+
+
+.meetfit-text:hover {
+  color: #5E50F9; 
+  transform: scale(1.05); 
+  text-shadow:
+    2px 2px 6px rgba(229, 228, 244, 0.7), 
+    0 0 10px rgba(220, 248, 167, 0.4);    
+}
+
+
+
+.custom-btn {
+  background-color: #817DF9 !important;
+  border: none;
+  color: #E3FE18 !important;
+  font-weight: 400;
+  padding: 0.6rem 1.4rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 10px rgba(129, 125, 249, 0.4);
+  transition: all 0.3s ease;
+}
+
+
+.custom-btn:hover {
+  background-color: #6c5cd7 !important; 
+  box-shadow: 0 6px 20px rgba(129, 125, 249, 0.6);
+  transform: translateY(-2px) scale(1.05);
+}
+
+
+.custom-btn:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 3px 8px rgba(129, 125, 249, 0.3);
+}
+
+
+.custom2-btn {
+  font-weight: 700;
+  color: #001F54; 
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  padding: 5px 8px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+
+.custom2-btn:hover {
+  border-color: #001F54; 
+  color: #001F54; 
+}

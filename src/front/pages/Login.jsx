@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import AuthShell from "../components/AuthShell";
 import TextInput from "../components/TextInput";
-import {login} from "../jsApiComponents/auth"
+import { login } from "../jsApiComponents/auth"
 
 export function Login() {
   const nav = useNavigate();
@@ -24,7 +24,7 @@ export function Login() {
   const onChange = (e) =>
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
     setErr("");
     if (!form.email || !form.password) {
@@ -32,8 +32,20 @@ export function Login() {
       return;
     }
     console.log("Login (solo UI):", form);
-    const user_login = login(form)
-    nav("/login");
+    const data = await login(form)
+    if (data.status == 400) {
+      setErr("Usuario o contraseña incorrecta.")
+      console.log("Respuesta del server", data)
+
+    }
+    if (data.status === 200) {
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+
+      nav("/home");
+    }
+
   };
 
   return (

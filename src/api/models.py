@@ -35,6 +35,8 @@ class User(db.Model):
     level = mapped_column(String(20))
     latitude = mapped_column(Float)
     longitude = mapped_column(Float)
+    reports = mapped_column(Integer, default=0)
+    is_blocked = mapped_column(db.Boolean, default=False)
     created_at = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     # Relaciones

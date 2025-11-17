@@ -1,0 +1,58 @@
+
+.about-logo {
+  width: 400px;
+  height: 400px;
+  margin-bottom: 1rem;
+}
+
+
+.about-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: flex-start; 
+  text-align: center;
+  padding: 6rem 2rem 2rem; 
+  background-color: #20232D; 
+  color: #FFFFFF; 
+  min-height: 100vh; 
+  box-sizing: border-box; 
+}
+
+
+.about-title {
+  display: flex;
+  align-items: baseline; 
+  gap: 0.3rem; 
+  margin-bottom: 2rem;
+}
+
+
+.sobre-box {
+  color: #E3FE18; 
+  font-size: 1.2rem;
+  text-transform: lowercase;
+  font-weight: normal;
+}
+
+
+.meetfit-title {
+  color: #817DF9; 
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+
+.about-text-container {
+  max-width: 600px; 
+  width: 100%;
+}
+
+
+.about-text {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #FFFFFF; 
+  margin-bottom: 1rem;
+  text-align: left; 
+}

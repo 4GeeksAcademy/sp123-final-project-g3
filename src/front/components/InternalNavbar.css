@@ -1,0 +1,53 @@
+.custom-navbar {
+  background-color: #EE6C4D !important;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s ease;
+}
+
+.meetfit-text {
+  color: #817DF9 !important;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 2.9rem;
+  padding: 0.4rem 1rem;
+  background-color: transparent;
+  transition: all 0.3s ease;
+  letter-spacing: 1px;
+}
+
+
+.meetfit-text {
+  font-weight: 700;
+  font-size: 2.5rem;
+  color: #817DF9; 
+  letter-spacing: 1px;
+  transition: color 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+
+
+.meetfit-text:hover {
+  color: #5E50F9; 
+  transform: scale(1.05); 
+  text-shadow:
+    2px 2px 6px rgba(229, 228, 244, 0.7), 
+    0 0 10px rgba(220, 248, 167, 0.4);    
+}
+
+.custom2-btn {
+  font-weight: 700;
+  color: #3c0802; 
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  padding: 5px 8px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+
+.custom2-btn:hover {
+  border-color: #601705; 
+  color: #1a0601; 
+}

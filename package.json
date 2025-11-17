@@ -4,7 +4,7 @@
 		"node": ">=20.0.0"
 	},
 	"version": "1.0.1",
-	"description": "",
+	"description": "Build web applications using React.js for the front end and python/flask for your backend API.",
 	"main": "index.js",
 	"scripts": {
 		"dev": "vite",
@@ -13,10 +13,7 @@
 		"lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
 		"preview": "vite preview"
 	},
-	"author": {
-		"name": "Alejandro Sanchez",
-		"url": "http://alesanchezr.com/"
-	},
+	"author": "Alejandro Sanchez (http://alesanchezr.com/)",
 	"contributors": [
 		{
 			"name": "Alejandro Sanchez",
@@ -62,6 +59,21 @@
 		"react-bootstrap": "^2.10.10",
 		"react-dom": "^18.2.0",
 		"react-icons": "^5.5.0",
-		"react-router-dom": "^6.18.0"
-	}
+		"react-router-dom": "^6.18.0",
+        "cors": "^2.8.5",
+		"express": "^5.1.0"
+	},
+	"directories": {
+		"doc": "docs"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/4GeeksAcademy/Proyecto_Final_Sala_3_119.git"
+	},
+	"keywords": [],
+	"type": "commonjs",
+	"bugs": {
+		"url": "https://github.com/4GeeksAcademy/Proyecto_Final_Sala_3_119/issues"
+	},
+	"homepage": "https://github.com/4GeeksAcademy/Proyecto_Final_Sala_3_119#readme"
 }
