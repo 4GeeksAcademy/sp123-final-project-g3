@@ -28,12 +28,8 @@
   position: relative;
   z-index: 2;
   transform: translateY(10%); 
-  transition: transform 0.3s ease;
 }
 
-.footer-cta:hover {
-  transform: translateY(-52%);
-}
 
 .footer-cta h2 {
   font-size: 2rem;
@@ -43,7 +39,7 @@
 }
 
 .footer-cta p {
-  color: #ccc;
+  color: #cccccc;
   font-size: 1rem;
   max-width: 500px;
   margin-bottom: 1rem;
@@ -164,7 +160,7 @@
 }
 
 .footer-logo {
-  width: 100px;
-  height: 100px;
-  margin-bottom: 1rem;
+  width: 30px;
+  height: 30px;
+  
 }

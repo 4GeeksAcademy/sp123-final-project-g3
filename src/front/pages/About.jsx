@@ -1,6 +1,6 @@
 import React from "react";
 import "./About.css"; 
-import logo from "../assets/img/logo.svg";
+import logo from "../assets/img/logohome.png";
 
 
 export const About = () => {
@@ -23,6 +23,7 @@ export const About = () => {
         <p className="about-text">
           Creemos que mantenerse en forma es más fácil y divertido cuando lo haces acompañado. Por eso desarrollamos MeetFit, una app pensada para unir a la gente a través del movimiento.
         </p>
+        
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
-import "./Home.css"; 
-import logo from "../assets/img/logo.svg"; 
+import "./Home.css";
+import logo from "../assets/img/logohome.png";
 
 export const Home = () => {
   const { store, dispatch } = useGlobalReducer();
@@ -14,7 +14,10 @@ export const Home = () => {
       const response = await fetch(backendUrl + "/api/hello");
       const data = await response.json();
 
-      if (response.ok) dispatch({ type: "set_hello", payload: data.message });
+      if (response.ok) {
+        dispatch({ type: "set_hello", payload: { message: data.message, quote: data.quote } });
+      }
+
 
       return data;
     } catch (error) {
@@ -24,7 +27,15 @@ export const Home = () => {
 
   useEffect(() => {
     loadMessage();
+
+
+    const interval = setInterval(() => {
+      loadMessage();
+    }, 10000);
+
+    return () => clearInterval(interval);
   }, []);
+
 
   return (
     <div className="home-page">
@@ -38,13 +49,20 @@ export const Home = () => {
 
       <div className="home-message">
         {store.message ? (
-          <span>{store.message}</span>
+          <span>{store.message.message}</span>
         ) : (
-          <span className="text-muted">
-            Loading message from the backend...
-          </span>
+          <span className="text-muted">Loading message from the backend...</span>
         )}
       </div>
+
+      {store.message && (
+        <div className="home-extra-box">
+          <p>Queremos decirte que...</p>
+          <strong>{store.message.quote}</strong>
+        </div>
+      )}
+
+
     </div>
   );
 };

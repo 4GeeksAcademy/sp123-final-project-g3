@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Footer.css";
-import logo from "../assets/img/logo.svg";
+import logo from "../assets/img/logofooter.png";
 
 export const Footer = () => {
   const [email, setEmail] = useState("");

@@ -1,4 +1,4 @@
-import bgImg from "../assets/img/background-screensL.png";
+import bgImg from "../assets/img/background-screens.png";
 
 
 export default function AuthShell({ children, title, subtitle }) {
@@ -7,7 +7,7 @@ export default function AuthShell({ children, title, subtitle }) {
       className="auth-theme"
       style={{
         backgroundImage: `url(${bgImg})`,
-        minHeight: "120vh",
+        minHeight: "125vh",
         backgroundSize: "cover",
         backgroundPosition: "center"
       }}

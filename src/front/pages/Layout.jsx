@@ -8,6 +8,8 @@ import ScrollToTop from "../components/ScrollToTop";
 import { Footer } from "../components/Footer";
 
 
+
+
 export const Layout = () => {
   const location = useLocation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
