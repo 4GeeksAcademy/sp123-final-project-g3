@@ -1,6 +1,7 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
+from datetime import datetime
 import os
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
@@ -285,7 +286,100 @@ def me():
     return jsonify(user.serialize()), 200
 
 
-# endPoint completo ACTIVITY ----> GET POST PUT DELETE
+# ENDPOINT DE ACTIVIDADES
+@app.route("/api/activities", methods=["GET"])
+def get_activities():
+    activities = Activity.query.all()
+    return jsonify([a.serialize() for a in activities]), 200
+
+
+@app.route("/api/activities/<int:id>", methods=["GET"])
+def get_activity(id):
+    activity = Activity.query.get(id)
+    if not activity:
+        return jsonify({"error": "Actividad no encontrada"}), 404
+    return jsonify(activity.serialize()), 200
+
+
+@app.route("/api/activities", methods=["POST"])
+@jwt_required()
+def create_activity():
+    user_id = get_jwt_identity()
+    data = request.get_json()
+
+    required_fields = ["title", "sport", "date", "time"]
+    if not all(field in data for field in required_fields):
+        return jsonify({"error": "Faltan campos obligatorios"}), 400
+
+    activity = Activity(
+        title=data["title"],
+        sport=data["sport"],
+        description=data.get("description"),
+        date=datetime.strptime(data["date"], "%Y-%m-%d").date(),
+        time=datetime.strptime(data["time"], "%H:%M").time(),
+        created_by=user_id,
+        max_participants=data.get("max_participants", 10),
+    )
+    db.session.add(activity)
+    db.session.commit()
+
+    return jsonify({"msg": "Actividad creada", "activity": activity.serialize()}), 201
+
+
+@app.route("/api/activities/<int:id>", methods=["PUT"])
+@jwt_required()
+def update_activity(id):
+    user_id = get_jwt_identity()
+    activity = Activity.query.get(id)
+    if not activity:
+        return jsonify({"error": "Actividad no encontrada"}), 404
+    if activity.created_by != user_id:
+        return jsonify({"error": "No autorizado"}), 403
+
+    data = request.get_json()
+    for key in ["title", "sport", "description", "date", "time", "max_participants"]:
+        if key in data:
+            setattr(activity, key, data[key])
+
+    db.session.commit()
+    return jsonify({"msg": "Actividad actualizada", "activity": activity.serialize()}), 200
+
+
+@app.route("/api/activities/<int:id>", methods=["DELETE"])
+@jwt_required()
+def delete_activity(id):
+    user_id = get_jwt_identity()
+    activity = Activity.query.get(id)
+    if not activity:
+        return jsonify({"error": "Actividad no encontrada"}), 404
+    if activity.created_by != user_id:
+        return jsonify({"error": "No autorizado"}), 403
+
+    db.session.delete(activity)
+    db.session.commit()
+    return jsonify({"msg": "Actividad eliminada"}), 200
+
+
+@app.route("/api/activities/<int:id>/join", methods=["POST"])
+@jwt_required()
+def join_activity(id):
+    user_id = get_jwt_identity()
+    activity = Activity.query.get(id)
+    if not activity:
+        return jsonify({"error": "Actividad no encontrada"}), 404
+
+    user = User.query.get(user_id)
+    if user in activity.participants:
+        return jsonify({"error": "Ya estás inscrito"}), 400
+
+    if len(activity.participants) >= (activity.max_participants or 10):
+        return jsonify({"error": "Cupo lleno"}), 400
+
+    activity.participants.append(user)
+    db.session.commit()
+
+    return jsonify({"msg": "Te has unido a la actividad"}), 200
+
 
 
 # Enpoint Editar Perfil y Eliminar Perfil ----> PUT DELETE

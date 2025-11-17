@@ -33,8 +33,6 @@ class User(db.Model):
     biography = mapped_column(Text)
     sports = mapped_column(String(200))
     level = mapped_column(String(20))
-    latitude = mapped_column(Float)
-    longitude = mapped_column(Float)
     reports = mapped_column(Integer, default=0)
     is_blocked = mapped_column(db.Boolean, default=False)
     created_at = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
@@ -65,8 +63,6 @@ class User(db.Model):
             "biography": self.biography,
             "sports": self.sports,
             "level": self.level,
-            "latitude": self.latitude,
-            "longitude": self.longitude,
             "created_at": self.created_at.isoformat(),
         }
 
@@ -79,8 +75,6 @@ class Activity(db.Model):
     title = mapped_column(String(100), nullable=False)
     sport = mapped_column(String(50), nullable=False)
     description = mapped_column(Text)
-    latitude = mapped_column(Float, nullable=False)
-    longitude = mapped_column(Float, nullable=False)
     date = mapped_column(Date, nullable=False)
     time = mapped_column(Time, nullable=False)
     created_by = mapped_column(Integer, ForeignKey("user.id"))
@@ -98,8 +92,6 @@ class Activity(db.Model):
             "title": self.title,
             "sport": self.sport,
             "description": self.description,
-            "latitude": self.latitude,
-            "longitude": self.longitude,
             "date": str(self.date),
             "time": str(self.time),
             "created_by": self.created_by,

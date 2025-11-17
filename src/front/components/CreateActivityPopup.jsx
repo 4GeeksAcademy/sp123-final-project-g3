@@ -5,6 +5,8 @@ export const CreateActivityPopup = ({ show, handleClose, onActivityCreated }) =>
   const [formData, setFormData] = useState({
     name: "",
     sport: "",
+    description: "",
+    max_participants: "",
     date: "",
     location: "",
   });
@@ -49,12 +51,12 @@ export const CreateActivityPopup = ({ show, handleClose, onActivityCreated }) =>
   return (
     <Modal show={show} onHide={handleClose} centered backdrop="static" keyboard={false}>
       <Modal.Header closeButton className="bg-dark text-light">
-        <Modal.Title>Crear nueva actividad</Modal.Title>
+        <Modal.Title>Crear actividad deportiva</Modal.Title>
       </Modal.Header>
       <Modal.Body className="bg-dark text-light">
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3">
-            <Form.Label>Nombre de actividad</Form.Label>
+            <Form.Label>Título</Form.Label>
             <Form.Control
               type="text"
               name="name"
@@ -74,6 +76,26 @@ export const CreateActivityPopup = ({ show, handleClose, onActivityCreated }) =>
               value={formData.sport}
               onChange={handleChange}
               required
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Descripción</Form.Label>
+            <Form.Control
+              as="textarea"
+              name="description"
+              onChange={handleChange}
+              placeholder="Describe la actividad"
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Máx. participantes</Form.Label>
+            <Form.Control
+              name="max_participants"
+              type="number"
+              min="1"
+              onChange={handleChange}
             />
           </Form.Group>
 

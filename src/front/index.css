@@ -1,6 +1,5 @@
 /* Tema de autenticación oscuro */
 .auth-theme {
- 
   --bg: #0f1b2b;
   --card: #1a2740;
   --muted: #a3b1c6;
@@ -10,7 +9,6 @@
   --input: #0e1a2a;
   --radius: 22px;
 
-  
   background: #f7eded;
   min-height: 100vh;
 }
@@ -126,6 +124,8 @@
   border-color: rgba(255, 255, 255, 0.15);
   box-shadow: 0 0 0 3px rgba(255, 107, 74, 0.15);
 }
+
+/* Estilo para boton MapView y Crear Actividad PopUp */
 
 body {
   background-color: #F7F4F3; 
