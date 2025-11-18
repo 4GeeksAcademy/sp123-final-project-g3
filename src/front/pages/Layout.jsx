@@ -1,14 +1,12 @@
 import { Outlet } from "react-router-dom/dist"
 import { AnimatePresence, motion } from "framer-motion"
 import ScrollToTop from "../components/ScrollToTop"
-import { Navbar } from "../components/Navbar"
 import { Footer } from "../components/Footer"
 
 // Base component that maintains the navbar and footer throughout the page and the scroll to top functionality.
 export const Layout = () => {
-    return (
-        <ScrollToTop>
-      <Navbar />
+  return (
+    <ScrollToTop>
       <AnimatePresence mode="wait">
         <motion.div
           key={location.pathname}
@@ -22,5 +20,5 @@ export const Layout = () => {
       </AnimatePresence>
       <Footer />
     </ScrollToTop>
-    )
+  )
 }
