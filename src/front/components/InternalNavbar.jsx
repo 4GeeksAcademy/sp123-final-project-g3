@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import "./InternalNavbar.css";
 
@@ -13,9 +12,9 @@ export const InternalNavbar = () => {
           </Link>
         </div>
 
-         <div className="d-flex align-items-center gap-2 ms-3">
+         <div className="d-flex align-items-center gap-2 ms-2 left-menu">
           <Link to="/profile" className="btn custom2-btn about-btn">
-            PROFILE
+            PERFIL
           </Link>
           <Link to="/mapview" className="btn custom2-btn">
             ACTIVIDADES
@@ -29,25 +28,25 @@ export const InternalNavbar = () => {
         </div>
 
           {/* SEARCH BAR */}
-          <div className="flex-grow-1 d-flex justify-content-center">
+          <div className="flex-grow-1 d-flex justify-content-center search-wrapper">
             <input
               type="text"
-              placeholder="Search..."
+              placeholder="Buscar..."
               className="form-control"
               style={{ maxWidth: "250px" }}
             />
           </div>
 
 
-          <div className="d-flex align-items-center gap-2">
+          <div className="d-flex align-items-center gap-2 me-2 right-menu">
             <Link to="/home" className="btn custom-btn">
-              HOME
+              INICIO
             </Link>
             <Link to="/about" className="btn custom-btn">
-              ABOUT
+              SOBRE
             </Link>
             <Link to="/logout" className="btn custom2-btn">
-              LOG OUT
+              CERRAR SESIÓN
             </Link>
           </div>
 

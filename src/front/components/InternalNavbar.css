@@ -51,3 +51,15 @@
   border-color: #601705; 
   color: #1a0601; 
 }
+
+.left-menu {
+  margin-right: 3rem; 
+}
+
+.search-wrapper {
+  max-width: 250px; 
+}
+
+.right-menu {
+  margin-left: 5rem; 
+}
