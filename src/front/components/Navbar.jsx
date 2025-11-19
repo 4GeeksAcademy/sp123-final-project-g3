@@ -14,14 +14,14 @@ export const Navbar = () => {
 
         <div className="d-flex align-items-center ms-auto gap-2">
           <Link to="/about" className="btn custom2-btn about-btn">
-            ABOUT
+            SOBRE
           </Link>
           <br></br><br></br>
           <Link to="/register" className="btn custom-btn">
-            JOIN US
+            ÚNETE
           </Link>
           <Link to="/login" className="btn custom-btn">
-            LOGIN
+            LOGEATE
           </Link>
         </div>
       </div>
