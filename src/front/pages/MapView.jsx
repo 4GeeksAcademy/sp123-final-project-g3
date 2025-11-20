@@ -50,15 +50,15 @@ export const MapView = () => {
 
       >
         {activities
-        
-        .filter(a => a.latitude && a.longitude) 
-        .map((a) => (
-          <Marker
-            key={a.id}
-            position={{ lat: a.latitude, lng: a.longitude }}
-            onClick={() => setSelected(a)}
-          />
-        ))}
+
+          .filter(a => a.latitude && a.longitude)
+          .map((a) => (
+            <Marker
+              key={a.id}
+              position={{ lat: a.latitude, lng: a.longitude }}
+              onClick={() => setSelected(a)}
+            />
+          ))}
         {newMarker && (
           <Marker
             position={{ lat: newMarker.latitude, lng: newMarker.longitude }}
@@ -85,11 +85,12 @@ export const MapView = () => {
       <Button
         variant="dark"
         className="position-absolute btn_Map"
-        style={{ top: "10px", right: "10px", zIndex: 10, padding: "25px", fontSize: "20px" }}
+        style={{ bottom: "900px", right: "60px", zIndex: 10, padding: "20px" }}
         onClick={() => setShowPopup(true)}
       >
         Crear actividad deportiva
       </Button>
+
 
       <CreateActivityPopup
         show={showPopup}

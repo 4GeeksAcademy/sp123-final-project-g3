@@ -56,6 +56,9 @@ export const CreateActivityPopup = ({ show, handleClose, onActivityCreated, coor
 
       const data = await resp.json();
       onActivityCreated(data);
+      
+      window.dispatchEvent(new Event("activities-updated"));
+
       handleClose();
     } catch (err) {
       setError(err.message);
