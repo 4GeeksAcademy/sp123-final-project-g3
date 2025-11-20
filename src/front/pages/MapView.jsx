@@ -85,7 +85,7 @@ export const MapView = () => {
       <Button
         variant="dark"
         className="position-absolute btn_Map"
-        style={{ bottom: "40px", left: "10px", zIndex: 10, padding: "20px" }}
+        style={{ top: "10px", right: "10px", zIndex: 10, padding: "25px", fontSize: "20px" }}
         onClick={() => setShowPopup(true)}
       >
         Crear actividad deportiva
