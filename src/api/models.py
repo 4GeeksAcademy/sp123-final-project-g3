@@ -47,43 +47,26 @@ class User(db.Model):
         }
 
 
-class Tareas(db.Model):
-    __tablename__ = 'tareas'
+class Task(db.Model):
+    __tablename__ = 'Task'
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    titulo: Mapped[str] = mapped_column(String(80), nullable=False)
-    evento_id: Mapped[int] = mapped_column(
-        ForeignKey('evento.id'), nullable=True)
-    db_evento_tareas: Mapped['Evento'] = relationship(
-        back_populates='db_tareas_evento')
-    fecha: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    descripcion: Mapped[str] = mapped_column(String(250), nullable=True)
-    prioridad_id: Mapped[int] = mapped_column(
-        ForeignKey('prioridad.id'), nullable=True)
-    db_prioridad_tareas: Mapped['Prioridad'] = relationship(
-        back_populates='db_tareas_prioridad')
-    estado_id: Mapped[int] = mapped_column(
-        ForeignKey('estado.id'), nullable=True)
-    db_estado_tareas: Mapped['Estado'] = relationship(
-        back_populates='db_tareas_estado')
-    imagen: Mapped[str] = mapped_column(String(255), nullable=True)
-    db_mision_tareas: Mapped[list['Mision']] = relationship(
-        back_populates='db_tareas_mision')
-    db_tareas_asignadas_tareas: Mapped[list['TareasAsignadas']] = relationship(
-        back_populates='db_tareas_tareas_asignadas')
+    title: Mapped[str] = mapped_column(String(80), nullable=False)
+    date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    description: Mapped[str] = mapped_column(String(250), nullable=True)
+    lat: Mapped[str] = mapped_column(String(255), nullable=True)
+    lng: Mapped[str] = mapped_column(String(255), nullable=True)
 
     def __repr__(self):
-        return f'{self.titulo}'
+        return f'{self.title}'
 
     def serialize(self):
         return {
             "id": self.id,
-            "titulo": self.titulo,
-            "imagen": self.imagen,
-            "descripcion": self.descripcion,
-            "fecha": self.fecha,
-            "evento_id": self.evento_id,
-            "prioridad_id": self.prioridad_id,
-            "estado_id": self.estado_id,
+            "title": self.title,
+            "date": self.date,
+            "description": self.description,
+            "lat": self.lat,
+            "lng": self.lng
         }
 
 
