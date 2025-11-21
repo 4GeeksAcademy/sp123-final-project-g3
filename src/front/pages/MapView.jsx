@@ -67,7 +67,7 @@ export const MapView = () => {
 
       <GoogleMap
 
-        mapContainerStyle={{ width: "80%", height: "100%" }}
+        mapContainerStyle={{ width: "100%", height: "100%" }}
         center={currentPosition}
         zoom={12}
         onClick={handleMarkerClick}
@@ -124,27 +124,13 @@ export const MapView = () => {
       <Button
         variant="dark"
         className="position-absolute btn_Map"
-        style={{ bottom: "40px", left: "10px", zIndex: 10, padding: "20px" }}
+        style={{ bottom: "900px", right: "60px", zIndex: 10, padding: "20px" }}
         onClick={() => setShowPopup(true)}
       >
         Crear actividad deportiva
       </Button>
 
-      <div className="position-absolute">
-      <ListOfActivities/>
-      </div>
-
-        
-      <CreateActivityPopup
-        show={showPopup}
-        handleClose={() => setShowPopup(false)}
-        coordinates={newMarker}
-
-        onActivityCreated={ async(newActivity) =>
-          // setActivities((prev) => [...prev, newActivity])
-         await fetchActivities()
-        }
-      />
+      
     </div>
 
   );

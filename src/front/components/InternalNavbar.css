@@ -37,7 +37,7 @@
 
 .custom2-btn {
   font-weight: 700;
-  color: #3c0802; 
+  color: #001F54;  
   font-size: 1.1rem;
   letter-spacing: 1px;
   padding: 5px 8px;
@@ -48,6 +48,18 @@
 
 
 .custom2-btn:hover {
-  border-color: #601705; 
-  color: #1a0601; 
+  border-color: #001F54; 
+  color: #001F54; 
+}
+
+.left-menu {
+  margin-right: 3rem; 
+}
+
+.search-wrapper {
+  max-width: 250px; 
+}
+
+.right-menu {
+  margin-left: 5rem; 
 }

@@ -192,7 +192,6 @@ def block_user(user_id):
 
 
 #prueba send-mail
-# prueba send-mail
 @app.route('/api/send-mail', methods=['GET'])
 def send_mail():
     msg = Message(
@@ -203,6 +202,7 @@ def send_mail():
     msg.html = '<h1>Testeando envio de correo</h1>'
     mail.send(msg)
     return jsonify({'msg': 'Correo enviado con exito'}), 200
+
 
 
 @app.route('/api/register', methods=['POST'])

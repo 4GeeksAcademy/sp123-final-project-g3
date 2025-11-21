@@ -134,14 +134,24 @@ body {
 }
 
 .btn_Map{
-   background-color:  #EE6C4D !important;
-   border: 0px;
-   font-weight: 600;
+   background-color:  #EE6C4D; 
+   border: 1px solid #001F54;
+   border-radius: 5px;
+   color: #001F54;
+   font-weight: 400;
+   font-size: 1.1rem;
+   box-shadow: 0 0px 20px #93877f;
+   transition: 0.25s ease;
 }
 .btn_Map:hover{
- background-color: #ea5029 !important;
+ border-color: #001F54; 
+ color: #E3FE18;
+ background-color: #817DF9;
 }
 
 .bg_PopUp{
   background-color: #0f1b2b !important;
 }
+
+
+
