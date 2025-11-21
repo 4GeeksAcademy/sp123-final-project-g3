@@ -9,7 +9,7 @@ export const Profile = () => {
   const [user_get, setUser_get] = useState(null);
   const [user_offlineMsg, setUser_offlineMsg] = useState("")
   const navigate = useNavigate();
-
+  const user_id = localStorage.getItem('USER')
 
   const runLogOut = () => {
     localStorage.removeItem("JWT-STORAGE-KEY");
@@ -41,7 +41,7 @@ export const Profile = () => {
   useEffect(() => {
     getUser()
   }, [])
-  const refreshUser = () =>{
+  const refreshUser = () => {
     getUser()
   }
 
@@ -49,16 +49,24 @@ export const Profile = () => {
   const userOfflineProcedure = () => {
     setInterval(() => {
       setUser_offlineMsg("Parece que tu sesion ha caducado, vuelve a iniciar sesion.")
-      alert("Parece que tu sesion ha caducado, vuelve a iniciar sesion.")
-      navigate('login')
-    }, 5000)
+
+
+    }, 2000)
   }
   if (user_get == null) {
 
+    userOfflineProcedure()
     return (
       <div className="d-flex justify-content-center align-items-center vh-100 flex-column gap-">
         <Spinner animation="border" variant="white" />
         <p>{user_offlineMsg}</p>
+        <Button
+          variant="success"
+          className="mt-3"
+          onClick={()=> navigate('/login')}
+        >
+          Iniciar sesion
+        </Button>
       </div>
     );
   }
@@ -88,7 +96,7 @@ export const Profile = () => {
         </div>
 
 
-        <UpdateUser user_bio = {user_get.biography} user_sports = {user_get.sports} user_level = {user_get.level} user_lastname = {user_get.lastname} refreshUser = {refreshUser} />
+        <UpdateUser user_bio={user_get.biography} user_sports={user_get.sports} user_level={user_get.level} user_lastname={user_get.lastname} refreshUser={refreshUser} />
 
 
         <Button

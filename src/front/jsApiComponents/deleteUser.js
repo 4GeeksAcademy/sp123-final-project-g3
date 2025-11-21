@@ -1,9 +1,9 @@
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
-const userID = localStorage.getItem("USER");
-const token = localStorage.getItem("JWT-STORAGE-KEY");
-export const deleteUser = async (body) => {
+export const deleteUser = async () => {
+  const user = localStorage.getItem("USER");
+  const token = localStorage.getItem("JWT-STORAGE-KEY");
   try {
-    const response = await fetch(`${BASE_URL}api/user/${userID}`, {
+    const response = await fetch(`${BASE_URL}api/user/${user}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
