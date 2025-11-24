@@ -27,7 +27,7 @@ export const router = createBrowserRouter(
 
   createRoutesFromElements(
     <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>}>
-      <Route index element={<Home />} /> 
+      <Route index element={<About />} /> 
       <Route path="/home" element={<Home />} />
       <Route path="/about" element={<About />} />
       <Route path="/single/:theId" element={<Single />} />

@@ -13,9 +13,9 @@ export const Navbar = () => {
         </Link>
 
         <div className="d-flex align-items-center ms-auto gap-2">
-          <Link to="/about" className="btn custom2-btn about-btn">
+          {/* <Link to="/about" className="btn custom2-btn about-btn">
             SOBRE
-          </Link>
+          </Link> */}
           <br></br><br></br>
           <Link to="/register" className="btn custom-btn">
             ÚNETE

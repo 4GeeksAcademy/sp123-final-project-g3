@@ -5,8 +5,8 @@ export const InternalNavbar = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
 
   const handleLogOut = () => {
-    localStorage.removeItem("token"); 
-    setIsLoggedIn(false);              
+    localStorage.removeItem("JWT-STORAGE-KEY"); 
+    localStorage.removeItem("USER")             
     navigate("/home");                  
   };
 

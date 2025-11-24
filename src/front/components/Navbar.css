@@ -12,19 +12,6 @@
   transform: translateY(4px); 
 }
 
-
-.meetfit-text {
-  color: #817DF9 !important;
-  text-decoration: none;
-  font-weight: 800;
-  font-size: 2.9rem;
-  padding: 0.4rem 1rem;
-  background-color: transparent;
-  transition: all 0.3s ease;
-  letter-spacing: 1px;
-}
-
-
 .meetfit-text {
   font-weight: 700;
   font-size: 2.5rem;
