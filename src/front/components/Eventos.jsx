@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Card, CardContent, CardMedia, Button, Modal } from "@mui/material";
-import {user} from '../jsApiComponents/user'
+import { Box, Typography, Card, CardContent, CardMedia, Button, Modal, TextField, InputLabel, Select, MenuItem, FormControl } from "@mui/material";
+import { user } from '../jsApiComponents/user'
 import { useNavigate } from "react-router-dom";
 
 export const Eventos = () => {
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [search, setSearch] = useState("");
+  const [sportFilter, setSportFilter] = useState("");
+
+
   const navigate = useNavigate()
   const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -93,10 +97,61 @@ export const Eventos = () => {
     max_participants: 10,
   }));
 
+
+  const filteredList = list.filter(event => {
+    const matchesSearch =
+      event.title?.toLowerCase().includes(search.toLowerCase()) ||
+      event.sport?.toLowerCase().includes(search.toLowerCase());
+
+    const matchesSport =
+      sportFilter === "" || event.sport === sportFilter;
+
+    return matchesSearch && matchesSport;
+  });
+
+
+  const sports = [...new Set(list.map(e => e.sport))];
+
+
+
   return (
     <>
+      <Box sx={{ mt: 12, textAlign: "center" }}>
+        <TextField
+          variant="outlined"
+          placeholder="Buscar evento o deporte..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          sx={{
+            width: "60%",
+            maxWidth: 450,
+            bgcolor: "#fff",
+            borderRadius: 2,
+          }}
+        />
+        <Box sx={{ mt: 2, textAlign: "center" }}>
+          <FormControl sx={{ width: "60%", maxWidth: 450, bgcolor: "#fff", borderRadius: 2}}>
+            <InputLabel>Filtrar por deporte</InputLabel>
+            <Select
+              value={sportFilter}
+              label="Filtrar por deporte"
+              onChange={(e) => setSportFilter(e.target.value)}
+            >
+              <MenuItem value="">Todos</MenuItem>
+              {sports.map((sport) => (
+                <MenuItem key={sport} value={sport}>
+                  {sport}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
+
+      </Box>
+
       <Box sx={{ my: 16, display: "flex", flexWrap: "wrap", gap: 4, justifyContent: "center" }}>
-        {list.map((event) => (
+        {filteredList.map((event) => (
+
           <Card
             key={event.id}
             sx={{
@@ -120,10 +175,10 @@ export const Eventos = () => {
             <CardContent>
               <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 0.5, mb: 0.5 }}>
                 <Typography variant="subtitle1" sx={{ color: "#20232D", fontWeight: 700 }}>
-                  {event.title}
+                  {event.sport}
                 </Typography>
-                <Button 
-                  size="small" 
+                <Button
+                  size="small"
                   sx={{
                     minWidth: "24px",
                     bgcolor: (event.participants?.length ?? 0) >= (event.max_participants ?? 0) ? "#888" : "#EE6C4D",
@@ -135,8 +190,8 @@ export const Eventos = () => {
                 >
                   +
                 </Button>
-                <Button 
-                  size="small" 
+                <Button
+                  size="small"
                   sx={{ minWidth: "24px", bgcolor: "#817DF9", color: "#fff", fontWeight: "bold" }}
                   onClick={() => showEventDetails(event)}
                 >
@@ -144,7 +199,8 @@ export const Eventos = () => {
                 </Button>
               </Box>
               <Typography variant="body2" sx={{ color: "#000000ff", fontSize: "0.75rem" }}>
-                {event.description} <br />
+                <h6>Titulo: {event.title}</h6> <br />
+                Descripcion: {event.description} <br />
                 Participantes: {(event.participants?.length ?? 0)}/{event.max_participants ?? 0}
               </Typography>
             </CardContent>

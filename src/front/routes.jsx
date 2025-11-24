@@ -15,7 +15,7 @@ import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
 import User from "./pages/User";
 import { Profile } from "./pages/Profile";
-import { Eventos } from "./pages/Eventos";
+import { Eventos } from "./components/Eventos"
 import { Terms } from "./pages/Terms";
 import { Privacy } from "./pages/Privacy";
 import { FAQ } from "./pages/FAQ";

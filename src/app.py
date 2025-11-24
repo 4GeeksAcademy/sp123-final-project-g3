@@ -1,7 +1,7 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 
 from flask import Flask, request, jsonify, url_for, send_from_directory
@@ -26,6 +26,15 @@ from flask_bcrypt import Bcrypt
 
 from flask_mail import Mail, Message
 
+
+from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
+import os
+from dotenv import load_dotenv
+import jwt
+
+load_dotenv()
+
 # from models import Person
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
@@ -33,6 +42,7 @@ static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../dist/')
 app = Flask(__name__)
 app.url_map.strict_slashes = False
+
 
 # Setup the Flask-JWT-Extended extension
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
@@ -47,21 +57,45 @@ CORS(
 
 GOOGLE_MAPS_API_KEY = os.getenv("GOOGLE_MAPS_API_KEY")
 
+VITE_FRONTEND_URL = os.getenv("VITE_FRONTEND_URL")
+
 jwt = JWTManager(app)
 
 bcrypt = Bcrypt(app)
 
-app.config.update(dict(
-    DEBUG=False,
-    MAIL_SERVER='smtp.gmail.com',
-    MAIL_PORT=587,
-    MAIL_USE_TLS=True,
-    MAIL_USE_SSL=False,
-    MAIL_USERNAME='meetfitfspt119@gmail.com',
-    MAIL_PASSWORD=os.getenv('MAIL_PASSWORD')
-))
+
+#Configuración Flask-Mail ----------------------------------------
+app.config['MAIL_SERVER'] = os.getenv("MAIL_SERVER")
+app.config['MAIL_PORT'] = int(os.getenv("MAIL_PORT"))
+app.config['MAIL_USERNAME'] = os.getenv("MAIL_USERNAME")
+app.config['MAIL_PASSWORD'] = os.getenv("MAIL_PASSWORD")
+app.config['MAIL_USE_TLS'] = os.getenv("MAIL_USE_TLS") == "True"
+app.config['MAIL_USE_SSL'] = os.getenv("MAIL_USE_SSL") == "True"
+app.config['MAIL_DEFAULT_SENDER'] = os.getenv("MAIL_DEFAULT_SENDER")
 
 mail = Mail(app)
+
+
+#Helper para generar token JWT-----------------------------------------
+def generate_reset_token(user_id, expires_in=3600):
+    payload = {
+        "user_id": user_id,
+        "exp": datetime.utcnow() + timedelta(seconds=expires_in)
+    }
+    token = jwt.encode(payload, app.config['JWT_SECRET_KEY'], algorithm="HS256")
+    return token
+
+def verify_reset_token(token):
+    try:
+        payload = jwt.decode(token, app.config['JWT_SECRET_KEY'], algorithms=["HS256"])
+        return payload['user_id']
+    except jwt.ExpiredSignatureError:
+        return None
+    except jwt.InvalidTokenError:
+        return None
+#Fin del Helper para generar token JWT-----------------------------------------
+
+
 
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
@@ -119,6 +153,56 @@ def serve_any_other_file(path):
     response.cache_control.max_age = 0  # avoid cache memory
     return response
 
+
+#FORGOT PASSWORD Y RESET PASSWORD -------------------------------
+@app.route("/api/forgot", methods=["POST"])
+def forgot_password():
+    data = request.json
+    email = data.get("email")
+    if not email:
+        return jsonify({"error": "Introduce tu email."}), 400
+
+    user = User.query.filter_by(email=email).first()
+    # Mensaje genérico para no filtrar emails
+    message = "Si existe el email, recibirás instrucciones para restablecer la contraseña."
+    if not user:
+        return jsonify({"message": message})
+
+    token = generate_reset_token(user.id)
+    reset_link = f"{os.getenv('VITE_FRONTEND_URL')}/reset/{token}"
+
+    # Email HTML
+    html_body = f"""
+    <p>Hola,</p>
+    <p>Haz clic en el siguiente enlace para restablecer tu contraseña:</p>
+    <p><a href="{reset_link}">{reset_link}</a></p>
+    <p>Si no solicitaste esto, ignora este mensaje.</p>
+    """
+
+    msg = Message("Restablece tu contraseña", recipients=[email], html=html_body)
+    mail.send(msg)
+
+    return jsonify({"message": message})
+
+@app.route("/api/reset/<token>", methods=["POST"])
+def reset_password(token):
+    data = request.json
+    new_password = data.get("password")
+    if not new_password:
+        return jsonify({"error": "Introduce la nueva contraseña."}), 400
+
+    user_id = verify_reset_token(token)
+    if not user_id:
+        return jsonify({"error": "Token inválido o expirado."}), 400
+
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"error": "Usuario no encontrado."}), 400
+
+    user.password = generate_password_hash(new_password)
+    db.session.commit()
+    return jsonify({"message": "Contraseña restablecida correctamente."}), 200
+#FIN DE FORGOT PASSWORD Y RESET PASSWORD --------------------------------------
 
 #REPORTAR USUARIO
 @app.route('/api/report_user/<int:user_id>', methods=['POST'])
@@ -196,21 +280,6 @@ def block_user(user_id):
     except Exception as e:
         db.session.rollback()
         return jsonify({"msg": "Error al bloquear usuario", "error": str(e)}), 500
-
-
-
-#prueba send-mail
-@app.route('/api/send-mail', methods=['GET'])
-def send_mail():
-    msg = Message(
-        subject='Prueba de correo de proyecto',
-        sender='meetfitfspt119@gmail.com',
-        recipients=['meetfitfspt119@gmail.com'],
-    )
-    msg.html = '<h1>Testeando envio de correo</h1>'
-    mail.send(msg)
-    return jsonify({'msg': 'Correo enviado con exito'}), 200
-
 
 
 @app.route('/api/register', methods=['POST'])

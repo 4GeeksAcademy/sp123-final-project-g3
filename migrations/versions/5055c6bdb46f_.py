@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: f1bcbab09165
+Revision ID: 5055c6bdb46f
 Revises: 
-Create Date: 2025-11-13 07:20:58.344772
+Create Date: 2025-11-24 14:11:28.079042
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'f1bcbab09165'
+revision = '5055c6bdb46f'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -31,8 +31,6 @@ def upgrade():
     sa.Column('biography', sa.Text(), nullable=True),
     sa.Column('sports', sa.String(length=200), nullable=True),
     sa.Column('level', sa.String(length=20), nullable=True),
-    sa.Column('latitude', sa.Float(), nullable=True),
-    sa.Column('longitude', sa.Float(), nullable=True),
     sa.Column('reports', sa.Integer(), nullable=True),
     sa.Column('is_blocked', sa.Boolean(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
@@ -44,13 +42,12 @@ def upgrade():
     sa.Column('title', sa.String(length=100), nullable=False),
     sa.Column('sport', sa.String(length=50), nullable=False),
     sa.Column('description', sa.Text(), nullable=True),
-    sa.Column('latitude', sa.Float(), nullable=False),
-    sa.Column('longitude', sa.Float(), nullable=False),
     sa.Column('date', sa.Date(), nullable=False),
-    sa.Column('time', sa.Time(), nullable=False),
     sa.Column('created_by', sa.Integer(), nullable=True),
     sa.Column('max_participants', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('latitude', sa.Float(), nullable=False),
+    sa.Column('longitude', sa.Float(), nullable=False),
     sa.ForeignKeyConstraint(['created_by'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )

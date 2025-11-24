@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, Button, Container, Row, Col, Spinner } from "react-bootstrap";
+import { Card, Button, Container, Row, Col, Spinner, Dropdown } from "react-bootstrap";
 import { user } from "../jsApiComponents/user";
 import { deleteUser } from "../jsApiComponents/deleteUser";
 import UpdateUser from "../components/UpdateUser";
@@ -63,7 +63,7 @@ export const Profile = () => {
         <Button
           variant="success"
           className="mt-3"
-          onClick={()=> navigate('/login')}
+          onClick={() => navigate('/login')}
         >
           Iniciar sesion
         </Button>
@@ -106,13 +106,26 @@ export const Profile = () => {
         >
           Cerrar sesion
         </Button>
-        <Button
-          variant="danger"
-          className="mt-3"
-          onClick={runDeleteUser}
-        >
-          Eliminar Usuario
-        </Button>
+
+
+        <Dropdown className="mt-3">
+          <Dropdown.Toggle className=" w-100">
+            Eliminar Usuario
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu className="text-center bg-dark">
+            <Dropdown.ItemText className="text-light">
+              ¿Estás seguro?
+            </Dropdown.ItemText>
+
+            <Dropdown.Divider />
+
+            <Dropdown.Item as="button" className="text-danger fw-bold" onClick={runDeleteUser}>
+              Confirmar eliminación
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+
 
       </Card>
     </Container>

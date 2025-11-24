@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import useGlobalReducer from '../hooks/useGlobalReducer';
 import { user } from '../jsApiComponents/user';
 import { updateUser } from '../jsApiComponents/auth';
-import { Button } from 'react-bootstrap';
+import { Button, Dropdown, Form } from 'react-bootstrap';
 export default function UpdateUser({ refreshUser ,user_bio, user_sports, user_level, user_lastname }) {
     const [info, setInfo] = useState({ bio: "", sports: "", level: "", lastname: "" })
     const [errors, setErrors] = useState({});
@@ -62,7 +62,7 @@ export default function UpdateUser({ refreshUser ,user_bio, user_sports, user_le
     }
     return (
         <>
-
+{/* 
             <Button
                 type='button'
                 className="btn btn-warning dropdown-toggle btn-success"
@@ -71,32 +71,66 @@ export default function UpdateUser({ refreshUser ,user_bio, user_sports, user_le
                 data-bs-auto-close="outside"
             >
                 Editar Perfil
-            </Button>
-            <div className="dropdown" style={{ minWidth: "300px" }}>
-                <form className="dropdown-menu p-4 m-2 form-register" onSubmit={updateSuccess}>
-                    <div className="mb-3 ">
-                        <label htmlFor="bio" className='form-label'><h4>Bio</h4></label>
-                        <input type="text" placeholder='Hola soy Sergio...' id='bio' className='form-control' value={info.bio} onChange={recoverBio} />
-                    </div>
-                    <div className="mb-3 ">
-                        <label htmlFor="deporte" className='form-label'><h4>Deporte</h4></label>
-                        <input type="text" placeholder='Correr, Tenis, Futbol...' id='deporte' className='form-control' value={info.sports} onChange={recoverSport} />
-                    </div>
-                    <div className="mb-3 ">
-                        <label htmlFor="nivel" className='form-label'><h4>Nivel</h4></label>
-                        <input type="text" placeholder='Principante, intermedio...' id='nivel' className='form-control' value={info.level} onChange={recoverLevel} />
-                    </div>
-                    {/* <div className="mb-3 ">
-                        <label htmlFor="nivel" className='form-label'><h4>Nombre</h4></label>
-                        <input type="text" placeholder='Sergio' id='nivel' className='form-control' onChange={recoverName} />
-                    </div> */}
-                    <div className="mb-3 ">
-                        <label htmlFor="nivel" className='form-label'><h4>Apellidos</h4></label>
-                        <input type="text" placeholder='Alvarez Lopez...' id='nivel' className='form-control' value={info.lastname} onChange={recoverLastname} />
-                    </div>
-                    <button type='submit' className='btn btn-success mt-1'>Enviar</button>
-                </form>
-            </div>
+            </Button> */}
+<Dropdown style={{ minWidth: "300px" }} className="mt-2">
+      <Dropdown.Toggle variant="info" className='w-100 custom-navbar p-1'>
+        Editar perfil
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu className="p-4 m-2 text-center bg-dark text-light">
+        <Form onSubmit={updateSuccess}>
+
+          {/* Bio */}
+          <Form.Group className="mb-3">
+            <Form.Label><h4>Bio</h4></Form.Label>
+            <Form.Control
+              as="textarea"
+              placeholder="Hola soy Sergio..."
+              value={info.bio}
+              onChange={recoverBio}
+              rows={3}
+            />
+          </Form.Group>
+
+          {/* Deporte */}
+          <Form.Group className="mb-3">
+            <Form.Label><h4>Deporte</h4></Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Correr, Tenis, Fútbol..."
+              value={info.sports}
+              onChange={recoverSport}
+            />
+          </Form.Group>
+
+          {/* Nivel */}
+          <Form.Group className="mb-3">
+            <Form.Label><h4>Nivel</h4></Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Principiante, Intermedio..."
+              value={info.level}
+              onChange={recoverLevel}
+            />
+          </Form.Group>
+
+          {/* Apellidos */}
+          <Form.Group className="mb-3">
+            <Form.Label><h4>Apellidos</h4></Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Alvarez López..."
+              value={info.lastname}
+              onChange={recoverLastname}
+            />
+          </Form.Group>
+
+          <Button type="submit" variant="success" className="mt-1">
+            Enviar
+          </Button>
+        </Form>
+      </Dropdown.Menu>
+    </Dropdown>
         </>
     )
 }

@@ -5,16 +5,28 @@ import AuthShell from "../components/AuthShell";
 import TextInput from "../components/TextInput";
 import { login } from "../jsApiComponents/auth"
 import { Button } from 'react-bootstrap';
-
+import bgImg from "../assets/img/background-screens.png";
+import JoinedEvents from '../components/JoinedEvents';
+import CreatedEvents from '../components/CreatedEvents';
 
 export default function MyEvents() {
     return (
+        <div
+            className="auth-theme container-fluid "
+            style={{
+                backgroundImage: `url(${bgImg})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center"
+            }}
+        >
+      <div className="row text-center justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
+        <div className="auth-card col-12 col-lg-6">
+          <JoinedEvents></JoinedEvents>
+        </div>
+        <div className="auth-card col-12 col-lg-6"><CreatedEvents></CreatedEvents></div>
 
-            <AuthShell title="Iniciar sesión" subtitle="Por favor, inicia sesión para continuar" >
-                <Button variant= "btn custom-btn m-2">Mis actividades</Button>
-                <Button variant= "btn custom-btn m-2">Actividades que sigo</Button>
-            </AuthShell>
-
+      </div>
+    </div>
     )
 }
 
