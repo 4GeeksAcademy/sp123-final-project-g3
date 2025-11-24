@@ -169,7 +169,7 @@ export const MapView = () => {
         <Button
           variant="primary"
           className="position-absolute"
-          style={{ top: "1vh", right: "5vh", zIndex: 10 }}
+          style={{ top: "10px", right: "60px", zIndex: 10 }}
           onClick={handleGetUserLocation}
         >
           📍 Mi ubicación
@@ -200,7 +200,7 @@ export const MapView = () => {
       <Button
         variant="dark"
         className="position-absolute btn_Map"
-        style={{ top: "70vh", right: "10vh", zIndex: 10, padding: "20px" }}
+        style={{ bottom: "20px", right: "70px", zIndex: 10, padding: "20px" }}
         onClick={() => setShowPopup(true)}
       >
         Crear actividad deportiva

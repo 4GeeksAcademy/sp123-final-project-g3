@@ -1,7 +1,8 @@
 from datetime import datetime, timezone, timedelta
 import secrets
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import (String, Float, DateTime, Text, Date, Time, Integer, ForeignKey, Table, Boolean)
+from sqlalchemy import (String, Float, DateTime, Text,
+                        Date, Time, Integer, ForeignKey, Table, Boolean)
 from sqlalchemy.orm import mapped_column, relationship
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -14,10 +15,13 @@ activity_user = Table(
     db.Column("id", Integer, primary_key=True),
     db.Column("user_id", Integer, ForeignKey("user.id")),
     db.Column("activity_id", Integer, ForeignKey("activity.id")),
-    db.Column("joined_at", DateTime, default=lambda: datetime.now(timezone.utc))
+    db.Column("joined_at", DateTime,
+              default=lambda: datetime.now(timezone.utc))
 )
 
 # MODELO: User
+
+
 class User(db.Model):
     __tablename__ = "user"
 
@@ -35,13 +39,17 @@ class User(db.Model):
     level = mapped_column(String(20))
     reports = mapped_column(Integer, default=0)
     is_blocked = mapped_column(db.Boolean, default=False)
-    created_at = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
+    created_at = mapped_column(
+        DateTime, default=lambda: datetime.now(timezone.utc))
 
     # Relaciones
-    activities_created = relationship("Activity", back_populates="creator", lazy=True)
-    activities_joined = relationship("Activity", secondary=activity_user, back_populates="participants")
+    activities_created = relationship(
+        "Activity", back_populates="creator", lazy=True)
+    activities_joined = relationship(
+        "Activity", secondary=activity_user, back_populates="participants")
     messages_sent = relationship("Message", back_populates="sender", lazy=True)
-    reset_tokens = relationship("PasswordResetToken", back_populates="user", cascade="all, delete-orphan")
+    reset_tokens = relationship(
+        "PasswordResetToken", back_populates="user", cascade="all, delete-orphan")
 
     # Métodos de seguridad
     def set_password(self, password):
@@ -64,6 +72,8 @@ class User(db.Model):
             "sports": self.sports,
             "level": self.level,
             "created_at": self.created_at.isoformat(),
+            "created_by": [activity.serialize() for activity in self.activities_created],
+            "joined": [activity.serialize() for activity in self.activities_joined],
         }
 
 
@@ -78,12 +88,14 @@ class Activity(db.Model):
     date = mapped_column(Date, nullable=False)
     created_by = mapped_column(Integer, ForeignKey("user.id"))
     max_participants = mapped_column(Integer)
-    created_at = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
+    created_at = mapped_column(
+        DateTime, default=lambda: datetime.now(timezone.utc))
     latitude = mapped_column(Float, nullable=False)
     longitude = mapped_column(Float, nullable=False)
     # Relaciones
     creator = relationship("User", back_populates="activities_created")
-    participants = relationship("User", secondary=activity_user, back_populates="activities_joined")
+    participants = relationship(
+        "User", secondary=activity_user, back_populates="activities_joined")
     messages = relationship("Message", back_populates="activity", lazy=True)
 
     def serialize(self):
@@ -111,7 +123,8 @@ class Message(db.Model):
     activity_id = mapped_column(Integer, ForeignKey("activity.id"))
     sender_id = mapped_column(Integer, ForeignKey("user.id"))
     message = mapped_column(Text, nullable=False)
-    created_at = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
+    created_at = mapped_column(
+        DateTime, default=lambda: datetime.now(timezone.utc))
 
     sender = relationship("User", back_populates="messages_sent")
     activity = relationship("Activity", back_populates="messages")
@@ -126,15 +139,19 @@ class Message(db.Model):
         }
 
 # MODELO: PasswordResetToken
+
+
 class PasswordResetToken(db.Model):
     __tablename__ = "password_reset_token"
 
     id = mapped_column(Integer, primary_key=True)
-    user_id = mapped_column(Integer, ForeignKey("user.id", ondelete="CASCADE"), nullable=False)
+    user_id = mapped_column(Integer, ForeignKey(
+        "user.id", ondelete="CASCADE"), nullable=False)
     token = mapped_column(String(128), unique=True, nullable=False)
     expires_at = mapped_column(DateTime(timezone=True), nullable=False)
     used = mapped_column(Boolean, default=False)
-    created_at = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
+    created_at = mapped_column(
+        DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
 
     user = relationship("User", back_populates="reset_tokens")
 
@@ -142,7 +159,8 @@ class PasswordResetToken(db.Model):
     def generate_token(user_id, expiration_minutes=30):
         """Genera un nuevo token de recuperación con validez temporal."""
         token = secrets.token_urlsafe(64)
-        expires_at = datetime.now(timezone.utc) + timedelta(minutes=expiration_minutes)
+        expires_at = datetime.now(timezone.utc) + \
+            timedelta(minutes=expiration_minutes)
         return PasswordResetToken(user_id=user_id, token=token, expires_at=expires_at)
 
     def is_valid(self):

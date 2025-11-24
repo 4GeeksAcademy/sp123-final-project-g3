@@ -107,14 +107,6 @@ export const Profile = () => {
           Cerrar sesion
         </Button>
 
-{/* 
-        <Button
-          variant="danger"
-          className="mt-3"
-          onClick={runDeleteUser}
-        >
-          Eliminar Usuario
-        </Button> */}
 
         <Dropdown className="mt-3">
           <Dropdown.Toggle className=" w-100">
