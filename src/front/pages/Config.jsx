@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Form from "../components/Form.jsx";
 import useGlobalReducer from "../hooks/useGlobalReducer";
+import { Sidebar } from "../components/Sidebar";
+import { div } from "framer-motion/m";
+
 
 export const Config = () => {
   const { store, dispatch } = useGlobalReducer();
@@ -69,11 +72,16 @@ export const Config = () => {
   };
 
   return (
-    <Form
-      mode="config"
-      userData={userData}
-      onSubmit={handleConfigSubmit}
-      successMessage={successMsn}
-    />
+    <div className="d-flex">
+      <div><Sidebar/></div>
+      <div className="">
+        <Form
+          mode="config"
+          userData={userData}
+          onSubmit={handleConfigSubmit}
+          successMessage={successMsn}
+        />
+      </div>
+    </div>
   );
 };

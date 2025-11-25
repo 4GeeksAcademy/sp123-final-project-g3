@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 import "../styles/ProfileGroups.css";
+import { div } from "framer-motion/client";
+import { Sidebar } from "../components/Sidebar";
 
 export const Finances = () => {
     const { store, dispatch } = useGlobalReducer();
@@ -53,189 +55,193 @@ export const Finances = () => {
     };
 
     return (
-        <div className="container page-container">
-            {/* --- MODAL PARA AÑADIR AL BOTE (Clan) --- */}
-            {showBoteModal && (
-                <div className="modal" tabIndex="-1" style={{ display: "block" }}>
-                    <div className="modal-dialog modal-dialog-centered">
-                        <div className="modal-content modal-content-dark">
-                            <form onSubmit={handleAddToBote}>
-                                <div className="modal-header">
-                                    <h5 className="modal-title">Añadir fondos al Bote Común</h5>
-                                    <button type="button" className="btn-close btn-close-white" onClick={() => setShowBoteModal(false)}></button>
-                                </div>
-                                <div className="modal-body">
-                                    <div className="mb-3">
-                                        <label htmlFor="boteAmount" className="form-label">Importe (€)</label>
-                                        <input
-                                            type="number"
-                                            step="1" // <-- CAMBIO A NÚMEROS ENTEROS
-                                            className="form-control"
-                                            id="boteAmount"
-                                            value={boteAmount}
-                                            onChange={(e) => setBoteAmount(e.target.value)}
-                                            placeholder="0"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="modal-footer">
-                                    <button type="button" className="btn btn-secondary" onClick={() => setShowBoteModal(false)}>Cancelar</button>
-                                    <button type="submit" className="btn btn-custom-blue">Añadir</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            )}
-            {showBoteModal && <div className="modal-backdrop fade show"></div>}
+        <div className="d-flex">
+            <div><Sidebar/></div>
+            <div className="container page-container">
 
-            {/* --- INICIO: SECCIÓN FINANZAS PERSONALES --- */}
-            <div className="main-box mb-4">
-                <h2 className="mb-4">Tus Finanzas Personales</h2>
-                <div className="row g-4">
-                    {/* Bote Personal */}
-                    <div className="col-lg-5">
-                        <div className="detail-box text-center" style={{ height: '100%' }}>
-                            <h4>Bote Personal</h4>
-                            <h1 className="display-3 fw-bold my-3 text-info">{personalBote.toFixed(2)} €</h1>
-                        </div>
-                    </div>
-                    {/* Añadir Gasto Personal */}
-                    <div className="col-lg-7">
-                        <div className="detail-box" style={{ height: '100%' }}>
-                            <h4><i className="fas fa-receipt me-2"></i> Añadir Gasto Personal</h4>
-                            <form onSubmit={handleAddPersonalExpense} className="mt-3">
-                                <div className="mb-3">
-                                    <label htmlFor="p_concept" className="form-label">Concepto</label>
-                                    <input type="text" className="form-control" id="p_concept" value={personalConcept} onChange={(e) => setPersonalConcept(e.target.value)} placeholder="Ej: Café" />
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="p_amount" className="form-label">Importe (€)</label>
-                                    <input
-                                        type="number"
-                                        step="1" // <-- CAMBIO A NÚMEROS ENTEROS
-                                        className="form-control"
-                                        id="p_amount"
-                                        value={personalAmount}
-                                        onChange={(e) => setPersonalAmount(e.target.value)}
-                                        placeholder="0"
-                                    />
-                                </div>
-                                <div className="d-grid">
-                                    <button type="submit" className="btn btn-custom-purple">Añadir Gasto (se restará)</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    {/* Historial Gastos Personales */}
-                    <div className="col-12">
-                        <div className="detail-box">
-                            <h4>Historial de Gastos Personales</h4>
-                            <ul className="list-group list-group-flush mt-3">
-                                {personalExpenses.length > 0 ? personalExpenses.map(expense => (
-                                    <li key={expense.id} className="list-group-item expense-item">
-                                        <div className="expense-details">
-                                            <span className="expense-concept">{expense.concept}</span>
-                                            <span className="expense-paidby">Fecha: {expense.date}</span>
+                {/* --- MODAL PARA AÑADIR AL BOTE (Clan) --- */}
+                {showBoteModal && (
+                    <div className="modal" tabIndex="-1" style={{ display: "block" }}>
+                        <div className="modal-dialog modal-dialog-centered">
+                            <div className="modal-content modal-content-dark">
+                                <form onSubmit={handleAddToBote}>
+                                    <div className="modal-header">
+                                        <h5 className="modal-title">Añadir fondos al Bote Común</h5>
+                                        <button type="button" className="btn-close btn-close-white" onClick={() => setShowBoteModal(false)}></button>
+                                    </div>
+                                    <div className="modal-body">
+                                        <div className="mb-3">
+                                            <label htmlFor="boteAmount" className="form-label">Importe (€)</label>
+                                            <input
+                                                type="number"
+                                                step="1" // <-- CAMBIO A NÚMEROS ENTEROS
+                                                className="form-control"
+                                                id="boteAmount"
+                                                value={boteAmount}
+                                                onChange={(e) => setBoteAmount(e.target.value)}
+                                                placeholder="0"
+                                            />
                                         </div>
-                                        <span className="expense-amount">-{expense.amount.toFixed(2)} €</span>
-                                    </li>
-                                )) : (
-                                    <p className="text-muted text-center mt-3">No hay gastos personales.</p>
-                                )}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {/* --- FIN: SECCIÓN FINANZAS PERSONALES --- */}
-
-            {/* --- INICIO: SECCIÓN FINANZAS DEL CLAN --- */}
-            {!activeClanId ? (
-                <div className="main-box text-center">
-                    <p className="lead text-muted mt-4">Selecciona un clan en la página de "Grupos" para ver sus finanzas.</p>
-                </div>
-            ) : (
-                <div className="main-box">
-                    <h2 className="mb-4">Finanzas: {store.clans.find(c => c.id === activeClanId)?.name}</h2>
-                    <div className="row g-4">
-                        {/* Bote Común */}
-                        <div className="col-lg-5">
-                            <div className="detail-box text-center" style={{ height: '100%' }}>
-                                <h4>Bote Común</h4>
-                                <h1 className="display-3 fw-bold my-3 text-info">{currentBote.toFixed(2)} €</h1>
-                                <button className="btn btn-custom-blue" onClick={() => setShowBoteModal(true)}>
-                                    <i className="fas fa-plus me-2"></i> Añadir fondos
-                                </button>
-                            </div>
-                        </div>
-                        {/* Añadir Gasto de Clan */}
-                        <div className="col-lg-7">
-                            <div className="detail-box" style={{ height: '100%' }}>
-                                <h4><i className="fas fa-shopping-cart me-2"></i> Añadir Gasto de Clan</h4>
-                                <form onSubmit={handleAddClanExpense} className="mt-3">
-                                    <div className="mb-3">
-                                        <label htmlFor="g_concept" className="form-label">Concepto</label>
-                                        <input type="text" className="form-control" id="g_concept" value={clanConcept} onChange={(e) => setClanConcept(e.target.value)} placeholder="Ej: Pizzas para la reunión" />
                                     </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="g_amount" className="form-label">Importe (€)</label>
-                                        <input
-                                            type="number"
-                                            step="1" // <-- CAMBIO A NÚMEROS ENTEROS
-                                            className="form-control"
-                                            id="g_amount"
-                                            value={clanAmount}
-                                            onChange={(e) => setClanAmount(e.target.value)}
-                                            placeholder="0"
-                                        />
-                                    </div>
-                                    <div className="d-grid">
-                                        <button type="submit" className="btn btn-custom-purple">Añadir al Bote (se restará)</button>
+                                    <div className="modal-footer">
+                                        <button type="button" className="btn btn-secondary" onClick={() => setShowBoteModal(false)}>Cancelar</button>
+                                        <button type="submit" className="btn btn-custom-blue">Añadir</button>
                                     </div>
                                 </form>
                             </div>
                         </div>
-                        {/* Historial de Gastos de Clan */}
+                    </div>
+                )}
+                {showBoteModal && <div className="modal-backdrop fade show"></div>}
+
+                {/* --- INICIO: SECCIÓN FINANZAS PERSONALES --- */}
+                <div className="main-box mb-4">
+                    <h2 className="mb-4">Tus Finanzas Personales</h2>
+                    <div className="row g-4">
+                        {/* Bote Personal */}
+                        <div className="col-lg-5">
+                            <div className="detail-box text-center" style={{ height: '100%' }}>
+                                <h4>Bote Personal</h4>
+                                <h1 className="display-3 fw-bold my-3 text-info">{personalBote.toFixed(2)} €</h1>
+                            </div>
+                        </div>
+                        {/* Añadir Gasto Personal */}
                         <div className="col-lg-7">
+                            <div className="detail-box" style={{ height: '100%' }}>
+                                <h4><i className="fas fa-receipt me-2"></i> Añadir Gasto Personal</h4>
+                                <form onSubmit={handleAddPersonalExpense} className="mt-3">
+                                    <div className="mb-3">
+                                        <label htmlFor="p_concept" className="form-label">Concepto</label>
+                                        <input type="text" className="form-control" id="p_concept" value={personalConcept} onChange={(e) => setPersonalConcept(e.target.value)} placeholder="Ej: Café" />
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="p_amount" className="form-label">Importe (€)</label>
+                                        <input
+                                            type="number"
+                                            step="1" // <-- CAMBIO A NÚMEROS ENTEROS
+                                            className="form-control"
+                                            id="p_amount"
+                                            value={personalAmount}
+                                            onChange={(e) => setPersonalAmount(e.target.value)}
+                                            placeholder="0"
+                                        />
+                                    </div>
+                                    <div className="d-grid">
+                                        <button type="submit" className="btn btn-custom-purple">Añadir Gasto (se restará)</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        {/* Historial Gastos Personales */}
+                        <div className="col-12">
                             <div className="detail-box">
-                                <h4>Historial de Gastos del Clan</h4>
+                                <h4>Historial de Gastos Personales</h4>
                                 <ul className="list-group list-group-flush mt-3">
-                                    {activeExpenses.length > 0 ? activeExpenses.map(expense => (
+                                    {personalExpenses.length > 0 ? personalExpenses.map(expense => (
                                         <li key={expense.id} className="list-group-item expense-item">
                                             <div className="expense-details">
                                                 <span className="expense-concept">{expense.concept}</span>
-                                                <span className="expense-paidby">Pagado por: {expense.paidBy}</span>
+                                                <span className="expense-paidby">Fecha: {expense.date}</span>
                                             </div>
                                             <span className="expense-amount">-{expense.amount.toFixed(2)} €</span>
                                         </li>
                                     )) : (
-                                        <p className="text-muted text-center mt-3">No hay gastos registrados para este clan.</p>
-                                    )}
-                                </ul>
-                            </div>
-                        </div>
-                        {/* Balances de Clan */}
-                        <div className="col-lg-5">
-                            <div className="detail-box">
-                                <h4>Balances del Grupo</h4>
-                                <ul className="list-group list-group-flush mt-3">
-                                    {activeBalances.length > 0 ? activeBalances.map(balance => (
-                                        <li key={balance.id} className="list-group-item balance-item">
-                                            <span>{balance.name}</span>
-                                            <span className={balance.amount >= 0 ? 'balance-positive' : 'balance-negative'}>
-                                                {balance.amount.toFixed(2)} €
-                                            </span>
-                                        </li>
-                                    )) : (
-                                        <p className="text-muted text-center mt-3">No hay balances calculados.</p>
+                                        <p className="text-muted text-center mt-3">No hay gastos personales.</p>
                                     )}
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-            )}
+                {/* --- FIN: SECCIÓN FINANZAS PERSONALES --- */}
+
+                {/* --- INICIO: SECCIÓN FINANZAS DEL CLAN --- */}
+                {!activeClanId ? (
+                    <div className="main-box text-center">
+                        <p className="lead text-muted mt-4">Selecciona un clan en la página de "Grupos" para ver sus finanzas.</p>
+                    </div>
+                ) : (
+                    <div className="main-box">
+                        <h2 className="mb-4">Finanzas: {store.clans.find(c => c.id === activeClanId)?.name}</h2>
+                        <div className="row g-4">
+                            {/* Bote Común */}
+                            <div className="col-lg-5">
+                                <div className="detail-box text-center" style={{ height: '100%' }}>
+                                    <h4>Bote Común</h4>
+                                    <h1 className="display-3 fw-bold my-3 text-info">{currentBote.toFixed(2)} €</h1>
+                                    <button className="btn btn-custom-blue" onClick={() => setShowBoteModal(true)}>
+                                        <i className="fas fa-plus me-2"></i> Añadir fondos
+                                    </button>
+                                </div>
+                            </div>
+                            {/* Añadir Gasto de Clan */}
+                            <div className="col-lg-7">
+                                <div className="detail-box" style={{ height: '100%' }}>
+                                    <h4><i className="fas fa-shopping-cart me-2"></i> Añadir Gasto de Clan</h4>
+                                    <form onSubmit={handleAddClanExpense} className="mt-3">
+                                        <div className="mb-3">
+                                            <label htmlFor="g_concept" className="form-label">Concepto</label>
+                                            <input type="text" className="form-control" id="g_concept" value={clanConcept} onChange={(e) => setClanConcept(e.target.value)} placeholder="Ej: Pizzas para la reunión" />
+                                        </div>
+                                        <div className="mb-3">
+                                            <label htmlFor="g_amount" className="form-label">Importe (€)</label>
+                                            <input
+                                                type="number"
+                                                step="1" // <-- CAMBIO A NÚMEROS ENTEROS
+                                                className="form-control"
+                                                id="g_amount"
+                                                value={clanAmount}
+                                                onChange={(e) => setClanAmount(e.target.value)}
+                                                placeholder="0"
+                                            />
+                                        </div>
+                                        <div className="d-grid">
+                                            <button type="submit" className="btn btn-custom-purple">Añadir al Bote (se restará)</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            {/* Historial de Gastos de Clan */}
+                            <div className="col-lg-7">
+                                <div className="detail-box">
+                                    <h4>Historial de Gastos del Clan</h4>
+                                    <ul className="list-group list-group-flush mt-3">
+                                        {activeExpenses.length > 0 ? activeExpenses.map(expense => (
+                                            <li key={expense.id} className="list-group-item expense-item">
+                                                <div className="expense-details">
+                                                    <span className="expense-concept">{expense.concept}</span>
+                                                    <span className="expense-paidby">Pagado por: {expense.paidBy}</span>
+                                                </div>
+                                                <span className="expense-amount">-{expense.amount.toFixed(2)} €</span>
+                                            </li>
+                                        )) : (
+                                            <p className="text-muted text-center mt-3">No hay gastos registrados para este clan.</p>
+                                        )}
+                                    </ul>
+                                </div>
+                            </div>
+                            {/* Balances de Clan */}
+                            <div className="col-lg-5">
+                                <div className="detail-box">
+                                    <h4>Balances del Grupo</h4>
+                                    <ul className="list-group list-group-flush mt-3">
+                                        {activeBalances.length > 0 ? activeBalances.map(balance => (
+                                            <li key={balance.id} className="list-group-item balance-item">
+                                                <span>{balance.name}</span>
+                                                <span className={balance.amount >= 0 ? 'balance-positive' : 'balance-negative'}>
+                                                    {balance.amount.toFixed(2)} €
+                                                </span>
+                                            </li>
+                                        )) : (
+                                            <p className="text-muted text-center mt-3">No hay balances calculados.</p>
+                                        )}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

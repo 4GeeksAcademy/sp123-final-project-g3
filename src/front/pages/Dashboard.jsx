@@ -4,6 +4,7 @@ import useGlobalReducer from "../hooks/useGlobalReducer";
 import "../styles/ProfileGroups.css";
 import ModalCreateTask from "../components/ModalCreateTask";
 import TaskDetailModal from "../components/TaskDetailModal";
+import { Sidebar } from "../components/Sidebar";
 
 // --- ACTUALIZADO: TaskListItem ahora recibe onEdit ---
 const TaskListItem = ({ task, onToggle, onDelete, onEdit, onClick }) => (
@@ -97,26 +98,7 @@ export const Dashboard = () => {
             )}
             {(showDetailModal) && <div className="modal-backdrop fade show"></div>}
 
-            <div className="dashboard-sidebar">
-                <div className="sidebar-header">
-                    <Link to="/dashboard" className="logo">TASKFLOW</Link>
-                </div>
-                <div className="user-profile-summary" onClick={() => navigate("/profile")} style={{ cursor: 'pointer' }}>
-                    <img src={store.profile.avatar} alt="User Avatar" className="user-avatar" />
-                    <span className="username">{store.profile.name}</span>
-                    <span className="user-email">{store.profile.email}</span>
-                </div>
-                <nav className="sidebar-nav">
-                    <ul>
-                        <li><Link to="/dashboard" className="active"><i className="fas fa-desktop me-2"></i>Escritorio</Link></li>               
-                        <li><Link to="/groups"><i className="fas fa-users me-2"></i>Tus Clanes</Link></li>
-                        <li><Link to="/finances"><i className="fas fa-wallet me-2"></i>Finanzas</Link></li>
-                        <li><Link to="/profile"><i className="fas fa-user-circle me-2"></i>Tu Perfil</Link></li>
-                        <li><Link to="/config"><i className="fas fa-cog me-2"></i>Configuración</Link></li>
-                        <li><Link to="/chat"><i className="fas fa-comments me-2"></i>Chat</Link></li>
-                    </ul>
-                </nav>
-            </div>
+           <Sidebar></Sidebar>
 
             <div className="dashboard-main-content">
                 <div className="dashboard-content-area page-container">

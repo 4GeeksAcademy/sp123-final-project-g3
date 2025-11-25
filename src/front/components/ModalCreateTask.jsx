@@ -117,20 +117,7 @@ function ModalCreateTask({ setShowTaskModal, taskType, taskToEdit = null }) {
                         onChange={e => setTitulo(e.target.value)}
                         style={{ width: "100%", marginBottom: 12, border: "1px solid #1e91ed", borderRadius: 8, padding: 10 }}
                     />
-                    <input
-                        placeholder="Fecha"
-                        value={fecha}
-                        onChange={e => {
-                            let v = e.target.value.replace(/[^0-9]/g, "");
-                            if (v.length > 2) v = v.slice(0, 2) + "/" + v.slice(2);
-                            if (v.length > 5) v = v.slice(0, 5) + "/" + v.slice(5, 9);
-                            if (v.length > 10) v = v.slice(0, 10);
-                            setFecha(v);
-                        }}
-                        maxLength={10}
-                        style={{ width: "100%", marginBottom: 12, border: "1px solid #1e91ed", borderRadius: 8, padding: 10 }}
-                        inputMode="numeric"
-                    />
+                    
                     <textarea placeholder="Descripción" value={descripcion} onChange={e => setDescripcion(e.target.value)} style={{ width: "100%", marginBottom: 12, border: "1px solid #1e91ed", borderRadius: 8, padding: 10, minHeight: 60 }} />
                     {/* Input de dirección eliminado, solo queda el campo sincronizado con el mapa */}
                     <GoogleMaps

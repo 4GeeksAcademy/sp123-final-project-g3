@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 import "../styles/ProfileGroups.css"; // Reutilizamos estilos
+import { Sidebar } from "../components/Sidebar";
 
 export const Chat = () => {
     const { store, dispatch } = useGlobalReducer();
@@ -37,29 +38,7 @@ export const Chat = () => {
     return (
         <div className="dashboard-container">
             
-            {/* --- SIDEBAR (Igual que Dashboard) --- */}
-            <div className="dashboard-sidebar">
-                <div className="sidebar-header">
-                    <Link to="/dashboard" className="logo">TASKFLOW</Link>
-                </div>
-                <div className="user-profile-summary" onClick={() => navigate("/profile")} style={{ cursor: 'pointer' }}>
-                    <img src={store.profile.avatar} alt="User Avatar" className="user-avatar" />
-                    <span className="username">{store.profile.name}</span>
-                    <span className="user-email">{store.profile.email}</span>
-                </div>
-                <nav className="sidebar-nav">
-                    <ul>
-                        <li><Link to="/dashboard"><i className="fas fa-desktop me-2"></i>Escritorio</Link></li>
-                        <li><Link to="/tasks"><i className="fas fa-tasks me-2"></i>Tus Tareas</Link></li>
-                        <li><Link to="/groups"><i className="fas fa-users me-2"></i>Tus Clanes</Link></li>
-                        <li><Link to="/shared-tasks"><i className="fas fa-share-alt me-2"></i>Tareas de Clanes</Link></li>
-                        <li><Link to="/finances"><i className="fas fa-wallet me-2"></i>Finanzas</Link></li>
-                        <li><Link to="/profile"><i className="fas fa-user-circle me-2"></i>Tu Perfil</Link></li>
-                        <li><Link to="/config"><i className="fas fa-cog me-2"></i>Configuración</Link></li>
-                        <li><Link to="/chat" className="active"><i className="fas fa-comments me-2"></i>Chat</Link></li>
-                    </ul>
-                </nav>
-            </div>
+            <div><Sidebar/></div>
 
             {/* --- CONTENIDO PRINCIPAL --- */}
             <div className="dashboard-main-content">

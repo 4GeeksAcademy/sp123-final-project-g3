@@ -3,10 +3,11 @@ from datetime import datetime, timedelta, timezone
 from api.models import db, User
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
+from flask_cors import CORS
 
 api_user = Blueprint('apiUser', __name__)
 SECRET_KEY = "super-secret-key"
-
+CORS (api_user)
 def token_requerido(f):
     def wrapper(*args, **kwargs):
         if request.method == 'OPTIONS':
@@ -25,6 +26,7 @@ def token_requerido(f):
 
 @api_user.route('/register', methods=['POST'])
 def create_profile():
+    print ("hola")
     body = request.get_json()
     email = body.get('email')
     password = body.get('password')
