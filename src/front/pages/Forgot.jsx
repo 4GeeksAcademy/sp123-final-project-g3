@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthShell from "../components/AuthShell";
 import TextInput from "../components/TextInput";
+import { requestReset } from "../jsApiComponents/auth";
 
 export function Forgot() {
   const [email, setEmail] = useState("");
@@ -11,11 +12,13 @@ export function Forgot() {
   const [token, setToken] = useState("");
   const nav = useNavigate();
 
-  const submit = (e) => {
+
+
+  const submit = async(e) => {
     e.preventDefault();
     setErr("");
     if (!email) return setErr("Introduce tu email.");
-    console.log("Forgot (solo UI):", email);
+    await requestReset(email)
     setSent(true);
   };
 

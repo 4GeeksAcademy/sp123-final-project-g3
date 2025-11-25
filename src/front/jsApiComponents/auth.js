@@ -42,3 +42,17 @@ export const updateUser = async (body, user) =>{
   const data = await response.json()
   return {data, status: response.status}
 }
+
+export const requestReset = async (email) => {
+  try {
+    const response = await fetch(`${BASE_URL}api/forgot`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+    });
+    return response.json();
+  } catch (error) {
+    console.log(error);
+  }
+    
+};

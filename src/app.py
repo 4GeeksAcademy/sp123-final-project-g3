@@ -80,12 +80,14 @@ mail = Mail(app)
 #Helper para generar token JWT-----------------------------------------
 def generate_reset_token(user_id: int) -> str:
     serializer = URLSafeTimedSerializer(app.config["JWT_SECRET_KEY"])
-    return serializer.dumps({"user_id": user_id})
+    token = serializer.dumps({"user_id": user_id})
+    return token.replace("." , "-")
 
 def verify_reset_token(token: str, max_age_seconds: int = 900):  # 15 minutos
     serializer = URLSafeTimedSerializer(app.config["JWT_SECRET_KEY"])
+    format_token = token.replace("-" , ".")
     try:
-        data = serializer.loads(token, max_age=max_age_seconds)
+        data = serializer.loads(format_token, max_age=max_age_seconds)
         return data.get("user_id")
     except SignatureExpired:
         return None
@@ -188,7 +190,7 @@ def forgot_password():
 
     # Generar token
     token = generate_reset_token(user.id)
-    reset_link = f"{os.getenv('VITE_FRONTEND_URL')}/reset/{token}"
+    reset_link = f"{os.getenv('VITE_FRONTEND_URL')}reset/{token}"
 
     # Email HTML
     html_body = f"""
