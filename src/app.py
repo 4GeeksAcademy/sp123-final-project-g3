@@ -26,6 +26,7 @@ from flask_bcrypt import Bcrypt
 
 from flask_mail import Mail, Message
 
+from itsdangerous import URLSafeTimedSerializer, BadSignature, SignatureExpired
 
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -65,33 +66,30 @@ bcrypt = Bcrypt(app)
 
 
 #Configuración Flask-Mail ----------------------------------------
-app.config['MAIL_SERVER'] = os.getenv("MAIL_SERVER")
-app.config['MAIL_PORT'] = int(os.getenv("MAIL_PORT"))
-app.config['MAIL_USERNAME'] = os.getenv("MAIL_USERNAME")
-app.config['MAIL_PASSWORD'] = os.getenv("MAIL_PASSWORD")
-app.config['MAIL_USE_TLS'] = os.getenv("MAIL_USE_TLS") == "True"
-app.config['MAIL_USE_SSL'] = os.getenv("MAIL_USE_SSL") == "True"
-app.config['MAIL_DEFAULT_SENDER'] = os.getenv("MAIL_DEFAULT_SENDER")
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 587
+app.config["MAIL_USE_TLS"] = True
+app.config["MAIL_USE_SSL"] = False
+app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
+app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
+app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_DEFAULT_SENDER")
 
 mail = Mail(app)
 
 
 #Helper para generar token JWT-----------------------------------------
-def generate_reset_token(user_id, expires_in=3600):
-    payload = {
-        "user_id": user_id,
-        "exp": datetime.utcnow() + timedelta(seconds=expires_in)
-    }
-    token = jwt.encode(payload, app.config['JWT_SECRET_KEY'], algorithm="HS256")
-    return token
+def generate_reset_token(user_id: int) -> str:
+    serializer = URLSafeTimedSerializer(app.config["JWT_SECRET_KEY"])
+    return serializer.dumps({"user_id": user_id})
 
-def verify_reset_token(token):
+def verify_reset_token(token: str, max_age_seconds: int = 900):  # 15 minutos
+    serializer = URLSafeTimedSerializer(app.config["JWT_SECRET_KEY"])
     try:
-        payload = jwt.decode(token, app.config['JWT_SECRET_KEY'], algorithms=["HS256"])
-        return payload['user_id']
-    except jwt.ExpiredSignatureError:
+        data = serializer.loads(token, max_age=max_age_seconds)
+        return data.get("user_id")
+    except SignatureExpired:
         return None
-    except jwt.InvalidTokenError:
+    except BadSignature:
         return None
 #Fin del Helper para generar token JWT-----------------------------------------
 
@@ -153,37 +151,67 @@ def serve_any_other_file(path):
     response.cache_control.max_age = 0  # avoid cache memory
     return response
 
+# Endpoint: prueba envio correo -------------------------------
+@app.route("/test-email")
+def test_email():
+    try:
+        msg = Message(
+            subject="Prueba de correo",
+            sender=os.getenv("MAIL_DEFAULT_SENDER"),
+            recipients=[os.getenv("MAIL_USERNAME")],
+            body="Este es un correo de prueba."
+        )
+        mail.send(msg)
+        return {"status": "ok", "message": "Correo enviado correctamente"}
+    except Exception as e:
+        print("ERROR:", e)
+        return {"status": "error", "details": str(e)}, 500
 
-#FORGOT PASSWORD Y RESET PASSWORD -------------------------------
+
+
+# Endpoint: solicitar recuperación -------------------------------
 @app.route("/api/forgot", methods=["POST"])
 def forgot_password():
-    data = request.json
+    data = request.get_json() or {}
     email = data.get("email")
+
     if not email:
         return jsonify({"error": "Introduce tu email."}), 400
 
     user = User.query.filter_by(email=email).first()
-    # Mensaje genérico para no filtrar emails
-    message = "Si existe el email, recibirás instrucciones para restablecer la contraseña."
-    if not user:
-        return jsonify({"message": message})
 
+    # Siempre devolvemos el mismo mensaje para no exponer información
+    message = "Si existe el email, recibirás instrucciones para restablecer la contraseña."
+
+    if not user:
+        return jsonify({"message": message}), 200
+
+    # Generar token
     token = generate_reset_token(user.id)
     reset_link = f"{os.getenv('VITE_FRONTEND_URL')}/reset/{token}"
 
     # Email HTML
     html_body = f"""
-    <p>Hola,</p>
-    <p>Haz clic en el siguiente enlace para restablecer tu contraseña:</p>
-    <p><a href="{reset_link}">{reset_link}</a></p>
-    <p>Si no solicitaste esto, ignora este mensaje.</p>
+        <p>Hola,</p>
+        <p>Haz clic en el siguiente enlace para restablecer tu contraseña:</p>
+        <p><a href="{reset_link}">{reset_link}</a></p>
+        <p>Si no solicitaste esto, ignora este mensaje.</p>
     """
 
-    msg = Message("Restablece tu contraseña", recipients=[email], html=html_body)
-    mail.send(msg)
+    try:
+        msg = Message(
+            "Restablece tu contraseña",
+            recipients=[email],
+            html=html_body
+        )
+        mail.send(msg)
+    except Exception as e:
+        # No informamos del error al usuario, por seguridad
+        app.logger.error(f"Error enviando email: {str(e)}")
 
-    return jsonify({"message": message})
+    return jsonify({"message": message}), 200
 
+# Endpoint: restablecer contraseña------------------------------------
 @app.route("/api/reset/<token>", methods=["POST"])
 def reset_password(token):
     data = request.json
