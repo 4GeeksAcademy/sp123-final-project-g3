@@ -130,6 +130,7 @@ export const MapView = () => {
         center={currentPosition}
         zoom={12}
         onClick={handleMarkerClick}
+        options={{disableDefaultUI: true}}
       >
         {activities
           .filter(a => a.latitude && a.longitude)
