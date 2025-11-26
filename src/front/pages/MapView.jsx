@@ -158,7 +158,7 @@ export const MapView = () => {
             <Button
               variant="primary"
               className="position-absolute"
-              style={{ top: "10px", right: "60px", zIndex: 10 }}
+              style={{ top: "40px", right: "40px", zIndex: 10 }}
               onClick={handleGetUserLocation}
             >
               📍 Mi ubicación
@@ -215,14 +215,18 @@ export const MapView = () => {
           </div>
 
           <div className="text-center mt-3">
-            <a href="/events" className="btn btn-dark px-4 py-2">
+            <a
+              href="/events"
+              className="px-4 py-2 neon-button"
+            >
               Ver todos los eventos →
             </a>
           </div>
+
         </div>
 
-  
-        </div> 
+
+      </div>
     </>
   );
 };

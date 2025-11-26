@@ -216,13 +216,6 @@ body {
 }
 
 
-
-
-
-
-
-
-
 /* Tema de autenticación oscuro */
 .auth-theme {
   --bg: #0f1b2b;
@@ -451,3 +444,16 @@ body {
   font-size: 1.5rem;
   margin-bottom: 20px;
 }
+
+.neon-button {
+  background-color: #2a2d3a;
+  color: #fff;
+  border: 1px solid #1a1930;
+  border-radius: 6px;
+  padding: 12px 24px;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0 3px 0 #b94e34;
+  transition: 0.3s ease;
+}
+
