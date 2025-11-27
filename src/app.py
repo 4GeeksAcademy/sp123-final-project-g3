@@ -15,13 +15,13 @@ from flask_jwt_extended import create_access_token
 from api.commands import setup_commands
 from api.admin import setup_admin
 from api.routes import api
-from api.models import db, User, Activity, Message, PasswordResetToken
+from api.models import db, User, Activity
 from api.utils import APIException, generate_sitemap
 from flask_cors import CORS
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_swagger import swagger
 from flask_migrate import Migrate
-from flask import Flask, request, jsonify, url_for, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory
 from datetime import datetime, timedelta
 import re
 import os
@@ -77,6 +77,7 @@ app.config["MAIL_USE_SSL"] = False
 app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
 app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
 app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_DEFAULT_SENDER")
+app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
 
 mail = Mail(app)
 
@@ -253,7 +254,8 @@ def forgot_password():
         msg = Message(
             "Restablece tu contraseña",
             recipients=[email],
-            html=html_body
+            html=html_body,
+            sender=os.getenv("MAIL_DEFAULT_SENDER"),
         )
         mail.send(msg)
     except Exception as e:
