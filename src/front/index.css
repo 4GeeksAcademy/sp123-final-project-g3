@@ -1,4 +1,5 @@
-body, html {
+body,
+html {
   overflow-x: hidden !important;
   font-size: 16px;
 }
@@ -8,21 +9,17 @@ body, html {
   border-color: #424242 !important;
 }
 
-
-.custom-overflow{
+.custom-overflow {
   overflow-y: scroll;
 }
 
-
-
 .profile-fixed-card {
-  height: 80vh;              
+  height: 80vh;
   border-radius: 20px;
   overflow-y: auto;
-  overflow-x: hidden;           
-
+  overflow-x: hidden;
 }
-.custom{
+.custom {
   min-height: 75vh;
 }
 
@@ -32,20 +29,18 @@ body, html {
 .profile-fixed-card::-webkit-scrollbar-track {
   background: transparent;
   border-radius: 10px;
-
 }
 
 .profile-fixed-card::-webkit-scrollbar-thumb {
   background-color: rgba(255, 255, 255, 0.4);
   border-radius: 10px;
-
 }
 
 /* vvv BOTÓN NEÓN CREAR ACTIVIDAD vvv */
 .footer-cta .newsletter-form .neon-create-btn {
   width: 90%;
   max-width: 340px;
-  background-color: #EE6C4D !important;
+  background-color: #ee6c4d !important;
   color: #fff !important;
   border: none !important;
   padding: 0.9rem 1.8rem !important;
@@ -64,7 +59,6 @@ body, html {
   box-shadow: 0 8px 0 #b94e34 !important;
 }
 
-
 .footer-cta .newsletter-form .neon-create-btn:disabled {
   background-color: #3b3b3b !important;
   color: #888 !important;
@@ -73,26 +67,28 @@ body, html {
   transform: none !important;
 }
 
-/* ^^^ BOTÓN NEÓN CREAR ACTIVIDAD ^^^ */ 
-
+/* ^^^ BOTÓN NEÓN CREAR ACTIVIDAD ^^^ */
 
 .map-layout {
-  height: 80vh;         
-  min-height: 520px;    
-  max-height: 900px;    
+  height: 80vh;
+  min-height: 520px;
+  max-height: 900px;
   overflow: hidden;
   padding: 10px;
 }
 
 /* 🔹 Asegura que todo el layout use el alto completo */
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
   margin: 0;
   padding: 0;
 }
 
 /* 🔹 Flex estable para que el mapa NO desaparezca */
-body > div, .d-flex.flex-column {
+body > div,
+.d-flex.flex-column {
   min-height: 100%;
 }
 
@@ -128,14 +124,14 @@ body {
   height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #E3FE18;
-  box-shadow: 0 0 8px #E3FE18;
+  border: 2px solid #e3fe18;
+  box-shadow: 0 0 8px #e3fe18;
 }
 
 /* 🏷 Títulos dentro del Card */
-.profile-stable-card h4, 
+.profile-stable-card h4,
 .profile-stable-card h5 {
-  color: #E3FE18 !important;
+  color: #e3fe18 !important;
 }
 
 /* 🧾 Formularios dentro del card */
@@ -153,7 +149,6 @@ body {
   color: #9f9f9f;
 }
 
-
 /* === 🔮 INPUT / SELECT NEÓN UNIFICADO === */
 .mf-neon-input {
   width: 90% !important;
@@ -161,7 +156,7 @@ body {
   background: #2a2d3a !important;
   color: #fff !important;
   border-radius: 12px !important;
-  border: 2px solid #817DF9 !important;
+  border: 2px solid #817df9 !important;
   padding: 0.8rem 1rem !important;
   font-weight: 500 !important;
   box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.4), 0 0 8px transparent !important;
@@ -170,8 +165,8 @@ body {
 
 .mf-neon-input:hover,
 .mf-neon-input:focus {
-  border-color: #E3FE18 !important;
-  box-shadow: 0 0 12px #E3FE18 !important;
+  border-color: #e3fe18 !important;
+  box-shadow: 0 0 12px #e3fe18 !important;
 }
 
 /* Placeholder */
@@ -181,7 +176,7 @@ body {
 
 /* === 🔮 BOTÓN PEQUEÑO DE EVENTOS === */
 .mf-neon-btn-small {
-  background-color: #EE6C4D !important;
+  background-color: #ee6c4d !important;
   color: #fff !important;
   border-radius: 10px !important;
   padding: 4px 10px !important;
@@ -199,7 +194,7 @@ body {
 
 /* Botón buscar y seleccionar */
 .mf-neon-btn-purple {
-  background-color: #817DF9 !important;
+  background-color: #817df9 !important;
   box-shadow: 0 4px 0 #5d5ab9 !important;
 }
 .mf-neon-btn-purple:hover {
@@ -215,14 +210,13 @@ body {
   text-align: center !important;
 }
 
-
 /* Tema de autenticación oscuro */
 .auth-theme {
   --bg: #0f1b2b;
   --card: #1a2740;
   --muted: #a3b1c6;
   --text: #e8eef7;
-  --accent: #EE6C4D !important;
+  --accent: #ee6c4d !important;
   --accent-hover: #ea5029;
   --input: #0e1a2a;
   --radius: 22px;
@@ -237,7 +231,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  
 }
 
 .auth-theme .auth-card {
@@ -355,43 +348,42 @@ body {
 /* Estilo para boton MapView y Crear Actividad PopUp */
 
 body {
-  background-color: #0f1120; 
-  margin: 0;                 
-  min-height: 100vh;         
+  background-color: #0f1120;
+  margin: 0;
+  min-height: 100vh;
 }
 
-.btn_Map{
-   background-color:  #EE6C4D; 
-   border: 1px solid #001F54;
-   border-radius: 5px;
-   color: #001F54;
-   font-weight: 400;
-   font-size: 1.1rem;
-   box-shadow: 0 0px 20px #93877f;
-   transition: 0.25s ease;
+.btn_Map {
+  background-color: #ee6c4d;
+  border: 1px solid #001f54;
+  border-radius: 5px;
+  color: #001f54;
+  font-weight: 400;
+  font-size: 1.1rem;
+  box-shadow: 0 0px 20px #93877f;
+  transition: 0.25s ease;
 }
-.btn_Map:hover{
- border-color: #001F54; 
- color: #E3FE18;
- background-color: #817DF9;
+.btn_Map:hover {
+  border-color: #001f54;
+  color: #e3fe18;
+  background-color: #817df9;
 }
 
-.bg_PopUp{
+.bg_PopUp {
   background-color: #0f1b2b !important;
 }
-
 
 ::-webkit-scrollbar {
   width: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.3);
+  background: rgba(255, 255, 255, 0.3);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255,255,255,0.5);
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .event-scroll-wrapper {
@@ -412,12 +404,11 @@ body {
 .event-card-scroll {
   min-width: 230px;
   max-width: 230px;
-  background: #ffffff;           
-  border-radius: 12px;           
+  background: #ffffff;
+  border-radius: 12px;
   padding: 15px;
-  border: 2px solid #EEE;        
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15); 
-  
+  border: 2px solid #001f54;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .event-card-scroll h5 {
@@ -425,12 +416,12 @@ body {
   margin-bottom: 8px;
 }
 .actividades-title {
-  color:#d7d5f8;
+  color: #d7d5f8;
   font-weight: bold;
   font-size: 1.5rem;
 }
 .actividades-box {
-  border: 2px solid #E3FE18; 
+  border: 2px solid #e3fe18;
   border-radius: 12px;
   padding: 20px;
   background-color: #d7d5f8;
@@ -439,7 +430,7 @@ body {
 }
 
 .actividades-title {
-  color: #817DF9;
+  color: #817df9;
   font-weight: bold;
   font-size: 1.5rem;
   margin-bottom: 20px;
@@ -455,4 +446,50 @@ body {
   text-decoration: none;
   box-shadow: 0 3px 0 #b94e34;
   transition: 0.3s ease;
+}
+
+.tip-bubble {
+  position: absolute;
+  padding: 18px 22px;
+  background: #e3fe18;
+  color: #001f54;
+  font-weight: 300;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  box-shadow: 0 0 40px 15px rgba(227, 254, 24, 0.35);
+
+  opacity: 0;
+  transform: scale(0.7);
+  animation: popIn 0.6s ease forwards;
+}
+
+.tip-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -18px;
+  width: 0;
+  height: 0;
+  border-left: 22px solid transparent;
+  border-right: 22px solid transparent;
+  border-top: 22px solid #e3fe18;
+  filter: drop-shadow(0 0 15px rgba(227, 254, 24, 0.35));
+}
+
+@keyframes popIn {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.hide {
+  opacity: 0;
+  transform: scale(0.7);
+  transition: all 0.4s ease;
 }

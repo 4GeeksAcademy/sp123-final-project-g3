@@ -201,6 +201,34 @@ export const MapView = () => {
   const [userLocation, setUserLocation] = useState(null);
   const navigate = useNavigate();
 
+
+  const [showWelcomeTip, setShowWelcomeTip] = useState(true);
+  const [showGeneralFormTip, setShowGeneralFormTip] = useState(false);
+  const [showMapTip, setShowMapTip] = useState(false);
+
+  useEffect(() => {
+    const welcomeTimer = setTimeout(() => {
+      setShowWelcomeTip(false);
+      setShowGeneralFormTip(true);
+    }, 3000);
+
+    const formTimer = setTimeout(() => {
+      setShowGeneralFormTip(false);
+      setShowMapTip(true);
+    }, 5000);
+
+    const mapTimer = setTimeout(() => {
+      setShowMapTip(false);
+    }, 10000);
+
+    return () => {
+      clearTimeout(welcomeTimer);
+      clearTimeout(formTimer);
+      clearTimeout(mapTimer);
+    };
+  }, []);
+
+
   const handleMarkerClick = (e) => {
     setNewMarker({
       latitude: e.latLng.lat(),
@@ -277,6 +305,19 @@ export const MapView = () => {
     <>
       <div className="row g-0 text-center w-100 m-0">
 
+        {showWelcomeTip && (
+          <div className="tip-bubble welcome-tip" style={{ top: "25px", left: "20px", zIndex: 9999 }}>
+            ¡Hola! Aquí podrás crear tus eventos deportivos.
+          </div>
+        )}
+
+        {showGeneralFormTip && (
+          <div className="tip-bubble form-tip" style={{ top: "100px", left: "60px", zIndex: 9999 }}>
+            Haz clic en el mapa para establecer la ubicación del encuentro y luego completa el formulario.
+          </div>
+        )}
+
+
         {/* 📌 FORMULARIO */}
         <div className="col-12 col-xl-6 d-flex justify-content-center align-items-center p-0">
           <div className="w-100 p-3" style={{ maxWidth: "700px", margin: "0 auto" }}>
@@ -288,14 +329,22 @@ export const MapView = () => {
           </div>
         </div>
 
+
         {/* 🗺️ MAPA */}
         <div className="col-12 col-xl-6 d-flex justify-content-center align-items-center p-3">
+
+          {showMapTip && (
+            <div className="tip-bubble map-tip" style={{ top: "125px", right: "650px", zIndex: 9999 }}>
+              Mueve el mapa. Desplázate libremente y encuentra el lugar ideal para tu evento.
+            </div>
+          )}
+
           <GoogleMap
             mapContainerStyle={{
               width: "100%",
               height: "70vh",
               minHeight: "350px",
-              marginTop: "120px",
+              marginTop: "135px",
               marginRight: "60px",
               borderRadius: "20px",
               border: "2px solid #EE6C4D",
@@ -371,6 +420,7 @@ export const MapView = () => {
           </GoogleMap>
         </div>
 
+
         <hr style={{ border: "1px solid #817DF9", margin: "40px 0" }} />
 
 
@@ -401,7 +451,7 @@ export const MapView = () => {
 
           <div className="text-center mt-3">
             <a
-              href="/events"
+              href="/eventos"
               className="px-4 py-2 neon-button"
             >
               Ver todos los eventos →
@@ -409,7 +459,6 @@ export const MapView = () => {
           </div>
 
         </div>
-
 
       </div>
     </>
