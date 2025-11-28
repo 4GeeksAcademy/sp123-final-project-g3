@@ -342,10 +342,12 @@ export const MapView = () => {
           <GoogleMap
             mapContainerStyle={{
               width: "100%",
-              height: "70vh",
+              height: "100%",
+              minHeight: "100%",
+             /*  height: "70vh",
               minHeight: "350px",
-              marginTop: "135px",
-              marginRight: "60px",
+              marginTop: "135px", 
+              marginRight: "60px",*/
               borderRadius: "20px",
               border: "2px solid #EE6C4D",
               borderTop: "6px solid #E3FE18",
