@@ -3,16 +3,13 @@ html {
   overflow-x: hidden !important;
   font-size: 16px;
 }
-
 .btn-dark:hover {
   background-color: #0a0a0a !important;
   border-color: #424242 !important;
 }
-
 .custom-overflow {
   overflow-y: scroll;
 }
-
 .profile-fixed-card {
   height: 80vh;
   border-radius: 20px;
@@ -22,7 +19,6 @@ html {
 .custom {
   min-height: 75vh;
 }
-
 .profile-fixed-card::-webkit-scrollbar {
   width: 6px;
 }
@@ -30,13 +26,10 @@ html {
   background: transparent;
   border-radius: 10px;
 }
-
 .profile-fixed-card::-webkit-scrollbar-thumb {
   background-color: rgba(255, 255, 255, 0.4);
   border-radius: 10px;
-}
-
-/* vvv BOTÓN NEÓN CREAR ACTIVIDAD vvv */
+} /* vvv BOTÓN NEÓN CREAR ACTIVIDAD vvv */
 .footer-cta .newsletter-form .neon-create-btn {
   width: 90%;
   max-width: 340px;
@@ -52,61 +45,46 @@ html {
   text-transform: uppercase;
   letter-spacing: 1px;
 }
-
 .footer-cta .newsletter-form .neon-create-btn:hover:not(:disabled) {
   transform: translateY(-3px);
   background-color: #e45b3a !important;
   box-shadow: 0 8px 0 #b94e34 !important;
 }
-
 .footer-cta .newsletter-form .neon-create-btn:disabled {
   background-color: #3b3b3b !important;
   color: #888 !important;
   cursor: not-allowed !important;
   box-shadow: none !important;
   transform: none !important;
-}
-
-/* ^^^ BOTÓN NEÓN CREAR ACTIVIDAD ^^^ */
-
+} /* ^^^ BOTÓN NEÓN CREAR ACTIVIDAD ^^^ */
 .map-layout {
   height: 80vh;
   min-height: 520px;
   max-height: 900px;
   overflow: hidden;
   padding: 10px;
-}
-
-/* 🔹 Asegura que todo el layout use el alto completo */
+} /* 🔹 Asegura que todo el layout use el alto completo */
 html,
 body,
 #root {
   height: 100%;
   margin: 0;
   padding: 0;
-}
-
-/* 🔹 Flex estable para que el mapa NO desaparezca */
+} /* 🔹 Flex estable para que el mapa NO desaparezca */
 body > div,
 .d-flex.flex-column {
   min-height: 100%;
-}
-
-/* 🔹 MAIN debe crecer sin empujar ni romper vistas */
+} /* 🔹 MAIN debe crecer sin empujar ni romper vistas */
 main.custom {
   flex: 1 1 auto;
   display: flex;
   justify-content: center;
   align-items: flex-start; /* evita que empuje */
   padding: 1rem 0;
-}
-
-/* 🔹 Evitar scroll horizontal global */
+} /* 🔹 Evitar scroll horizontal global */
 body {
   overflow-x: hidden;
-}
-
-/* 🌌 Card “Stable” Global Style - MeetFit */
+} /* 🌌 Card “Stable” Global Style - MeetFit */
 .profile-stable-card {
   background: linear-gradient(145deg, #1f2124, #111214);
   border-radius: 22px !important;
@@ -116,9 +94,7 @@ body {
   max-width: 700px;
   margin: 0 auto !important;
   color: #e6e6e6 !important;
-}
-
-/* 🖼 Avatars con borde neon */
+} /* 🖼 Avatars con borde neon */
 .profile-avatar {
   width: 120px;
   height: 120px;
@@ -126,15 +102,11 @@ body {
   object-fit: cover;
   border: 2px solid #e3fe18;
   box-shadow: 0 0 8px #e3fe18;
-}
-
-/* 🏷 Títulos dentro del Card */
+} /* 🏷 Títulos dentro del Card */
 .profile-stable-card h4,
 .profile-stable-card h5 {
   color: #e3fe18 !important;
-}
-
-/* 🧾 Formularios dentro del card */
+} /* 🧾 Formularios dentro del card */
 .profile-stable-card form input,
 .profile-stable-card form select,
 .profile-stable-card form textarea {
@@ -143,13 +115,10 @@ body {
   border: 1px solid #656565;
   border-radius: 8px;
 }
-
 .profile-stable-card form input::placeholder,
 .profile-stable-card form textarea::placeholder {
   color: #9f9f9f;
-}
-
-/* === 🔮 INPUT / SELECT NEÓN UNIFICADO === */
+} /* === 🔮 INPUT / SELECT NEÓN UNIFICADO === */
 .mf-neon-input {
   width: 90% !important;
   max-width: 420px !important;
@@ -162,19 +131,14 @@ body {
   box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.4), 0 0 8px transparent !important;
   transition: box-shadow 0.25s ease, border-color 0.25s ease !important;
 }
-
 .mf-neon-input:hover,
 .mf-neon-input:focus {
   border-color: #e3fe18 !important;
   box-shadow: 0 0 12px #e3fe18 !important;
-}
-
-/* Placeholder */
+} /* Placeholder */
 .mf-neon-input::placeholder {
   color: #ffffffb0 !important;
-}
-
-/* === 🔮 BOTÓN PEQUEÑO DE EVENTOS === */
+} /* === 🔮 BOTÓN PEQUEÑO DE EVENTOS === */
 .mf-neon-btn-small {
   background-color: #ee6c4d !important;
   color: #fff !important;
@@ -186,13 +150,10 @@ body {
   box-shadow: 0 4px 0 #b94e34 !important;
   transition: all 0.2s ease;
 }
-
 .mf-neon-btn-small:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 0 #b94e34 !important;
-}
-
-/* Botón buscar y seleccionar */
+} /* Botón buscar y seleccionar */
 .mf-neon-btn-purple {
   background-color: #817df9 !important;
   box-shadow: 0 4px 0 #5d5ab9 !important;
@@ -201,13 +162,143 @@ body {
   box-shadow: 0 6px 0 #5d5ab9 !important;
   transform: translateY(-2px);
 }
-
 .mf-neon-input {
   width: 90% !important;
   max-width: 450px !important;
   margin: 0 auto !important;
   display: block !important;
   text-align: center !important;
+}
+
+/* Estilo para boton MapView y Crear Actividad PopUp */
+body {
+  background-color: #0f1120;
+  margin: 0;
+  min-height: 100vh;
+}
+.btn_Map {
+  background-color: #ee6c4d;
+  border: 1px solid #001f54;
+  border-radius: 5px;
+  color: #001f54;
+  font-weight: 400;
+  font-size: 1.1rem;
+  box-shadow: 0 0px 20px #93877f;
+  transition: 0.25s ease;
+}
+.btn_Map:hover {
+  border-color: #001f54;
+  color: #e3fe18;
+  background-color: #817df9;
+}
+.bg_PopUp {
+  background-color: #0f1b2b !important;
+}
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+.event-scroll-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.event-scroll-container {
+  display: flex !important;
+  flex-direction: row;
+  gap: 15px;
+  overflow-x: auto;
+  padding: 10px;
+  max-width: 100%;
+}
+.event-card-scroll {
+  min-width: 230px;
+  max-width: 230px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 15px;
+  border: 2px solid #001f54;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+.event-card-scroll h5 {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+.actividades-title {
+  color: #d7d5f8;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+.actividades-box {
+  border: 2px solid #e3fe18;
+  border-radius: 12px;
+  padding: 20px;
+  background-color: #d7d5f8;
+  box-shadow: 0 5px 15px rgba(129, 125, 249, 0.3);
+  margin-top: 180px;
+}
+.actividades-title {
+  color: #817df9;
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+.neon-button {
+  background-color: #2a2d3a;
+  color: #fff;
+  border: 1px solid #1a1930;
+  border-radius: 6px;
+  padding: 12px 24px;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0 3px 0 #b94e34;
+  transition: 0.3s ease;
+}
+.tip-bubble {
+  position: absolute;
+  padding: 18px 22px;
+  background: #e3fe18;
+  color: #001f54;
+  font-weight: 300;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 0 40px 15px rgba(227, 254, 24, 0.35);
+  opacity: 0;
+  transform: scale(0.7);
+  animation: popIn 0.6s ease forwards;
+}
+.tip-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -18px;
+  width: 0;
+  height: 0;
+  border-left: 22px solid transparent;
+  border-right: 22px solid transparent;
+  border-top: 22px solid #e3fe18;
+  filter: drop-shadow(0 0 15px rgba(227, 254, 24, 0.35));
+}
+@keyframes popIn {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.hide {
+  opacity: 0;
+  transform: scale(0.7);
+  transition: all 0.4s ease;
 }
 
 /* ======== TEMAS DE AUTENTICACIÓN (LOGIN / REGISTER) ======== */
@@ -228,7 +319,7 @@ body {
 
 /* Contenedor general */
 .auth-theme .auth-shell {
-  min-height: calc(100vh - 80px); 
+  min-height: calc(100vh - 80px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -250,7 +341,7 @@ body {
 .auth-card-horizontal {
   display: flex;
   gap: 40px;
-  align-items: flex-start;  
+  align-items: flex-start;
 }
 
 /* Columna del formulario */
@@ -262,7 +353,7 @@ body {
 
 /* Panel lateral sencillo */
 .auth-card-side {
-  flex: 0 0 320px;                    
+  flex: 0 0 320px;
   background: rgba(255, 255, 255, 0.04);
   border-radius: 18px;
   padding: 20px 22px;
@@ -359,7 +450,6 @@ body {
   font-weight: 600;
 }
 
-
 .auth-theme .btn-accent:hover {
   background: var(--accent-hover);
 }
@@ -412,7 +502,7 @@ body {
   }
 
   .auth-card-side {
-    display: none;  
+    display: none;
   }
 
   .auth-theme .auth-title,
