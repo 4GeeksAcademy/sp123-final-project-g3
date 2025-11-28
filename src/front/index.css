@@ -170,6 +170,137 @@ body {
   text-align: center !important;
 }
 
+/* Estilo para boton MapView y Crear Actividad PopUp */
+body {
+  background-color: #0f1120;
+  margin: 0;
+  min-height: 100vh;
+}
+.btn_Map {
+  background-color: #ee6c4d;
+  border: 1px solid #001f54;
+  border-radius: 5px;
+  color: #001f54;
+  font-weight: 400;
+  font-size: 1.1rem;
+  box-shadow: 0 0px 20px #93877f;
+  transition: 0.25s ease;
+}
+.btn_Map:hover {
+  border-color: #001f54;
+  color: #e3fe18;
+  background-color: #817df9;
+}
+.bg_PopUp {
+  background-color: #0f1b2b !important;
+}
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+.event-scroll-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.event-scroll-container {
+  display: flex !important;
+  flex-direction: row;
+  gap: 15px;
+  overflow-x: auto;
+  padding: 10px;
+  max-width: 100%;
+}
+.event-card-scroll {
+  min-width: 230px;
+  max-width: 230px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 15px;
+  border: 2px solid #001f54;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+.event-card-scroll h5 {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+.actividades-title {
+  color: #d7d5f8;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+.actividades-box {
+  border: 2px solid #e3fe18;
+  border-radius: 12px;
+  padding: 20px;
+  background-color: #d7d5f8;
+  box-shadow: 0 5px 15px rgba(129, 125, 249, 0.3);
+  margin-top: 180px;
+}
+.actividades-title {
+  color: #817df9;
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+.neon-button {
+  background-color: #2a2d3a;
+  color: #fff;
+  border: 1px solid #1a1930;
+  border-radius: 6px;
+  padding: 12px 24px;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0 3px 0 #b94e34;
+  transition: 0.3s ease;
+}
+.tip-bubble {
+  position: absolute;
+  padding: 18px 22px;
+  background: #e3fe18;
+  color: #001f54;
+  font-weight: 300;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 0 40px 15px rgba(227, 254, 24, 0.35);
+  opacity: 0;
+  transform: scale(0.7);
+  animation: popIn 0.6s ease forwards;
+}
+.tip-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -18px;
+  width: 0;
+  height: 0;
+  border-left: 22px solid transparent;
+  border-right: 22px solid transparent;
+  border-top: 22px solid #e3fe18;
+  filter: drop-shadow(0 0 15px rgba(227, 254, 24, 0.35));
+}
+@keyframes popIn {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.hide {
+  opacity: 0;
+  transform: scale(0.7);
+  transition: all 0.4s ease;
+}
+
 /* ======== TEMAS DE AUTENTICACIÓN (LOGIN / REGISTER) ======== */
 
 .auth-theme {
