@@ -249,6 +249,8 @@ def forgot_password():
     return jsonify({"message": message}), 200
 
 # Endpoint: restablecer contraseña------------------------------------
+
+
 @app.route("/api/reset/<token>", methods=["POST"])
 def reset_password(token):
     data = request.json
@@ -264,12 +266,15 @@ def reset_password(token):
     if not user:
         return jsonify({"error": "Usuario no encontrado."}), 400
 
-    user.password_hash = bcrypt.generate_password_hash(new_password).decode('utf-8')
+    user.password_hash = bcrypt.generate_password_hash(
+        new_password).decode('utf-8')
     db.session.commit()
     return jsonify({"message": "Contraseña restablecida correctamente."}), 200
 # FIN DE FORGOT PASSWORD Y RESET PASSWORD --------------------------------------
 
-#ENDPOINT CAMBIO DE CONTRASEÑA--------------------------------------------------
+# ENDPOINT CAMBIO DE CONTRASEÑA--------------------------------------------------
+
+
 @app.route("/api/change-password", methods=["POST"])
 @jwt_required()
 def change_password():
@@ -303,11 +308,11 @@ def change_password():
         return jsonify({"error": "La contraseña actual es incorrecta."}), 400
 
     # Actualizar hash de contraseña
-    user.password_hash = bcrypt.generate_password_hash(new_password).decode('utf-8')
+    user.password_hash = bcrypt.generate_password_hash(
+        new_password).decode('utf-8')
     db.session.commit()
 
     return jsonify({"message": "Contraseña cambiada correctamente."}), 200
-
 
 
 # REPORTAR USUARIO
@@ -574,8 +579,40 @@ def join_activity(id):
 
     return jsonify({"msg": "Te has unido a la actividad"}), 200
 
+# Endpoint: calificación de actividad
+
+
+@app.route("/api/activities/<int:id>/rate", methods=["POST"])
+@jwt_required()
+def rate_activity(id):
+    user_id = int(get_jwt_identity())
+    activity = Activity.query.get(id)
+    if not activity:
+        return jsonify({"error": "Actividad no encontrada"}), 404
+
+    data = request.get_json() or {}
+    score = data.get("score")
+
+    if score is None or not (1 <= score <= 5):
+        return jsonify({"error": "Puntaje inválido. Debe ser entre 1 y 5"}), 400
+
+    # Asumimos que Activity tiene un campo ratings como lista JSON
+    if not hasattr(activity, "ratings") or activity.ratings is None:
+        activity.ratings = []
+
+    # Guardamos la valoración
+    activity.ratings.append(score)
+
+    # Calculamos promedio
+    activity.average_rating = sum(activity.ratings) / len(activity.ratings)
+
+    db.session.commit()
+
+    return jsonify({"average_rating": activity.average_rating}), 200
 
 # Obtener todos los usuarios (GET)
+
+
 @app.route('/api/users', methods=['GET'])
 @jwt_required()
 def get_users():

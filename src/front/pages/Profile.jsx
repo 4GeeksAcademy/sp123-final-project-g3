@@ -9,6 +9,7 @@ import CreatedEvents from "../components/CreatedEvents";
 import { toast } from "react-toastify";
 
 
+
 export const Profile = () => {
   const [user_get, setUser_get] = useState(null);
   const [user_offlineMsg, setUser_offlineMsg] = useState("");
@@ -231,7 +232,9 @@ toast.success("🔐 Sesión cerrada correctamente");
             )}
 
           </Container>
+          
         </div>
+        <br></br><br></br>
       </div>
     </div>
   );

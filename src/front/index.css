@@ -4,7 +4,7 @@ html {
   font-size: 16px;
 }
 .btn-dark:hover {
-  background-color: #0a0a0a !important;
+  background-color: #0A0A0A !important;
   border-color: #424242 !important;
 }
 .custom-overflow {
@@ -29,84 +29,95 @@ html {
 .profile-fixed-card::-webkit-scrollbar-thumb {
   background-color: rgba(255, 255, 255, 0.4);
   border-radius: 10px;
-} /* vvv BOTÓN NEÓN CREAR ACTIVIDAD vvv */
+}
+/* vvv BOTÓN NEÓN CREAR ACTIVIDAD vvv */
 .footer-cta .newsletter-form .neon-create-btn {
   width: 90%;
   max-width: 340px;
-  background-color: #ee6c4d !important;
+  background-color: #EE6C4D !important;
   color: #fff !important;
   border: none !important;
   padding: 0.9rem 1.8rem !important;
   font-weight: 700 !important;
   border-radius: 12px !important;
   cursor: pointer !important;
-  box-shadow: 0 6px 0 #b94e34 !important;
+  box-shadow: 0 6px 0 #B94E34 !important;
   transition: all 0.2s ease !important;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 .footer-cta .newsletter-form .neon-create-btn:hover:not(:disabled) {
   transform: translateY(-3px);
-  background-color: #e45b3a !important;
-  box-shadow: 0 8px 0 #b94e34 !important;
+  background-color: #E45B3A !important;
+  box-shadow: 0 8px 0 #B94E34 !important;
 }
 .footer-cta .newsletter-form .neon-create-btn:disabled {
-  background-color: #3b3b3b !important;
+  background-color: #3B3B3B !important;
   color: #888 !important;
   cursor: not-allowed !important;
   box-shadow: none !important;
   transform: none !important;
-} /* ^^^ BOTÓN NEÓN CREAR ACTIVIDAD ^^^ */
+}
+/* ^^^ BOTÓN NEÓN CREAR ACTIVIDAD ^^^ */
 .map-layout {
   height: 80vh;
   min-height: 520px;
   max-height: 900px;
   overflow: hidden;
   padding: 10px;
-} /* 🔹 Asegura que todo el layout use el alto completo */
+}
+/* :small_blue_diamond: Asegura que todo el layout use el alto completo */
 html,
 body,
 #root {
   height: 100%;
   margin: 0;
   padding: 0;
-} /* 🔹 Flex estable para que el mapa NO desaparezca */
+}
+/* :small_blue_diamond: Flex estable para que el mapa NO desaparezca */
 body > div,
 .d-flex.flex-column {
   min-height: 100%;
-} /* 🔹 MAIN debe crecer sin empujar ni romper vistas */
+}
+/* :small_blue_diamond: MAIN debe crecer sin empujar ni romper vistas */
 main.custom {
   flex: 1 1 auto;
   display: flex;
   justify-content: center;
   align-items: flex-start; /* evita que empuje */
   padding: 1rem 0;
-} /* 🔹 Evitar scroll horizontal global */
+}
+/* :small_blue_diamond: Evitar scroll horizontal global */
 body {
   overflow-x: hidden;
-} /* 🌌 Card “Stable” Global Style - MeetFit */
+}
+/* :milky_way: Card “Stable” Global Style - MeetFit */
 .profile-stable-card {
-  background: linear-gradient(145deg, #1f2124, #111214);
+  background: linear-gradient(145deg, #1F2124, #111214);
   border-radius: 22px !important;
-  box-shadow: 0 4px 22px rgba(129, 125, 249, 0.25) !important;
+  border-top: 4px solid #817DF9;
+  box-shadow: 0 4px 22px #817df9 !important;
   padding: 30px !important;
   width: 100%;
   max-width: 700px;
   margin: 0 auto !important;
-  color: #e6e6e6 !important;
-} /* 🖼 Avatars con borde neon */
+  color: #E6E6E6 !important;
+}
+/* :frame_with_picture: Avatars con borde neon */
 .profile-avatar {
   width: 120px;
   height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #e3fe18;
-  box-shadow: 0 0 8px #e3fe18;
-} /* 🏷 Títulos dentro del Card */
+  border: 2px solid #E3FE18;
+  box-shadow: 0 0 8px #E3FE18;
+}
+/* :label: Títulos dentro del Card */
 .profile-stable-card h4,
 .profile-stable-card h5 {
-  color: #e3fe18 !important;
-} /* 🧾 Formularios dentro del card */
+  color: #E3FE18 !important;
+}
+/* :receipt: Formularios dentro del card */
 .profile-stable-card form input,
 .profile-stable-card form select,
 .profile-stable-card form textarea {
@@ -117,15 +128,16 @@ body {
 }
 .profile-stable-card form input::placeholder,
 .profile-stable-card form textarea::placeholder {
-  color: #9f9f9f;
-} /* === 🔮 INPUT / SELECT NEÓN UNIFICADO === */
+  color: #9F9F9F;
+}
+/* === :crystal_ball: INPUT / SELECT NEÓN UNIFICADO === */
 .mf-neon-input {
   width: 90% !important;
   max-width: 420px !important;
-  background: #2a2d3a !important;
+  background: #2A2D3A !important;
   color: #fff !important;
   border-radius: 12px !important;
-  border: 2px solid #817df9 !important;
+  border: 2px solid #817DF9 !important;
   padding: 0.8rem 1rem !important;
   font-weight: 500 !important;
   box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.4), 0 0 8px transparent !important;
@@ -133,33 +145,36 @@ body {
 }
 .mf-neon-input:hover,
 .mf-neon-input:focus {
-  border-color: #e3fe18 !important;
-  box-shadow: 0 0 12px #e3fe18 !important;
-} /* Placeholder */
+  border-color: #E3FE18 !important;
+  box-shadow: 0 0 12px #E3FE18 !important;
+}
+/* Placeholder */
 .mf-neon-input::placeholder {
   color: #ffffffb0 !important;
-} /* === 🔮 BOTÓN PEQUEÑO DE EVENTOS === */
+}
+/* === :crystal_ball: BOTÓN PEQUEÑO DE EVENTOS === */
 .mf-neon-btn-small {
-  background-color: #ee6c4d !important;
+  background-color: #EE6C4D !important;
   color: #fff !important;
   border-radius: 10px !important;
   padding: 4px 10px !important;
   font-weight: 700 !important;
   cursor: pointer !important;
   border: none !important;
-  box-shadow: 0 4px 0 #b94e34 !important;
+  box-shadow: 0 4px 0 #B94E34 !important;
   transition: all 0.2s ease;
 }
 .mf-neon-btn-small:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 0 #b94e34 !important;
-} /* Botón buscar y seleccionar */
+  box-shadow: 0 6px 0 #B94E34 !important;
+}
+/* Botón buscar y seleccionar */
 .mf-neon-btn-purple {
-  background-color: #817df9 !important;
-  box-shadow: 0 4px 0 #5d5ab9 !important;
+  background-color: #817DF9 !important;
+  box-shadow: 0 4px 0 #5D5AB9 !important;
 }
 .mf-neon-btn-purple:hover {
-  box-shadow: 0 6px 0 #5d5ab9 !important;
+  box-shadow: 0 6px 0 #5D5AB9 !important;
   transform: translateY(-2px);
 }
 .mf-neon-input {
@@ -169,30 +184,154 @@ body {
   display: block !important;
   text-align: center !important;
 }
-
+/* Tema de autenticación oscuro */
+.auth-theme {
+  --bg: #0F1B2B;
+  --card: #1A2740;
+  --muted: #A3B1C6;
+  --text: #E8EEF7;
+  --accent: #EE6C4D !important;
+  --accent-hover: #EA5029;
+  --input: #0E1A2A;
+  --radius: 22px;
+  background: #F7EDED;
+  min-height: 100vh;
+}
+/* Layout y tarjeta */
+.auth-theme .auth-shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.auth-theme .auth-card {
+  width: 360px;
+  max-width: 92vw;
+  background: var(--bg);
+  border-radius: var(--radius);
+  padding: 28px 22px;
+  color: var(--text);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+}
+.auth-theme .auth-card-sergio {
+  width: 50vh;
+  max-width: 92vw;
+  background: var(--bg);
+  border-radius: var(--radius);
+  padding: 28px 22px;
+  color: var(--text);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+}
+.auth-theme .auth-title {
+  font-size: 22px;
+  font-weight: 700;
+  text-align: center;
+  margin: 6px 0 18px;
+}
+.auth-theme .auth-sub {
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+  margin-bottom: 12px;
+}
+/* Inputs y labels dentro del scope */
+.auth-theme .form-label {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+.auth-theme .input-dark.form-control {
+  background: var(--input);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  border-radius: 12px;
+  height: 44px;
+}
+.auth-theme .input-dark.form-control::placeholder {
+  color: #7F8BA1;
+}
+.auth-theme .input-dark.form-control:focus {
+  background: var(--input);
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 3px rgba(255, 107, 74, 0.15);
+}
+/* Botones y links (solo auth) */
+.auth-theme .btn-accent {
+  background: var(--accent);
+  border: none;
+  color: #fff;
+  height: 46px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+.auth-theme .btn-accent:hover {
+  background: var(--accent-hover);
+}
+.auth-theme .link-muted {
+  color: var(--muted);
+  font-size: 13px;
+}
+.auth-theme .link-accent {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+.auth-theme .link-accent:hover {
+  color: var(--accent-hover);
+}
+/* Icono ojo y notas */
+.auth-theme .eye-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: 0;
+  color: #9AB0CC;
+}
+.auth-theme .small-note {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+/* Select oscuro */
+.auth-theme .select-dark.form-select {
+  background: var(--input);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  border-radius: 12px;
+  height: 44px;
+}
+.auth-theme .select-dark.form-select:focus {
+  background: var(--input);
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 3px rgba(255, 107, 74, 0.15);
+}
 /* Estilo para boton MapView y Crear Actividad PopUp */
 body {
-  background-color: #0f1120;
+  background-color: #0F1120;
   margin: 0;
   min-height: 100vh;
 }
 .btn_Map {
-  background-color: #ee6c4d;
-  border: 1px solid #001f54;
+  background-color: #EE6C4D;
+  border: 1px solid #001F54;
   border-radius: 5px;
-  color: #001f54;
+  color: #001F54;
   font-weight: 400;
   font-size: 1.1rem;
-  box-shadow: 0 0px 20px #93877f;
+  box-shadow: 0 0px 20px #93877F;
   transition: 0.25s ease;
 }
 .btn_Map:hover {
-  border-color: #001f54;
-  color: #e3fe18;
-  background-color: #817df9;
+  border-color: #001F54;
+  color: #E3FE18;
+  background-color: #817DF9;
 }
 .bg_PopUp {
-  background-color: #0f1b2b !important;
+  background-color: #0F1B2B !important;
 }
 ::-webkit-scrollbar {
   width: 6px;
@@ -220,10 +359,10 @@ body {
 .event-card-scroll {
   min-width: 230px;
   max-width: 230px;
-  background: #ffffff;
+  background: #FFFFFF;
   border-radius: 12px;
   padding: 15px;
-  border: 2px solid #001f54;
+  border: 2px solid #001F54;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 .event-card-scroll h5 {
@@ -231,40 +370,40 @@ body {
   margin-bottom: 8px;
 }
 .actividades-title {
-  color: #d7d5f8;
+  color: #D7D5F8;
   font-weight: bold;
   font-size: 1.5rem;
 }
 .actividades-box {
-  border: 2px solid #e3fe18;
+  border: 2px solid #E3FE18;
   border-radius: 12px;
   padding: 20px;
-  background-color: #d7d5f8;
+  background-color: #D7D5F8;
   box-shadow: 0 5px 15px rgba(129, 125, 249, 0.3);
   margin-top: 180px;
 }
 .actividades-title {
-  color: #817df9;
+  color: #817DF9;
   font-weight: bold;
   font-size: 1.5rem;
   margin-bottom: 20px;
 }
 .neon-button {
-  background-color: #2a2d3a;
+  background-color: #2A2D3A;
   color: #fff;
-  border: 1px solid #1a1930;
+  border: 1px solid #1A1930;
   border-radius: 6px;
   padding: 12px 24px;
   font-weight: bold;
   text-decoration: none;
-  box-shadow: 0 3px 0 #b94e34;
+  box-shadow: 0 3px 0 #B94E34;
   transition: 0.3s ease;
 }
 .tip-bubble {
   position: absolute;
   padding: 18px 22px;
-  background: #e3fe18;
-  color: #001f54;
+  background: #E3FE18;
+  color: #001F54;
   font-weight: 300;
   border-radius: 50%;
   width: 200px;
@@ -286,7 +425,7 @@ body {
   height: 0;
   border-left: 22px solid transparent;
   border-right: 22px solid transparent;
-  border-top: 22px solid #e3fe18;
+  border-top: 22px solid #E3FE18;
   filter: drop-shadow(0 0 15px rgba(227, 254, 24, 0.35));
 }
 @keyframes popIn {
@@ -299,191 +438,6 @@ body {
   opacity: 0;
   transform: scale(0.7);
   transition: all 0.4s ease;
-}
-
-/* ======== TEMAS DE AUTENTICACIÓN (LOGIN / REGISTER) ======== */
-
-.auth-theme {
-  --bg: #0f1b2b;
-  --card: #1a2740;
-  --muted: #a3b1c6;
-  --text: #e8eef7;
-  --accent: #ee6c4d;
-  --accent-hover: #ea5029;
-  --input: #0e1a2a;
-  --radius: 22px;
-
-  background: #0f1120;
-  min-height: 100vh;
-}
-
-/* Contenedor general */
-.auth-theme .auth-shell {
-  min-height: calc(100vh - 80px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 16px;
-}
-
-/* Tarjeta principal */
-.auth-theme .auth-card {
-  width: 100%;
-  max-width: 980px;
-  background: rgba(7, 15, 26, 0.96);
-  border-radius: var(--radius);
-  padding: 32px 40px;
-  color: var(--text);
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.4);
-}
-
-/* Layout horizontal interno: formulario + panel */
-.auth-card-horizontal {
-  display: flex;
-  gap: 40px;
-  align-items: flex-start;
-}
-
-/* Columna del formulario */
-.auth-card-main {
-  flex: 1 1 0;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Panel lateral sencillo */
-.auth-card-side {
-  flex: 0 0 320px;
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: 18px;
-  padding: 20px 22px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-  color: #e8eef7;
-}
-
-.auth-card-side h3 {
-  margin: 0 0 8px 0;
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.auth-card-side p {
-  font-size: 14px;
-  line-height: 1.4;
-  margin-bottom: 8px;
-}
-
-.auth-card-side ul {
-  list-style: none;
-  padding-left: 0;
-  margin: 4px 0 0 0;
-  font-size: 13px;
-}
-
-.auth-card-side li + li {
-  margin-top: 4px;
-}
-
-/* Título y subtítulo del formulario */
-.auth-theme .auth-title {
-  font-size: 24px;
-  font-weight: 700;
-  text-align: left;
-  margin: 4px 0 6px;
-}
-
-.auth-theme .auth-sub {
-  color: var(--muted);
-  font-size: 13px;
-  margin-bottom: 18px;
-}
-
-/* Inputs y labels */
-.auth-theme .form-label {
-  color: var(--muted);
-  font-size: 13px;
-  margin-bottom: 6px;
-}
-
-.auth-theme .input-dark.form-control {
-  background: var(--input);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  color: var(--text);
-  border-radius: 12px;
-  height: 44px;
-}
-
-.auth-theme .input-dark.form-control::placeholder {
-  color: #7f8ba1;
-}
-
-.auth-theme .input-dark.form-control:focus {
-  background: var(--input);
-  color: var(--text);
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 0 0 3px rgba(255, 107, 74, 0.15);
-}
-
-/* Select oscuro */
-.auth-theme .select-dark.form-select {
-  background: var(--input);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  color: var(--text);
-  border-radius: 12px;
-  height: 44px;
-}
-
-.auth-theme .select-dark.form-select:focus {
-  background: var(--input);
-  color: var(--text);
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 0 0 3px rgba(255, 107, 74, 0.15);
-}
-
-/* Botones y links */
-.auth-theme .btn-accent {
-  background: var(--accent);
-  border: none;
-  color: #fff;
-  height: 46px;
-  border-radius: 12px;
-  font-weight: 600;
-}
-
-.auth-theme .btn-accent:hover {
-  background: var(--accent-hover);
-}
-
-.auth-theme .link-muted {
-  color: var(--muted);
-  font-size: 13px;
-}
-
-.auth-theme .link-accent {
-  color: var(--accent);
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.auth-theme .link-accent:hover {
-  color: var(--accent-hover);
-}
-
-/* Icono ojo y nota pequeña */
-.auth-theme .eye-btn {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: transparent;
-  border: 0;
-  color: #9ab0cc;
-}
-
-.auth-theme .small-note {
-  font-size: 12px;
-  color: var(--muted);
-  margin-top: 6px;
 }
 
 /* Responsive */

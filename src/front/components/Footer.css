@@ -314,3 +314,61 @@
   background-color: #e45b3a !important;
   box-shadow: 0 8px 0 #80301f !important;
 }
+
+/* --- Responsywność stopki i CTA --- */
+@media (max-width: 768px) {
+  .footer-cta {
+    width: 90%;
+    padding: 2rem 1rem;
+    transform: none; /* usuwa przesunięcie 3D */
+  }
+
+  .footer-cta h2 {
+    font-size: 1.5rem;
+  }
+
+  .footer-cta p {
+    font-size: 0.9rem;
+  }
+
+  .newsletter-form {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .newsletter-form input,
+  .newsletter-form button {
+    width: 100%;
+    max-width: none;
+  }
+
+  .footer-follow {
+    padding: 1.5rem 1rem;
+  }
+
+  .social-icons {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-cta h2 {
+    font-size: 1.3rem;
+  }
+
+  .footer-cta p {
+    font-size: 0.8rem;
+  }
+
+  .footer-follow h3 {
+    font-size: 1rem;
+  }
+
+  .social-icons a {
+    font-size: 1.4rem;
+  }
+
+  .footer-bottom {
+    font-size: 0.8rem;
+  }
+}

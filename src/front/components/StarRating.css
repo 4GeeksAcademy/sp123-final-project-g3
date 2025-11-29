@@ -1,0 +1,68 @@
+.star-rating {
+  display: flex;
+  gap: 5px;
+  font-size: 1.5rem;
+  color: #ccc;
+}
+
+.star {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.star.filled {
+  color: #EE6C4D; 
+}
+
+.star:hover {
+  color: #FF8A5C; 
+}
+@media (max-width: 768px) {
+  .custom-navbar {
+    padding: 0.5rem 1rem;
+    flex-direction: column; 
+    align-items: flex-start;
+  }
+
+  .left-menu {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .right-menu {
+    margin-left: 0;
+    margin-top: 0.5rem;
+  }
+
+  .search-wrapper {
+    max-width: 100%;
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .meetfit-text,
+  .meetfit-text-custom,
+  .custom2-btn {
+    font-size: 1rem;
+    padding: 4px 8px;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .custom-navbar {
+    padding: 0.4rem 0.8rem;
+  }
+
+  .meetfit-text,
+  .meetfit-text-custom,
+  .custom2-btn {
+    font-size: 0.9rem;
+    padding: 3px 6px;
+  }
+
+  .left-menu,
+  .right-menu {
+    margin: 0;
+  }
+}

@@ -1,37 +1,232 @@
-/* EventDetails.css */
-.event-details {
+/* Wrapper centrowanie */
+.event-card-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
   margin-top: 120px;
   padding: 20px;
-  text-align: center;
 }
 
-.event-details h1 {
+/* Karta neonowa */
+.event-card {
+  width: 100%;
+  max-width: 700px;
+  flex: 1 1 60%;
+  position: relative;
+
+  /* Neonowe tło jak CTA */
+  background: linear-gradient(145deg, #20232D, #171a24);
+  border-radius: 20px;
+  border-top: 2px solid #817DF9;
+
+  /* Padding i spacing */
+  padding: 30px;
+  color: #fff;
+
+  /* Glow / cień */
+  box-shadow: 0 5px 15px #817DF9;
+
+  /* Typografia */
+  font-size: 1rem;
+  text-align: center; /* Tytuł i sport na środku */
+
+  /* Animacje / przejścia */
+  transition: all 0.3s ease;
+}
+
+/* Tytuły */
+.event-title {
   font-size: 2rem;
+  color: #E3FE18;
   margin-bottom: 10px;
 }
 
-.event-details h3 {
-  color: #555;
+.event-sport {
+  font-size: 1.2rem;
+  color: #817DF9;
   margin-bottom: 20px;
 }
 
-.event-details img {
-  width: 60%;
-  border-radius: 10px;
-  margin-top: 20px;
+/* Obraz */
+.event-image {
+  width: 80%;
+  max-width: 500px;
+  border-radius: 12px;
+  margin: 20px auto;
+  display: block;
+  box-shadow: 0 4px 10px rgba(129, 125, 249, 0.4);
 }
 
-.event-details p {
+/* Opis */
+.event-description {
   margin-top: 20px;
   font-size: 1.1rem;
+  color: #cccccc;
+  text-align: left; /* opis normalnie */
+}
+
+/* Dodatkowe info */
+.event-info {
+  margin-top: 15px;
+  font-size: 0.95rem;
+  color: #ffffffcc;
+  text-align: left;
+}
+
+/* Loading / error */
+.event-details .loading,
+.event-details .error {
+  margin-top: 100px;
+  text-align: center;
 }
 
 .event-details .error {
   color: #EE6C4D;
-  margin-top: 100px;
+}
+.back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: linear-gradient(145deg, #EE6C4D, #FF8A5C);
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1rem;
+  box-shadow: 0 4px 0 #B94E34, 0 0 6px #EE6C4D;
+  transition: all 0.2s ease, box-shadow 0.3s ease;
+  text-align: center;
 }
 
-.event-details .loading {
-  margin-top: 100px;
-  text-align: center;
+.back-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #B94E34, 0 0 8px #EE6C4D;
+  background: linear-gradient(145deg, #FF8A5C, #EE6C4D);
+}
+
+.icon-info {
+  width: 20px;
+  height: 20px;
+  color: #817DF9; /* fioletowy kolor */
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.star.filled {
+  color: #817DF9; /* fiolet dla gwiazdek */
+}
+
+.event-info p {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0;
+}
+.event-card {
+  position: relative;
+}
+
+.add-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s;
+}
+
+.add-btn:hover {
+  transform: scale(1.2);
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+  .event-card {
+    padding: 20px;
+  }
+
+  .event-image {
+    width: 90%;
+  }
+}
+/* Tablety */
+@media (max-width: 768px) {
+  .event-card-wrapper {
+    margin-top: 80px;
+    padding: 15px;
+  }
+
+  .event-card {
+    padding: 20px;
+  }
+
+  .event-title {
+    font-size: 1.6rem;
+  }
+
+  .event-sport {
+    font-size: 1rem;
+  }
+
+  .event-description {
+    font-size: 1rem;
+  }
+
+  .event-info {
+    font-size: 0.9rem;
+  }
+
+  .event-image {
+    width: 90%;
+    max-width: 400px;
+  }
+}
+
+/* Smartfony */
+@media (max-width: 480px) {
+  .event-card-wrapper {
+    margin-top: 60px;
+    padding: 10px;
+  }
+
+  .event-card {
+    padding: 15px;
+  }
+
+  .event-title {
+    font-size: 1.4rem;
+  }
+
+  .event-sport {
+    font-size: 0.9rem;
+  }
+
+  .event-description {
+    font-size: 0.95rem;
+  }
+
+  .event-info {
+    font-size: 0.85rem;
+  }
+
+  .event-image {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .back-btn {
+    padding: 8px 14px;
+    font-size: 0.9rem;
+  }
+
+  .add-btn {
+    width: 32px;
+    height: 32px;
+  }
 }

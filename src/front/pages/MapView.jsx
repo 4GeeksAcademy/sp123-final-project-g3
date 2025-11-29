@@ -319,7 +319,7 @@ export const MapView = () => {
 
 
         {/* 📌 FORMULARIO */}
-        <div className="col-12 col-xl-6 d-flex justify-content-center align-items-center p-0">
+        <div className="col-12 col-xl-6 d-flex justify-content-center align-items-center p-0 mt-5">
           <div className="w-100 p-3" style={{ maxWidth: "700px", margin: "0 auto" }}>
             <CreateActivityPopup
               show={true}
@@ -331,7 +331,7 @@ export const MapView = () => {
 
 
         {/* 🗺️ MAPA */}
-        <div className="col-12 col-xl-6 d-flex justify-content-center align-items-center p-3">
+        <div className="col-12 col-xl-6 d-flex justify-content-center align-items-center p-3 mt-5">
 
           {showMapTip && (
             <div className="tip-bubble map-tip" style={{ top: "125px", right: "650px", zIndex: 9999 }}>
@@ -344,10 +344,8 @@ export const MapView = () => {
               width: "100%",
               height: "100%",
               minHeight: "100%",
-             /*  height: "70vh",
-              minHeight: "350px",
-              marginTop: "135px", 
-              marginRight: "60px",*/
+               
+              marginRight: "70px",
               borderRadius: "20px",
               border: "2px solid #EE6C4D",
               borderTop: "6px solid #E3FE18",
@@ -423,7 +421,7 @@ export const MapView = () => {
         </div>
 
 
-        <hr style={{ border: "1px solid #817DF9", margin: "40px 0" }} />
+        <hr style={{ border: "1.5px solid #817DF9", margin: "40px 0" }} />
 
 
         <div
