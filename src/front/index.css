@@ -190,38 +190,96 @@ body {
   --card: #1A2740;
   --muted: #A3B1C6;
   --text: #E8EEF7;
-  --accent: #EE6C4D !important;
+  --accent: #EE6C4D;
   --accent-hover: #EA5029;
   --input: #0E1A2A;
   --radius: 22px;
-  background: #F7EDED;
+  background: #0f1120;
   min-height: 100vh;
 }
-/* Layout y tarjeta */
+
+/* Contenedor general */
 .auth-theme .auth-shell {
-  min-height: 100vh;
+  min-height: calc(100vh - 80px); 
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 40px 16px;
 }
+
+/* Tarjeta principal */
 .auth-theme .auth-card {
-  width: 360px;
-  max-width: 92vw;
-  background: var(--bg);
+  width: 100%;
+  max-width: 980px;
+  background: rgba(7, 15, 26, 0.96);
   border-radius: var(--radius);
-  padding: 28px 22px;
+  padding: 32px 40px;
   color: var(--text);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.4);
 }
-.auth-theme .auth-card-sergio {
-  width: 50vh;
-  max-width: 92vw;
-  background: var(--bg);
-  border-radius: var(--radius);
-  padding: 28px 22px;
-  color: var(--text);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+
+/* Layout horizontal interno: formulario + panel */
+.auth-card-horizontal {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;  
 }
+
+/* Columna del formulario */
+.auth-card-main {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Panel lateral sencillo */
+.auth-card-side {
+  flex: 0 0 320px;                    
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 18px;
+  padding: 20px 22px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  color: #e8eef7;
+}
+
+.auth-card-side h3 {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.auth-card-side p {
+  font-size: 14px;
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.auth-card-side ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 4px 0 0 0;
+  font-size: 13px;
+}
+
+.auth-card-side li + li {
+  margin-top: 4px;
+}
+
+/* Título y subtítulo del formulario */
+.auth-theme .auth-title {
+  font-size: 24px;
+  font-weight: 700;
+  text-align: left;
+  margin: 4px 0 6px;
+}
+
+.auth-theme .auth-sub {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 18px;
+}
+
+
 .auth-theme .auth-title {
   font-size: 22px;
   font-weight: 700;
@@ -231,10 +289,9 @@ body {
 .auth-theme .auth-sub {
   color: var(--muted);
   font-size: 13px;
-  text-align: center;
-  margin-bottom: 12px;
+  margin-bottom: 18px;
 }
-/* Inputs y labels dentro del scope */
+/* Inputs y labels */
 .auth-theme .form-label {
   color: var(--muted);
   font-size: 13px;
@@ -256,7 +313,22 @@ body {
   border-color: rgba(255, 255, 255, 0.15);
   box-shadow: 0 0 0 3px rgba(255, 107, 74, 0.15);
 }
-/* Botones y links (solo auth) */
+/* Select oscuro */
+.auth-theme .select-dark.form-select {
+  background: var(--input);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  border-radius: 12px;
+  height: 44px;
+}
+
+.auth-theme .select-dark.form-select:focus {
+  background: var(--input);
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 3px rgba(255, 107, 74, 0.15);
+}
+
 .auth-theme .btn-accent {
   background: var(--accent);
   border: none;
@@ -280,7 +352,7 @@ body {
 .auth-theme .link-accent:hover {
   color: var(--accent-hover);
 }
-/* Icono ojo y notas */
+/* Icono ojo y nota pequeña */
 .auth-theme .eye-btn {
   position: absolute;
   right: 10px;
@@ -295,20 +367,7 @@ body {
   color: var(--muted);
   margin-top: 6px;
 }
-/* Select oscuro */
-.auth-theme .select-dark.form-select {
-  background: var(--input);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  color: var(--text);
-  border-radius: 12px;
-  height: 44px;
-}
-.auth-theme .select-dark.form-select:focus {
-  background: var(--input);
-  color: var(--text);
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 0 0 3px rgba(255, 107, 74, 0.15);
-}
+
 /* Estilo para boton MapView y Crear Actividad PopUp */
 body {
   background-color: #0F1120;
