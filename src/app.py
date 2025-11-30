@@ -596,19 +596,17 @@ def rate_activity(id):
     if score is None or not (1 <= score <= 5):
         return jsonify({"error": "Puntaje inválido. Debe ser entre 1 y 5"}), 400
 
-    # Asumimos que Activity tiene un campo ratings como lista JSON
-    if not hasattr(activity, "ratings") or activity.ratings is None:
+    if activity.ratings is None:
         activity.ratings = []
 
-    # Guardamos la valoración
-    activity.ratings.append(score)
-
-    # Calculamos promedio
+    activity.ratings = (activity.ratings or []) + [score]
     activity.average_rating = sum(activity.ratings) / len(activity.ratings)
 
     db.session.commit()
 
     return jsonify({"average_rating": activity.average_rating}), 200
+
+
 
 # Obtener todos los usuarios (GET)
 

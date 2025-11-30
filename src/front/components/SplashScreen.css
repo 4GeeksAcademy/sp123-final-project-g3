@@ -1,0 +1,40 @@
+.splash-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background: url('../assets/img/background-screens.png') center/cover no-repeat;
+  color: #817df9; 
+  text-align: center;
+}
+
+.splash-logo {
+  width: 150px;
+  margin-bottom: 10px;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.splash-title {
+  font-size: 5rem;
+  margin-bottom: 10px;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.splash-subtitle {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.splash-slogan {
+  font-size: 1.2rem;
+  font-weight: bold;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

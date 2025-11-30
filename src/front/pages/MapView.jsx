@@ -306,13 +306,13 @@ export const MapView = () => {
       <div className="row g-0 text-center w-100 m-0">
 
         {showWelcomeTip && (
-          <div className="tip-bubble welcome-tip" style={{ top: "25px", left: "20px", zIndex: 9999 }}>
+          <div className="tip-bubble welcome-tip" style={{ top: "20px", left: "20px", zIndex: 9999 }}>
             ¡Hola! Aquí podrás crear tus eventos deportivos.
           </div>
         )}
 
         {showGeneralFormTip && (
-          <div className="tip-bubble form-tip" style={{ top: "100px", left: "60px", zIndex: 9999 }}>
+          <div className="tip-bubble form-tip" style={{ top: "100px", left: "40px", zIndex: 9999 }}>
             Haz clic en el mapa para establecer la ubicación del encuentro y luego completa el formulario.
           </div>
         )}
@@ -334,7 +334,7 @@ export const MapView = () => {
         <div className="col-12 col-xl-6 d-flex justify-content-center align-items-center p-3 mt-5">
 
           {showMapTip && (
-            <div className="tip-bubble map-tip" style={{ top: "125px", right: "650px", zIndex: 9999 }}>
+            <div className="tip-bubble map-tip" style={{ top: "100px", right: "650px", zIndex: 9999 }}>
               Mueve el mapa. Desplázate libremente y encuentra el lugar ideal para tu evento.
             </div>
           )}

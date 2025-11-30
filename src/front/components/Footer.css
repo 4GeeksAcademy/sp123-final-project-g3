@@ -315,12 +315,12 @@
   box-shadow: 0 8px 0 #80301f !important;
 }
 
-/* --- Responsywność stopki i CTA --- */
+
 @media (max-width: 768px) {
   .footer-cta {
     width: 90%;
     padding: 2rem 1rem;
-    transform: none; /* usuwa przesunięcie 3D */
+    transform: none; 
   }
 
   .footer-cta h2 {

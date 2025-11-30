@@ -21,11 +21,11 @@ export default function EventInfo({ event }) {
         centered
         contentClassName="bg-dark text-light"
       >
-        <Modal.Header closeButton className="bg-secondary text-light border-0">
-          <Modal.Title>📌 {event.title}</Modal.Title>
+        <Modal.Header closeButton className="custom-modal-header">
+          <Modal.Title> {event.title}</Modal.Title>
         </Modal.Header>
 
-        <Modal.Body className="bg-dark text-light">
+        <Modal.Body className="custom-modal-body">
           <p><strong>Deporte:</strong> {event.sport}</p>
           <p><strong>Fecha:</strong> {event.date}</p>
           <p><strong>Descripción:</strong> {event.description}</p>

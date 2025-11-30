@@ -72,7 +72,7 @@ export const EventDetails = () => {
       });
       if (!resp.ok) throw new Error("No rating saved");
       const data = await resp.json();
-      setRating(data.average_rating);
+      setRating(data.average_rating ?? data.rating ?? value);
     } catch (err) {
       console.error(err);
       alert("Error");
