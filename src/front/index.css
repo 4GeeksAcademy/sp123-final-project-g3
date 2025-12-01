@@ -469,6 +469,13 @@ body {
   font-size: 1.5rem;
   margin-bottom: 20px;
 }
+.mf-neon-btn-orange {
+  background-color: #EE6C4D !important;
+  color: white !important;
+  font-weight: bold;
+  border-radius: 6px;
+}
+
 .neon-button {
   background-color: #2A2D3A;
   color: #fff;

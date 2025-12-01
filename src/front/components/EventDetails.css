@@ -128,7 +128,7 @@
   position: relative;
 }
 
-.add-btn {
+.delete-btn {
   position: absolute;
   top: 16px;
   right: 16px;
@@ -141,9 +141,11 @@
   transition: transform 0.2s;
 }
 
-.add-btn:hover {
+.delete-btn:hover {
   transform: scale(1.2);
 }
+
+
 
 /* Responsywność */
 @media (max-width: 768px) {

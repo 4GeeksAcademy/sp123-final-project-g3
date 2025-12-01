@@ -124,6 +124,35 @@ export const Eventos = () => {
     return matchesSearch && matchesSport;
   });
 
+  // ➕ JOIN EVENT
+  const joinEvent = async (event) => {
+    if (event.participants.length >= event.max_participants) {
+      alert("Este evento ya está lleno.");
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem("JWT-STORAGE-KEY");
+      const resp = await fetch(`${BASE_URL}/api/activities/${event.id}/join`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!resp.ok) {
+        const err = await resp.json();
+        throw new Error(err.error || "No se pudo unir al evento");
+      }
+
+      alert(`Te has unido a: ${event.title}`);
+      fetchEvents();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
   return (
     <>
       {/* 🔎 FILTROS RESPONSIVE (Bootstrap GRID) */}
@@ -199,8 +228,30 @@ export const Eventos = () => {
 
                   <Button
                     size="small"
+                    className="mf-neon-btn-small mf-neon-btn-orange"
+                    title="Unirse al evento"
+                    onClick={() => joinEvent(event)}
+                    disabled={(event.participants?.length ?? 0) >= event.max_participants}
+                    sx={{
+                      minWidth: "70px",
+                      minHeight: "40px",
+                      fontSize: "1.2rem",
+                      marginRight: "10px",
+                    }}
+                  >
+                    +
+                  </Button>
+
+                  <Button
+                    size="small"
                     className="mf-neon-btn-small mf-neon-btn-purple"
+                    title="Ver detalles del evento o calificar"
                     onClick={() => navigate(`/events/${event.id}`)}
+                    sx={{
+                      minWidth: "70px",
+                      minHeight: "40px",
+                      fontSize: "1.2rem",
+                    }}
                   >
                     🔍
                   </Button>
