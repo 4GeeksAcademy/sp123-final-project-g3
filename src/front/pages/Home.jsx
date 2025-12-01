@@ -51,7 +51,7 @@ export const Home = () => {
         {store.message ? (
           <span>{store.message.message}</span>
         ) : (
-          <span className="text-muted">Loading message from the backend...</span>
+          <span className="text-muted">Cargando mensaje...</span>
         )}
       </div>
 
