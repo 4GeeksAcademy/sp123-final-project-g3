@@ -215,11 +215,11 @@ export const MapView = () => {
     const formTimer = setTimeout(() => {
       setShowGeneralFormTip(false);
       setShowMapTip(true);
-    }, 5000);
+    }, 8000);
 
     const mapTimer = setTimeout(() => {
       setShowMapTip(false);
-    }, 10000);
+    }, 14000);
 
     return () => {
       clearTimeout(welcomeTimer);
