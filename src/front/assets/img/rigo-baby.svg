@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+  <rect width="100%" height="100%" fill="#fff8f0"/>
+  <circle cx="300" cy="240" r="140" fill="#ffd166" />
+  <rect x="180" y="360" width="240" height="120" rx="20" fill="#8ecae6" />
+  <text x="50%" y="520" dominant-baseline="middle" text-anchor="middle" font-size="28" fill="#023047">Rigo</text>
+</svg>

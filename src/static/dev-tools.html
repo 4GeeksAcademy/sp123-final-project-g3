@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dev Tools - Users</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body style="background: #f8f9fa">
+    <nav class="navbar navbar-dark bg-primary mb-4">
+      <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">Dev Tools (test UI)</span>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row">
+        <div class="col-8">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">Usuarios</h5>
+              <div class="table-responsive">
+                <table class="table table-striped" id="users-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Email</th>
+                      <th>Nombre</th>
+                      <th>Apellido</th>
+                      <th>Activo</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">Crear usuario</h5>
+              <form id="signup-form">
+                <div class="mb-2">
+                  <label class="form-label">Email</label>
+                  <input id="su-email" class="form-control" required />
+                </div>
+                <div class="mb-2">
+                  <label class="form-label">Nombre</label>
+                  <input id="su-first" class="form-control" />
+                </div>
+                <div class="mb-2">
+                  <label class="form-label">Apellido</label>
+                  <input id="su-last" class="form-control" />
+                </div>
+                <div class="mb-2">
+                  <label class="form-label">Contraseña</label>
+                  <input
+                    id="su-pass"
+                    type="password"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <button class="btn btn-success w-100" type="submit">
+                  Crear
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Probar login / tokens</h5>
+              <form id="login-form">
+                <div class="mb-2">
+                  <label class="form-label">Email</label>
+                  <input id="li-email" class="form-control" required />
+                </div>
+                <div class="mb-2">
+                  <label class="form-label">Contraseña</label>
+                  <input
+                    id="li-pass"
+                    type="password"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <button class="btn btn-primary w-100" type="submit">
+                  Iniciar sesión
+                </button>
+              </form>
+              <hr />
+              <div class="d-grid gap-2">
+                <button id="btn-refresh" class="btn btn-outline-secondary">
+                  Refresh token
+                </button>
+                <button id="btn-private" class="btn btn-outline-info">
+                  Probar /private
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-12">
+          <pre
+            id="output"
+            style="
+              background: #fff;
+              padding: 1rem;
+              border-radius: 6px;
+              min-height: 120px;
+            "
+          ></pre>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      async function loadUsers() {
+        const res = await fetch("/api/users");
+        const data = await res.json();
+        const tbody = document.querySelector("#users-table tbody");
+        tbody.innerHTML = "";
+        data.forEach((u) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `<td>${u.id}</td><td>${u.email}</td><td>${
+            u.first_name || ""
+          }</td><td>${u.last_name || ""}</td><td>${
+            u.is_active ? "Sí" : "No"
+          }</td>`;
+          tbody.appendChild(tr);
+        });
+      }
+
+      function show(msg) {
+        const out = document.getElementById("output");
+        out.innerText = msg;
+      }
+
+      document
+        .getElementById("signup-form")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const email = document.getElementById("su-email").value;
+          const first = document.getElementById("su-first").value;
+          const last = document.getElementById("su-last").value;
+          const pass = document.getElementById("su-pass").value;
+          const res = await fetch("/signup", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email,
+              password: pass,
+              first_name: first,
+              last_name: last,
+            }),
+          });
+          const txt = await res.text();
+          show(txt);
+          await loadUsers();
+        });
+
+      document
+        .getElementById("login-form")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const email = document.getElementById("li-email").value;
+          const pass = document.getElementById("li-pass").value;
+          const res = await fetch("/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password: pass }),
+          });
+          const data = await res.json().catch(() => ({}));
+          show(JSON.stringify(data, null, 2));
+          if (data.token) sessionStorage.setItem("token", data.token);
+          if (data.refresh_token)
+            sessionStorage.setItem("refresh_token", data.refresh_token);
+        });
+
+      document
+        .getElementById("btn-refresh")
+        .addEventListener("click", async () => {
+          const refresh_token = sessionStorage.getItem("refresh_token");
+          if (!refresh_token) {
+            show("No hay refresh token en sessionStorage");
+            return;
+          }
+          const res = await fetch("/refresh", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ refresh_token }),
+          });
+          const data = await res.json().catch(() => ({}));
+          show(JSON.stringify(data, null, 2));
+          if (data.token) sessionStorage.setItem("token", data.token);
+        });
+
+      document
+        .getElementById("btn-private")
+        .addEventListener("click", async () => {
+          const token = sessionStorage.getItem("token");
+          const headers = token ? { Authorization: "Bearer " + token } : {};
+          const res = await fetch("/private", { method: "GET", headers });
+          const data = await res.json().catch(() => ({}));
+          show(JSON.stringify(data, null, 2));
+        });
+
+      // load initially
+      loadUsers();
+    </script>
+  </body>
+</html>

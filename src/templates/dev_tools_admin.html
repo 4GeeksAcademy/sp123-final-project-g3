@@ -1,0 +1,269 @@
+{% extends 'admin/master.html' %} {% block body %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Usuarios</h5>
+          <div class="table-responsive">
+            <table class="table table-striped" id="users-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Email</th>
+                  <th>Nombre</th>
+                  <th>Apellido</th>
+                  <th>Activo</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Crear usuario</h5>
+          <form id="signup-form">
+            <div class="mb-2">
+              <input
+                id="su-email"
+                class="form-control"
+                placeholder="Email"
+                required
+              />
+            </div>
+            <div class="mb-2">
+              <input id="su-first" class="form-control" placeholder="Nombre" />
+            </div>
+            <div class="mb-2">
+              <input id="su-last" class="form-control" placeholder="Apellido" />
+            </div>
+            <div class="mb-2">
+              <input
+                id="su-pass"
+                type="password"
+                class="form-control"
+                placeholder="Contraseña"
+                required
+              />
+            </div>
+            <button class="btn btn-success w-100" type="submit">Crear</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Probar login / tokens</h5>
+          <form id="login-form">
+            <div class="mb-2">
+              <input
+                id="li-email"
+                class="form-control"
+                placeholder="Email"
+                required
+              />
+            </div>
+            <div class="mb-2">
+              <input
+                id="li-pass"
+                type="password"
+                class="form-control"
+                placeholder="Contraseña"
+                required
+              />
+
+              <div class="row mt-4">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">API Runner</h5>
+                      <div class="row g-2">
+                        <div class="col-md-2">
+                          <select id="api-method" class="form-select">
+                            <option>GET</option>
+                            <option>POST</option>
+                            <option>PUT</option>
+                            <option>DELETE</option>
+                          </select>
+                        </div>
+                        <div class="col-md-6">
+                          <input
+                            id="api-path"
+                            class="form-control"
+                            placeholder="/signup or /private or /api/users"
+                          />
+                        </div>
+                        <div class="col-md-4">
+                          <input
+                            id="api-body"
+                            class="form-control"
+                            placeholder='{"email":"...","password":"..."}'
+                          />
+                        </div>
+                      </div>
+                      <div class="mt-2 d-flex gap-2">
+                        <button id="btn-run" class="btn btn-sm btn-primary">
+                          Run
+                        </button>
+                        <button
+                          id="btn-clear-output"
+                          class="btn btn-sm btn-outline-secondary"
+                        >
+                          Clear
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-primary w-100" type="submit">
+              Iniciar sesión
+            </button>
+          </form>
+          <hr />
+          <div class="d-grid gap-2">
+            <button id="btn-refresh" class="btn btn-outline-secondary">
+              Refresh token
+            </button>
+            <button id="btn-private" class="btn btn-outline-info">
+              Probar /private
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-12">
+      <pre
+        id="output"
+        style="
+          background: #fff;
+          padding: 1rem;
+          border-radius: 6px;
+          min-height: 120px;
+        "
+      ></pre>
+    </div>
+  </div>
+</div>
+
+<script>
+  async function loadUsers() {
+    const res = await fetch("/api/users");
+    <script>
+    async function loadUsers(){
+      const res = await fetch('/api/users');
+      const data = await res.json();
+      const tbody = document.querySelector('#users-table tbody');
+      tbody.innerHTML = '';
+      data.forEach(u=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${u.id}</td><td>${u.email}</td><td>${u.first_name||''}</td><td>${u.last_name||''}</td><td>${u.is_active? 'Sí':'No'}</td><td><div class="btn-group" role="group"><button class="btn btn-sm btn-outline-primary btn-fill-login" data-email="${u.email}">Llenar</button><button class="btn btn-sm btn-outline-success btn-login-user" data-email="${u.email}">Login</button><button class="btn btn-sm btn-outline-info btn-test-private" data-email="${u.email}">/private</button></div></td>`;
+        tbody.appendChild(tr);
+      });
+      attachRowListeners();
+    }
+
+    function show(msg){
+      const out = document.getElementById('output');
+      out.innerText = msg;
+    }
+
+    document.getElementById('signup-form').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const email = document.getElementById('su-email').value;
+      const first = document.getElementById('su-first').value;
+      const last = document.getElementById('su-last').value;
+      const pass = document.getElementById('su-pass').value;
+      const res = await fetch('/signup', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({email, password: pass, first_name: first, last_name: last})});
+      const txt = await res.text();
+      show(txt);
+      await loadUsers();
+    });
+
+    document.getElementById('login-form').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const email = document.getElementById('li-email').value;
+      const pass = document.getElementById('li-pass').value;
+      const res = await fetch('/login', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({email, password: pass})});
+      const data = await res.json().catch(()=>({}));
+      show(JSON.stringify(data, null, 2));
+      if(data.token) sessionStorage.setItem('token', data.token);
+      if(data.refresh_token) sessionStorage.setItem('refresh_token', data.refresh_token);
+    });
+
+    document.getElementById('btn-refresh').addEventListener('click', async ()=>{
+      const refresh_token = sessionStorage.getItem('refresh_token');
+      if(!refresh_token){ show('No hay refresh token en sessionStorage'); return; }
+      const res = await fetch('/refresh', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({refresh_token})});
+      const data = await res.json().catch(()=>({}));
+      show(JSON.stringify(data, null, 2));
+      if(data.token) sessionStorage.setItem('token', data.token);
+    });
+
+    document.getElementById('btn-private').addEventListener('click', async ()=>{
+      const token = sessionStorage.getItem('token');
+      const headers = token ? { 'Authorization': 'Bearer ' + token } : {};
+      const res = await fetch('/private', {method:'GET', headers});
+      const data = await res.json().catch(()=>({}));
+      show(JSON.stringify(data, null, 2));
+    });
+
+    function attachRowListeners(){
+      document.querySelectorAll('.btn-fill-login').forEach(b=>{
+        b.onclick = ()=>{
+          const email = b.getAttribute('data-email');
+          document.getElementById('li-email').value = email;
+          document.getElementById('li-pass').value = '';
+        };
+      });
+      document.querySelectorAll('.btn-login-user').forEach(b=>{
+        b.onclick = async ()=>{
+          const email = b.getAttribute('data-email');
+          const pass = window.prompt('Password for ' + email + ':','');
+          if(pass === null) return;
+          const res = await fetch('/login', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({email, password: pass})});
+          const data = await res.json().catch(()=>({}));
+          show(JSON.stringify(data, null, 2));
+          if(data.token) sessionStorage.setItem('token', data.token);
+          if(data.refresh_token) sessionStorage.setItem('refresh_token', data.refresh_token);
+        };
+      });
+      document.querySelectorAll('.btn-test-private').forEach(b=>{
+        b.onclick = async ()=>{
+          const token = sessionStorage.getItem('token');
+          const headers = token ? { 'Authorization': 'Bearer ' + token } : {};
+          const res = await fetch('/private', {method:'GET', headers});
+          const data = await res.json().catch(()=>({}));
+          show(JSON.stringify(data, null, 2));
+        };
+      });
+    }
+
+    document.getElementById('btn-run').addEventListener('click', async ()=>{
+      const method = document.getElementById('api-method').value;
+      const path = document.getElementById('api-path').value;
+      let body = document.getElementById('api-body').value;
+      let options = {method, headers:{}};
+      if(body){
+        try{ body = JSON.parse(body); options.body = JSON.stringify(body); options.headers['Content-Type']='application/json'; }catch(e){ options.body = document.getElementById('api-body').value; }
+      }
+      const res = await fetch(path, options);
+      const text = await res.text();
+      try{ show(JSON.stringify(JSON.parse(text), null, 2)); }catch(e){ show(text); }
+    });
+
+    document.getElementById('btn-clear-output').addEventListener('click', ()=>{ document.getElementById('output').innerText = ''; });
+
+    loadUsers();
+</script>
+{% endblock %}

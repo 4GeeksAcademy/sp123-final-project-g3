@@ -1,15 +1,17 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import String, Boolean
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy import Column
 
 db = SQLAlchemy()
 
-class User(db.Model):
-    id: Mapped[int] = mapped_column(primary_key=True)
-    email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
-    password: Mapped[str] = mapped_column(nullable=False)
-    is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False)
 
+class User(db.Model):
+    id = Column(db.Integer, primary_key=True)
+    email = Column(String(120), unique=True, nullable=False)
+    password = Column(String(120), nullable=False)
+    first_name = Column(String(120), nullable=True)
+    last_name = Column(String(120), nullable=True)
+    is_active = Column(Boolean(), nullable=False)
 
     def serialize(self):
         return {
