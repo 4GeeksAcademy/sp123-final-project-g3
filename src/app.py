@@ -9,6 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask import Flask, request, jsonify
 import os
+from dotenv import load_dotenv
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
@@ -25,6 +26,8 @@ static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../dist/')
 app = Flask(__name__)
 app.url_map.strict_slashes = False
+
+load_dotenv()
 
 _CORS(app)
 
@@ -60,7 +63,7 @@ def handle_invalid_usage(error):
 # generate sitemap with all your endpoints
 
 
-app.config['SECRET_KEY'] = 'super-secret-key'
+app.config['SECRET_KEY'] = os.getenv('JWT_SECRET', 'super-secret-key')
 
 
 @app.route('/signup', methods=['POST'])

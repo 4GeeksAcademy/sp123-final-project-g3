@@ -1,10 +1,11 @@
-import os
 import jwt
 from datetime import datetime, timedelta
 from functools import wraps
-from flask import request, jsonify
+from flask import request, jsonify, current_app
 
-SECRET_KEY = os.getenv("JWT_SECRET", "super-secret")
+
+def _secret():
+    return current_app.config.get('SECRET_KEY')
 
 
 def generate_token(user_id, expires_hours=2):
@@ -12,7 +13,7 @@ def generate_token(user_id, expires_hours=2):
         "user_id": user_id,
         "exp": datetime.utcnow() + timedelta(hours=expires_hours)
     }
-    token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
+    token = jwt.encode(payload, _secret(), algorithm="HS256")
     if isinstance(token, bytes):
         token = token.decode('utf-8')
     return token
@@ -20,7 +21,7 @@ def generate_token(user_id, expires_hours=2):
 
 def verify_token(token):
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+        payload = jwt.decode(token, _secret(), algorithms=["HS256"])
         return payload.get("user_id")
     except jwt.ExpiredSignatureError:
         return None
