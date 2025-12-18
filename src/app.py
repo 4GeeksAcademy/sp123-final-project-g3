@@ -50,7 +50,7 @@ def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
 
 
-app.config['SECRET_KEY'] = os.getenv('JWT_SECRET', 'super-secret-key')
+app.config['SECRET_KEY'] = os.getenv('JWT_SECRET_KEY') or os.getenv('JWT_SECRET', 'super-secret-key')
 
 
 @app.route('/signup', methods=['POST'])
@@ -143,8 +143,6 @@ def private():
         return jsonify({'msg': 'Acceso permitido', 'email': user.email})
     except Exception:
         return jsonify({'msg': 'Token inválido'}), 401
-
-
 @app.route('/')
 def index():
     return '''

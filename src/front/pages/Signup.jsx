@@ -112,7 +112,7 @@ function Signup() {
                     <div className="alert alert-success text-center" role="alert" style={{ width: '100%' }}>
                         <div>Te has registrado correctamente{registeredName ? `, ${registeredName.charAt(0).toUpperCase() + registeredName.slice(1)}` : ''}!</div>
                         <div className="mt-2 text-center">
-                            <button className="btn btn-primary" onClick={() => navigate('/')}>Iniciar sesión</button>
+                            <button className="btn btn-primary" onClick={() => navigate('/login')}>Iniciar sesión</button>
                         </div>
                     </div>
                 </div>

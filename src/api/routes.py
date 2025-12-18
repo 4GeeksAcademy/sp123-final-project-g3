@@ -2,6 +2,8 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint, redirect
+import jwt
+import os
 from api.models import db, User
 from api.utils import generate_sitemap, APIException
 from api.auth import jwt_required
@@ -74,3 +76,32 @@ def delete_user(auth_user_id, user_id):
 @api.route('/dev-tools', methods=['GET'])
 def dev_tools():
     return redirect(url_for('static', filename='dev-tools.html'))
+
+
+@api.route('/private', methods=['GET'])
+def private_route():
+    auth_header = request.headers.get('Authorization')
+    if not auth_header:
+        return jsonify({"msg": "Token requerido"}), 401
+
+    try:
+        token = auth_header.split(' ')[1]
+        payload = jwt.decode(
+            token,
+            os.getenv('JWT_SECRET_KEY'),
+            algorithms=['HS256']
+        )
+
+        user = User.query.get(payload['user_id'])
+        if not user:
+            return jsonify({"msg": "Usuario no encontrado"}), 404
+
+        return jsonify({
+            "msg": "Acceso permitido",
+            "email": user.email
+        }), 200
+
+    except jwt.ExpiredSignatureError:
+        return jsonify({"msg": "Token expirado"}), 401
+    except Exception:
+        return jsonify({"msg": "Token inválido"}), 401
