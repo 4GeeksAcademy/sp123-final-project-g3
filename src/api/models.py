@@ -7,14 +7,13 @@ db = SQLAlchemy()
 
 
 class Users(db.Model):
-    
-
+    __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
+    password = db.Column(db.String(255), unique=False, nullable=False)
     name = db.Column(db.String(120), nullable=False)
-    profesional_title = db.Cloumn(db.String(120))
-    created_at = db.Column(db.DateTime, default=datetime)
+    profesional_title = db.Column(db.String(120))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     
     def __repr__(self):
@@ -24,18 +23,17 @@ class Users(db.Model):
         return {"id": self.id, 
                 "email": self.email,
                 "name": self.name,
-                "porfessional_title": self.profesional_title,
+                "profesional_title": self.profesional_title,
                 "created_at": self.created_at
                 }
 
 
 class CV(db.Model):
-    
+    __tablename__ = "cv"
     
     id = db.Column(db.Integer, primary_key=True)
     cv_url = db.Column(db.String(300), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime)
-    app_postulation = db.relationship("")
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     user_to = db.relationship("Users", 
                             foreign_keys = [user_id], 
@@ -47,27 +45,26 @@ class CV(db.Model):
     
     def serialize(self):
         return {"id": self.id, 
-                "cv-url": self.cv_url,
+                "cv_url": self.cv_url,
                 "created_at": self.created_at
                 }
         
         
 class Job(db.Model):
-    
-    
-    id = db.Column(db.Ineger, primary_key=True)
+    __tablename__ = "job"
+    id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120), nullable=False)
-    company = db.Column(db.String(120), nullabele=False)
+    company = db.Column(db.String(120), nullable=False)
     link = db.Column(db.String(300))
     about_job = db.Column(db.Text)
     accountabilities = db.Column(db.Text)
     requirements = db.Column(db.Text)
-    benefits = db.Column(db.text)
+    benefits = db.Column(db.Text)
     salary = db.Column(db.String(120))
     location = db.Column(db.String(120))
     notes = db.Column(db.Text)
     description = db.Column(db.Text)
-    created_at = db.Column(db.DateTime, default=datetime)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     
     def __repr__(self):
@@ -84,9 +81,8 @@ class Job(db.Model):
         
         
 class Postulations(db.Model):
-    
-    
-    id = db.Column(db.Ineger, primary_key=True)
+    __tablename__ = "postulations"
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), nullable=False)
     status = db.Column(db.String(100), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
