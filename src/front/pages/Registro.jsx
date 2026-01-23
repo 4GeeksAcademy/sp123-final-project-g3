@@ -1,8 +1,10 @@
 import "../index.css";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-// import mascotaregistro from "../imagenes/roboregistro.png";
+import robot from "../imagenes/roboregistro.png";
 import robotgif from "../imagenes/robotregistrogif.gif";
+import logo from "../imagenes/logo.png";
+
 
 export default function Registro() {
     const [form, setForm] = useState({
@@ -84,14 +86,15 @@ export default function Registro() {
                 <div className="login-form">
 
                     {/* Logo */}
-                    <div className="login-logo-form mx-auto mb-3">
+                    <div className="login-logo-form d-flex align-items-center mb-3">
                         <div className="logo-shape-1"></div>
                         <div className="logo-shape-2"></div>
-                        <h3 className="fw-bold ms-2">Logo Futuro</h3>
+                        <img src={logo} alt="logo" className="logo-image" />
+                        <h3 className="fw-bold ms-2">¡Futuro nombre superchulo!</h3>
                     </div>
 
-                    <h1 className="fw-semibold text-center">Crea tu cuenta</h1>
-                    <p className="login-subtitle text-center">
+                    <h1 className="fw-semibold ms-3">Crea tu cuenta</h1>
+                    <p className="login-subtitle ms-3">
                         Crea tu nueva cuenta para comenzar
                     </p>
 
@@ -232,7 +235,7 @@ export default function Registro() {
                 {/* Imagen + indicadores */}
                 <div className="d-flex flex-column align-items-center">
                     <img
-                        src={robotgif}
+                        src={robot}
                         alt="register visual"
                         className="login-image"
                     />

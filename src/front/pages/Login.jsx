@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import mascota from "../imagenes/robot.png";
 import mascotagif from "../imagenes/robotlogin.gif";
+import logo from "../imagenes/logo.png";
 
 
 export default function Login() {
@@ -75,14 +76,15 @@ export default function Login() {
                 <div className="login-form">
 
                     {/* Logo */}
-                    <div className="login-logo-form mx-auto mb-3">
+                    <div className="login-logo-form d-flex align-items-center mb-3">
                         <div className="logo-shape-1"></div>
                         <div className="logo-shape-2"></div>
-                        <h3 className="fw-bold ms-2">Logo Futuro</h3>
+                        <img src={logo} alt="logo" className="logo-image" />
+                        <h3 className="fw-bold ms-2">¡Futuro nombre superchulo!</h3>
                     </div>
 
-                    <h1 className="fw-semibold text-center">Inicio de Sesión</h1>
-                    <p className="login-subtitle text-center">
+                    <h1 className="fw-semibold ms-3">Inicio de Sesión</h1>
+                    <p className="login-subtitle ms-3">
                         Inicia sesión para acceder a tu tablero de empleos
                     </p>
 
@@ -173,7 +175,7 @@ export default function Login() {
                 {/* IMAGEN + INDICADORES */}
                 <div className="d-flex flex-column align-items-center">
                     <img
-                        src={mascotagif}
+                        src={mascota}
                         alt="login visual"
                         className="login-image"
                     />
