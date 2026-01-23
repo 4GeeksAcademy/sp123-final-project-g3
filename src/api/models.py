@@ -89,6 +89,7 @@ class Postulations(db.Model):
     job_id = db.Column(db.Integer, db.ForeignKey("job.id"), nullable=False)
     cv_id = db.Column(db.Integer, db.ForeignKey("cv.id"), nullable=False)
     interview_date = db.Column(db.DateTime)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
     user_to = db.relationship("Users",
                               foreign_keys=[user_id],
                               backref = db.backref("user_postulation", lazy="select"))
@@ -110,7 +111,8 @@ class Postulations(db.Model):
                 "user_id": self.user_id,
                 "job_id": self.job_id,
                 "cv_id": self.cv_id,
-                "interview_date": self.interview_date
+                "interview_date": self.interview_date,
+                "created_at": self.created_at
                 }
         
         
