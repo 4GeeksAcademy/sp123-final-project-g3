@@ -1,0 +1,143 @@
+/* =========================
+   BASE
+========================= */
+.login-container {
+  font-family: "Poppins", sans-serif;
+  background-color: #e6d1b4;
+  color: #533946;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  position: relative;
+}
+
+/* =========================
+   WRAPPER (FORM + IMAGE)
+========================= */
+.login-wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 3rem;
+  width: 100%;
+  max-width: 1400px;
+}
+
+/* =========================
+   IMAGEN
+========================= */
+.login-image {
+  width: 616px;
+  height: 816px;
+  border-radius: 1.5rem;
+}
+
+/* =========================
+   FORMULARIO
+========================= */
+.login-form {
+  width: 512px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* =========================
+   LABELS Y INPUTS
+========================= */
+.form-label {
+  color: #533946;
+  font-weight: 500;
+  min-width: 150px;
+}
+
+.form-control {
+  background-color: #f3eadb;
+  border: 1px solid #21616a;
+  color: #533946;
+}
+
+.form-control::placeholder {
+  color: #533946;
+  opacity: 0.5;
+}
+
+.form-control:focus {
+  background-color: #f3eadb;
+  border-color: #2e9ca0;
+  box-shadow: 0 0 0 0.2rem rgba(46, 156, 160, 0.25);
+}
+
+/* =========================
+   BOTONES Y LINKS
+========================= */
+.btn-primary {
+  background-color: #0f2c33;
+  border: none;
+  color: #e6d1b4;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background-color: #533946;
+}
+
+.btn-outline-primary {
+  border-color: #21616a;
+  color: #21616a;
+}
+
+.btn-outline-primary:hover {
+  background-color: #533946;
+  color: #e6d1b4;
+}
+
+/* =========================
+   INDICADORES
+========================= */
+.login-indicators {
+  display: flex;
+  gap: 8px;
+  margin-top: 1rem;
+}
+
+.indicator {
+  width: 10px;
+  height: 10px;
+  background: #533946;
+  opacity: 0.4;
+  border-radius: 50%;
+}
+
+.indicator.active {
+  width: 28px;
+  background: #2e9ca0;
+  border-radius: 6px;
+  opacity: 1;
+}
+
+/* Tablet */
+@media (max-width: 1199px) {
+  .login-wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .login-image {
+    display: none;
+  }
+
+  .login-form {
+    width: 90%;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .login-form {
+    width: 100%;
+  }
+}

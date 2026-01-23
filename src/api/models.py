@@ -30,7 +30,7 @@ class Users(db.Model):
 
 class CV(db.Model):
     __tablename__ = "cv"
-    
+
     id = db.Column(db.Integer, primary_key=True)
     cv_url = db.Column(db.String(300), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
