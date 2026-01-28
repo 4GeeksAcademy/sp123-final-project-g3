@@ -2,6 +2,8 @@
 import { NavLink, Link } from "react-router-dom";
 import "../index.css";
 import logo from "../imagenes/logo.png";
+import "bootstrap-icons/font/bootstrap-icons.css";
+
 
 export default function Navbar() {
 	return (
@@ -32,22 +34,30 @@ export default function Navbar() {
 			{/* MENÚ */}
 			<ul className="navbar-menu">
 				<li>
+
 					<Link to="/" className="nav-item">
+						<i className="bi bi-layers me-2"></i>
 						Tablero Kanban
 					</Link>
 				</li>
 				<li>
 					<NavLink to="/estadisticas" className="nav-item">
+						<i className="bi bi-bar-chart me-2"></i>
+
 						Estadísticas
 					</NavLink>
 				</li>
 				<li>
 					<NavLink to="/perfil" className="nav-item">
+						<i className="bi bi-person me-2"></i>
+
 						Mi Perfil
 					</NavLink>
 				</li>
 				<li>
 					<NavLink to="/buscar" className="nav-item">
+						<i className="bi bi-search me-2"></i>
+
 						Buscar Postulaciones
 					</NavLink>
 				</li>
