@@ -10,11 +10,9 @@ import { Home } from "./pages/Home";
 import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
 import Login from "./pages/Login";
-import Registro from "./pages/Registro";
-import Search from "./pages/Search";
-import Profile from "./pages/Profile";
-import Statistics from "./pages/Statistics";
-import Dashboard from "./pages/Dashboard";
+import Registro from "./pages/Registro.jsx";
+import Buscar from "./pages/Buscar.jsx";
+import Estadisticas from "./pages/Estadisticas.jsx";
 
 
 
@@ -35,10 +33,8 @@ export const router = createBrowserRouter(
       <Route path="/demo" element={<Demo />} />
       <Route path="/login" element={<Login />} />
       <Route path="/registro" element={<Registro />} />
-      <Route path="/search" element={<Search />} />
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/statistics" element={<Statistics />} />
-      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/buscar" element={<Buscar />} />
+      <Route path="/estadisticas" element={<Estadisticas />} />
 
     </Route>
   )
