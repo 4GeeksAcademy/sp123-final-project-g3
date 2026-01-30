@@ -11,8 +11,10 @@ import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
 import Login from "./pages/Login";
 import Registro from "./pages/Registro";
-
-
+import Search from "./pages/Search";
+import Profile from "./pages/Profile";
+import Statistics from "./pages/Statistics";
+import Dashboard from "./pages/Dashboard";
 
 
 
@@ -33,6 +35,10 @@ export const router = createBrowserRouter(
       <Route path="/demo" element={<Demo />} />
       <Route path="/login" element={<Login />} />
       <Route path="/registro" element={<Registro />} />
+      <Route path="/search" element={<Search />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/statistics" element={<Statistics />} />
+      <Route path="/dashboard" element={<Dashboard />} />
 
     </Route>
   )
