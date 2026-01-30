@@ -11,6 +11,7 @@ import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
 import Login from "./pages/Login";
 import Registro from "./pages/Registro";
+import Perfil from "./pages/Perfil";
 
 
 
@@ -33,6 +34,9 @@ export const router = createBrowserRouter(
       <Route path="/demo" element={<Demo />} />
       <Route path="/login" element={<Login />} />
       <Route path="/registro" element={<Registro />} />
+      <Route path="/perfil" element={<Perfil />} />
+
+
 
     </Route>
   )
