@@ -6,15 +6,14 @@ import {
   Route,
 } from "react-router-dom";
 import { Layout } from "./pages/Layout";
-import { Home } from "./pages/Home";
+import Home from "./pages/Home.jsx";
 import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
 import Login from "./pages/Login";
 import Registro from "./pages/Registro.jsx";
 import Buscar from "./pages/Buscar.jsx";
 import Estadisticas from "./pages/Estadisticas.jsx";
-import Registro from "./pages/Registro";
-import Perfil from "./pages/Perfil";
+import Perfil from "./pages/Perfil.jsx";
 
 
 
