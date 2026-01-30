@@ -12,6 +12,10 @@
 		"build": "vite build",
 		"lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
 		"preview": "vite preview"
+		"start": "vite",
+		"build": "vite build",
+		"lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+		"preview": "vite preview"
 	},
 	"author": {
 		"name": "Alejandro Sanchez",
@@ -54,6 +58,7 @@
 		]
 	},
 	"dependencies": {
+		"bootstrap-icons": "^1.13.1",
 		"chart.js": "^4.5.1",
 		"lucide-react": "^0.563.0",
 		"prop-types": "^15.8.1",

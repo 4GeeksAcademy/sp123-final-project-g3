@@ -13,6 +13,10 @@ import Login from "./pages/Login";
 import Registro from "./pages/Registro.jsx";
 import Buscar from "./pages/Buscar.jsx";
 import Estadisticas from "./pages/Estadisticas.jsx";
+import Registro from "./pages/Registro";
+import Perfil from "./pages/Perfil";
+
+
 
 
 
@@ -35,6 +39,9 @@ export const router = createBrowserRouter(
       <Route path="/registro" element={<Registro />} />
       <Route path="/buscar" element={<Buscar />} />
       <Route path="/estadisticas" element={<Estadisticas />} />
+      <Route path="/perfil" element={<Perfil />} />
+
+
 
     </Route>
   )
