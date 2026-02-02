@@ -175,7 +175,7 @@ export default function Login() {
                 {/* IMAGEN + INDICADORES */}
                 <div className="d-flex flex-column align-items-center">
                     <img
-                        src={mascota}
+                        src={mascotagif}
                         alt="login visual"
                         className="login-image"
                     />

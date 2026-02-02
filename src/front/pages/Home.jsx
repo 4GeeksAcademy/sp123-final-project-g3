@@ -103,6 +103,57 @@ function Column({ title, headerClass, cards, onCardClick }) {
   );
 }
 
+function SidePanel({ offer, onClose }) {
+  if (!offer) return null;
+
+  return (
+    <aside className="side-panel">
+      <div className="side-panel-header">
+        <div>
+          <span className="priority-tag priority-high">
+            Prioridad: {offer.priority}
+          </span>
+        </div>
+
+        <div className="side-panel-actions">
+          <button className="icon-btn">✏️</button>
+          <button className="icon-btn close" onClick={onClose}>✕</button>
+        </div>
+      </div>
+
+      <h2 className="side-panel-title">{offer.role}</h2>
+      <p className="side-panel-company">🏢 {offer.company}</p>
+
+      <section className="side-section">
+        <h4>📄 Descripción del Puesto</h4>
+        <p>Analista de ciberseguridad para protección de infraestructuras.</p>
+      </section>
+
+      <section className="side-section">
+        <h4>📋 Requisitos</h4>
+        <p>Seguridad informática, Pentesting, CISSP, 3+ años</p>
+      </section>
+
+      <section className="side-section">
+        <h4>📍 Detalles de la Oferta</h4>
+        <p><strong>Ubicación:</strong> Bilbao (Remoto)</p>
+        <p><strong>Salario:</strong> €40,000 - €50,000</p>
+      </section>
+
+      <section className="side-section">
+        <h4>🗓️ Fechas importantes</h4>
+        <p>Fecha de aplicación: 6 de enero de 2026</p>
+      </section>
+
+      <section className="side-section">
+        <h4>📝 Notas personales</h4>
+        <textarea defaultValue={offer.notes} />
+      </section>
+    </aside>
+  );
+}
+
+
 export default function Home() {
   const [cards] = useState(INITIAL_CARDS);
   const [selected, setSelected] = useState(null);

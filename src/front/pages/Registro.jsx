@@ -235,7 +235,7 @@ export default function Registro() {
                 {/* Imagen + indicadores */}
                 <div className="d-flex flex-column align-items-center">
                     <img
-                        src={robot}
+                        src={robotgif}
                         alt="register visual"
                         className="login-image"
                     />
