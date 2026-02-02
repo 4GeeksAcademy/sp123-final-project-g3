@@ -1127,3 +1127,133 @@
 .btn-primary:hover {
   opacity: 0.9;
 }
+
+/* =========================
+   MODAL NUEVA POSTULACION
+========================= */
+
+.post-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 24px;
+}
+
+.post-modal-card {
+  width: 560px;
+  max-width: 100%;
+  background: #e6d1b4;
+  border: 1px solid rgba(15, 44, 51, 0.18);
+  border-radius: 12px;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.post-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(15, 44, 51, 0.15);
+}
+
+.post-modal-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0f2c33;
+}
+
+.post-modal-close {
+  background: transparent;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: #0f2c33;
+  line-height: 1;
+}
+
+.post-modal-form {
+  padding: 14px 16px 16px;
+}
+
+.post-modal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.post-span-2 {
+  grid-column: span 2;
+}
+
+.post-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.post-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #0f2c33;
+}
+
+.post-required {
+  color: #6d3c4f;
+}
+
+.post-textarea {
+  min-height: 84px;
+  resize: vertical;
+}
+
+.post-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(15, 44, 51, 0.15);
+}
+
+.post-btn {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.post-btn-secondary {
+  background: transparent;
+  border: 1px solid rgba(15, 44, 51, 0.4);
+  color: #0f2c33;
+}
+
+.post-btn-primary {
+  background: #1f5f66;
+  color: #ffffff;
+}
+
+.post-btn-primary:hover {
+  opacity: 0.92;
+}
+
+@media (max-width: 640px) {
+  .post-modal-card {
+    width: 100%;
+  }
+
+  .post-modal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .post-span-2 {
+    grid-column: span 1;
+  }
+}
