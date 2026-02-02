@@ -468,8 +468,8 @@
   min-height: 220px;
   display: grid;
   place-items: center;
-  background: rgba(243, 2)
-
+  background: rgba(243, 2);
+}
 .board-page {
   background-color: #e6d1b4;
   min-height: 100vh;
@@ -500,13 +500,25 @@
   color: #ffffff;
 }
 
-.col-header-gray { background: #7c8793; }
-.col-header-teal { background: #21616a; }
-.col-header-orange { background: #f39b1e; }
-.col-header-green { background: #2f8f62; }
-.col-header-maroon { background: #6d3c4f; }
+.col-header-gray {
+  background: #7c8793;
+}
+.col-header-teal {
+  background: #21616a;
+}
+.col-header-orange {
+  background: #f39b1e;
+}
+.col-header-green {
+  background: #2f8f62;
+}
+.col-header-maroon {
+  background: #6d3c4f;
+}
 
-.col-title { font-size: 0.85rem; }
+.col-title {
+  font-size: 0.85rem;
+}
 .col-count {
   background: rgba(255, 255, 255, 0.25);
   padding: 0.1rem 0.5rem;
@@ -532,7 +544,9 @@
   cursor: pointer;
   appearance: none;
   -webkit-appearance: none;
-  transition: transform 0.08s ease, box-shadow 0.12s ease;
+  transition:
+    transform 0.08s ease,
+    box-shadow 0.12s ease;
 }
 
 .job-card:hover {
@@ -586,16 +600,530 @@
   border: 1px solid rgba(15, 44, 51, 0.18);
 }
 
-.priority-high { background: #ffe3e3 !important; color: #8a1f1f; }
-.priority-medium { background: #fff0cc !important; color: #7a4f00; }
-.priority-low { background: #dfefff !important; color: #1d4e89; }
-
-.priority-dot.priority-high { background: #ff6b6b !important; }
-.priority-dot.priority-medium { background: #f39b1e !important; }
-.priority-dot.priority-low { background: #4d8dff !important; }
-
-@media (max-width: 1100px) {
-  .kanban-board { grid-template-columns: 1fr; }
-  .col-body { min-height: auto; }
+.priority-high {
+  background: #ffe3e3 !important;
+  color: #8a1f1f;
+}
+.priority-medium {
+  background: #fff0cc !important;
+  color: #7a4f00;
+}
+.priority-low {
+  background: #dfefff !important;
+  color: #1d4e89;
 }
 
+.priority-dot.priority-high {
+  background: #ff6b6b !important;
+}
+.priority-dot.priority-medium {
+  background: #f39b1e !important;
+}
+.priority-dot.priority-low {
+  background: #4d8dff !important;
+}
+
+@media (max-width: 1100px) {
+  .kanban-board {
+    grid-template-columns: 1fr;
+  }
+  .col-body {
+    min-height: auto;
+  }
+}
+
+/* =========================
+   KANBAN LAYOUT
+========================= */
+
+.kanban-board {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  align-items: flex-start;
+}
+
+/* =========================
+   COLUMNAS
+========================= */
+
+.kanban-column {
+  background-color: #ffffff;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 120px);
+}
+
+/* =========================
+   CABECERAS DE COLUMNA
+========================= */
+
+.col-header {
+  padding: 12px 14px;
+  border-radius: 10px 10px 0 0;
+  color: #ffffff;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.col-header-gray {
+  background-color: #6b7280;
+}
+
+.col-header-teal {
+  background-color: #1f5f66;
+}
+
+.col-header-orange {
+  background-color: #f59e0b;
+}
+
+.col-header-green {
+  background-color: #2f9e9e;
+}
+
+.col-header-maroon {
+  background-color: #5b3b46;
+}
+
+.col-title {
+  font-size: 0.95rem;
+}
+
+.col-count {
+  background: rgba(255, 255, 255, 0.25);
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+}
+
+/* =========================
+   CONTENIDO DE COLUMNAS
+========================= */
+
+.col-body {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* =========================
+   TARJETAS (JOB CARD)
+========================= */
+
+.job-card {
+  background-color: #ffffff;
+  border: 1px solid #d6e2e8;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+}
+
+.job-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.job-card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.job-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* =========================
+   META INFO (EMPRESA)
+========================= */
+
+.job-meta {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: #256d85;
+}
+
+.job-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* =========================
+   PRIORIDADES
+========================= */
+
+.priority-badge {
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid;
+  font-weight: 500;
+}
+
+.priority-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.priority-high {
+  color: #ef4444;
+  border-color: #ef4444;
+  background-color: #fee2e2;
+}
+
+.priority-medium {
+  color: #f59e0b;
+  border-color: #f59e0b;
+  background-color: #fef3c7;
+}
+
+.priority-low {
+  color: #3b82f6;
+  border-color: #3b82f6;
+  background-color: #dbeafe;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-card {
+  background: #ffffff;
+  border-radius: 12px;
+  width: 420px;
+  max-width: 90%;
+  padding: 16px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.modal-body {
+  margin-top: 12px;
+}
+
+.modal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.modal-field-full {
+  grid-column: span 2;
+}
+
+.modal-label {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.modal-value {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.btn-primary {
+  background-color: #1f5f66;
+  color: #ffffff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+/* =========================
+   KANBAN LAYOUT
+========================= */
+
+.kanban-board {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  align-items: flex-start;
+}
+
+/* =========================
+   COLUMNAS
+========================= */
+
+.kanban-column {
+  background-color: #ffffff;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 120px);
+}
+
+/* =========================
+   CABECERAS DE COLUMNA
+========================= */
+
+.col-header {
+  padding: 12px 14px;
+  border-radius: 10px 10px 0 0;
+  color: #ffffff;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.col-header-gray {
+  background-color: #6b7280;
+}
+
+.col-header-teal {
+  background-color: #1f5f66;
+}
+
+.col-header-orange {
+  background-color: #f59e0b;
+}
+
+.col-header-green {
+  background-color: #2f9e9e;
+}
+
+.col-header-maroon {
+  background-color: #5b3b46;
+}
+
+.col-title {
+  font-size: 0.95rem;
+}
+
+.col-count {
+  background: rgba(255, 255, 255, 0.25);
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+}
+
+/* =========================
+   CONTENIDO DE COLUMNAS
+========================= */
+
+.col-body {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* =========================
+   TARJETAS (JOB CARD)
+========================= */
+
+.job-card {
+  background-color: #ffffff;
+  border: 1px solid #d6e2e8;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+}
+
+.job-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.job-card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.job-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* =========================
+   META INFO (EMPRESA)
+========================= */
+
+.job-meta {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: #256d85;
+}
+
+.job-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* =========================
+   PRIORIDADES
+========================= */
+
+.priority-badge {
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid;
+  font-weight: 500;
+}
+
+.priority-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.priority-high {
+  color: #ef4444;
+  border-color: #ef4444;
+  background-color: #fee2e2;
+}
+
+.priority-medium {
+  color: #f59e0b;
+  border-color: #f59e0b;
+  background-color: #fef3c7;
+}
+
+.priority-low {
+  color: #3b82f6;
+  border-color: #3b82f6;
+  background-color: #dbeafe;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-card {
+  background: #ffffff;
+  border-radius: 12px;
+  width: 420px;
+  max-width: 90%;
+  padding: 16px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.modal-body {
+  margin-top: 12px;
+}
+
+.modal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.modal-field-full {
+  grid-column: span 2;
+}
+
+.modal-label {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.modal-value {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.btn-primary {
+  background-color: #1f5f66;
+  color: #ffffff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
