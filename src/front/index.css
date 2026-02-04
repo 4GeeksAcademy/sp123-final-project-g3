@@ -1127,3 +1127,28 @@
 .btn-primary:hover {
   opacity: 0.9;
 }
+/* =======================
+   BUSCAR POSTULACIONES
+======================= */
+
+.page-title {
+  font-weight: 700;
+  color: #12343b;
+}
+
+.search-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+/* Reutilizamos job-card del kanban */
+.search-card {
+  cursor: default;
+}
+
+.search-card a.btn-primary {
+  display: block;
+  margin-top: 12px;
+  text-decoration: none;
+}
