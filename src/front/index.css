@@ -468,7 +468,7 @@
   min-height: 220px;
   display: grid;
   place-items: center;
-  background: rgba(243, 2);
+  background: rgba(243, 234, 219, 0.35);
 }
 .board-page {
   background-color: #e6d1b4;
@@ -1127,9 +1127,283 @@
 .btn-primary:hover {
   opacity: 0.9;
 }
+
+/* =========================
+   MODAL NUEVA POSTULACION
+
+.post-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 24px;
+}
+
+.post-modal-card {
+  width: 560px;
+  max-width: 100%;
+  background: #e6d1b4;
+  border: 1px solid rgba(15, 44, 51, 0.18);
+  border-radius: 12px;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.post-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(15, 44, 51, 0.15);
+}
+
+.post-modal-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0f2c33;
+}
+
+.post-modal-close {
+  background: transparent;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: #0f2c33;
+  line-height: 1;
+}
+
+.post-modal-form {
+  padding: 14px 16px 16px;
+}
+
+.post-modal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.post-span-2 {
+  grid-column: span 2;
+}
+
+.post-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.post-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #0f2c33;
+}
+
+.post-required {
+  color: #6d3c4f;
+}
+
+.post-textarea {
+  min-height: 84px;
+  resize: vertical;
+}
+
+.post-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(15, 44, 51, 0.15);
+}
+
+.post-btn {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.post-btn-secondary {
+  background: transparent;
+  border: 1px solid rgba(15, 44, 51, 0.4);
+  color: #0f2c33;
+}
+
+.post-btn-primary {
+  background: #1f5f66;
+  color: #ffffff;
+}
+
+.post-btn-primary:hover {
+  opacity: 0.92;
+}
+
+@media (max-width: 640px) {
+  .post-modal-card {
+    width: 100%;
+  }
+
+  .post-modal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .post-span-2 {
+    grid-column: span 1;
+  }
+}
+
+/* =========================
+   BUSCAR (EMPTY STATE)
+.search-page {
+  background-color: #e6d1b4; /* tu fondo beige */
+  min-height: 100vh;
+  padding: 2.5rem 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.search-card {
+  width: min(1100px, 100%);
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 1.75rem 2rem 2.25rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.search-title {
+  margin: 0 0 1.75rem;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #0f2c33;
+}
+
+.search-empty {
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 0.4rem;
+  padding: 1rem;
+}
+
+.search-icon-wrap {
+  font-size: 4.2rem;
+  color: #1f5f66;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.search-subtitle {
+  margin: 0.4rem 0 0;
+  color: #533946;
+  opacity: 0.9;
+  font-size: 0.95rem;
+}
+
+.search-subtitle span {
+  font-weight: 700;
+}
+
+.search-hint {
+  margin: 0.15rem 0 0;
+  color: #533946;
+  opacity: 0.6;
+  font-size: 0.8rem;
+}
+
+/* responsive */
+@media (max-width: 768px) {
+  .search-card {
+    padding: 1.25rem 1.25rem 1.75rem;
+  }
+
+  .search-title {
+    font-size: 1.35rem;
+  }
+
+  .search-icon-wrap {
+    font-size: 3.6rem;
+  }
+}
+
+/* =========================
+   ESTADISTICAS - PROGRESS LIST
+.progress-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.progress-row {
+  display: grid;
+  grid-template-columns: 120px 1fr 90px;
+  align-items: center;
+  gap: 12px;
+}
+
+.progress-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #0f2c33;
+}
+
+.progress-meta {
+  font-size: 0.78rem;
+  color: #0f2c33;
+  opacity: 0.75;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.progress-track {
+  height: 6px;
+  background: rgba(15, 44, 51, 0.15);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 999px;
+}
+
+/* Colores como tu pie chart */
+.progress-fill.is-gray {
+  background: #6b6b6b;
+}
+.progress-fill.is-teal {
+  background: #21616a;
+}
+.progress-fill.is-orange {
+  background: #d48a2a;
+}
+.progress-fill.is-blue {
+  background: #2e9ca0;
+}
+.progress-fill.is-purple {
+  background: #533946;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .progress-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .progress-meta {
+    text-align: left;
+  }
 /* =======================
    BUSCAR POSTULACIONES
-======================= */
 
 .page-title {
   font-weight: 700;

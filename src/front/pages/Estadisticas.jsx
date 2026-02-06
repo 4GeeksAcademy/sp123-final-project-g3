@@ -37,6 +37,15 @@ const Estadisticas = () => {
             borderWidth: 0,},
         ],
     };
+    const total = pieData.datasets[0].data.reduce((acc, n) => acc + n, 0);
+
+    const progressItems = [
+    { key: "Por aplicar", value: pieData.datasets[0].data[0], colorClass: "is-gray" },
+    { key: "Aplicado", value: pieData.datasets[0].data[1], colorClass: "is-teal" },
+    { key: "Entrevista", value: pieData.datasets[0].data[2], colorClass: "is-orange" },
+    { key: "Oferta", value: pieData.datasets[0].data[3], colorClass: "is-blue" },
+    { key: "Rechazado", value: pieData.datasets[0].data[4], colorClass: "is-purple" },
+    ];
 
     const barData = {
         labels: ["StartupXYZ", "InnovateTech", "CloudSystems"],
@@ -138,45 +147,25 @@ const Estadisticas = () => {
 
                     <div className="panel-body">
                         <div className="progress-list">
-                            <div className="progress-row">
-                                <span className="progress-label">Por Aplicar</span>
-                                <div className="progress-track">
-                                    <div className="progress-fill is-gray" style={{ width: "26.7%" }}></div>
-                                </div>
-                                <span className="progress-meta">4 (26.7%)</span>
-                            </div>
+                                {progressItems.map((item) => {
+                                    const pct = total === 0 ? 0 : (item.value / total) * 100;
+                                    return (
+                                    <div className="progress-row" key={item.key}>
+                                        <span className="progress-label">{item.key}</span>
 
-                            <div className="progress-row">
-                                <span className="progress-label">Aplicado</span>
-                                <div className="progress-track">
-                                    <div className="progress-fill is-teal" style={{ width: "26.7%" }}></div>
-                                </div>
-                                <span className="progress-meta">4 (26.7%)</span>
-                            </div>
+                                        <div className="progress-track" aria-label={`${item.key} ${item.value}`}>
+                                            <div
+                                                className={`progress-fill ${item.colorClass}`}
+                                                style={{ width: `${pct}%` }}
+                                            />
+                                        </div>
 
-                            <div className="progress-row">
-                                <span className="progress-label">Entrevista</span>
-                                <div className="progress-track">
-                                    <div className="progress-fill is-orange" style={{ width: "20%" }}></div>
-                                </div>
-                                <span className="progress-meta">3 (20%)</span>
-                            </div>
-
-                            <div className="progress-row">
-                                <span className="progress-label">Oferta</span>
-                                <div className="progress-track">
-                                    <div className="progress-fill is-blue" style={{ width: "13.3%" }}></div>
-                                </div>
-                                <span className="progress-meta">2 (13.3%)</span>
-                            </div>
-
-                            <div className="progress-row">
-                                <span className="progress-label">Rechazado</span>
-                                <div className="progress-track">
-                                    <div className="progress-fill is-purple" style={{ width: "13.3%" }}></div>
-                                </div>
-                                <span className="progress-meta">2 (13.3%)</span>
-                            </div>
+                                        <span className="progress-meta">
+                                            {item.value} ({pct.toFixed(1)}%)
+                                        </span>
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                 </section>
