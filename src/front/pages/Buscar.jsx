@@ -1,6 +1,5 @@
 import "../index.css";
-import { useNavigate, Link } from "react-router-dom";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Buscar = () => {
   return (
@@ -23,7 +22,23 @@ const Buscar = () => {
   );
 }
 
-export default Buscar
+export default function Buscar() {
+    const [jobs, setJobs] = useState([]);
 
+    useEffect(() => {
+        //  Aquí irá el fetch real en el futuro
+        setJobs(CARD_PRUEBA);
+    }, []);
 
+    return (
+        <div className="board-page">
+            <h2 className="page-title mb-4">Buscar Postulaciones</h2>
 
+            <div className="search-grid">
+                {jobs.map((job) => (
+                    <CartaBuscarTrabajo key={job.external_id} job={job} />
+                ))}
+            </div>
+        </div>
+    );
+}

@@ -1130,7 +1130,6 @@
 
 /* =========================
    MODAL NUEVA POSTULACION
-========================= */
 
 .post-modal-overlay {
   position: fixed;
@@ -1260,7 +1259,6 @@
 
 /* =========================
    BUSCAR (EMPTY STATE)
-========================= */
 .search-page {
   background-color: #e6d1b4; /* tu fondo beige */
   min-height: 100vh;
@@ -1338,7 +1336,6 @@
 
 /* =========================
    ESTADISTICAS - PROGRESS LIST
-========================= */
 .progress-list {
   display: flex;
   flex-direction: column;
@@ -1405,4 +1402,27 @@
   .progress-meta {
     text-align: left;
   }
+/* =======================
+   BUSCAR POSTULACIONES
+
+.page-title {
+  font-weight: 700;
+  color: #12343b;
+}
+
+.search-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+/* Reutilizamos job-card del kanban */
+.search-card {
+  cursor: default;
+}
+
+.search-card a.btn-primary {
+  display: block;
+  margin-top: 12px;
+  text-decoration: none;
 }
