@@ -1,9 +1,10 @@
 import "../index.css";
-import React, { useMemo, useState } from "react";
-// Estos imports no los estás usando ahora mismo.
-// Déjalos solo si realmente los necesitas, si no: bórralos para evitar warnings.
-import rigoImageUrl from "../assets/img/rigo-baby.jpg";
-import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import {
+  draggable,
+  dropTargetForElements,
+  monitorForElements,
+} from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 
 const PRIORITY_STYLES = {
   Alta: { badgeClass: "priority-badge priority-high", dotClass: "priority-dot priority-high" },
@@ -68,9 +69,29 @@ function Modal({ open, onClose, title, children }) {
 
 function JobCard({ card, onClick }) {
   const styles = PRIORITY_STYLES[card.priority] ?? PRIORITY_STYLES.Media;
+  const ref = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    // Hacemos la card draggable + metemos data para recuperarla en el drop
+    return draggable({
+      element: el,
+      getInitialData: () => ({ cardId: card.id }),
+      onDragStart: () => setIsDragging(true),
+      onDrop: () => setIsDragging(false),
+    });
+  }, [card.id]);
 
   return (
-    <button className="job-card" onClick={() => onClick(card)} type="button">
+    <button
+      ref={ref}
+      className={`job-card ${isDragging ? "is-dragging" : ""}`}
+      onClick={() => onClick(card)}
+      type="button"
+    >
       <div className="job-card-row">
         <h4 className="job-title">{card.role}</h4>
         <span className={styles.badgeClass}>{card.priority}</span>
@@ -86,9 +107,26 @@ function JobCard({ card, onClick }) {
   );
 }
 
-function Column({ title, headerClass, cards, onCardClick }) {
+function Column({ columnKey, title, headerClass, cards, onCardClick }) {
+  const ref = useRef(null);
+  const [isOver, setIsOver] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    // Hacemos la columna "drop target" + metemos data (columna destino)
+    return dropTargetForElements({
+      element: el,
+      getData: () => ({ columnKey }),
+      onDragEnter: () => setIsOver(true),
+      onDragLeave: () => setIsOver(false),
+      onDrop: () => setIsOver(false),
+    });
+  }, [columnKey]);
+
   return (
-    <section className="kanban-column">
+    <section ref={ref} className={`kanban-column ${isOver ? "is-over" : ""}`}>
       <div className={headerClass}>
         <span className="col-title">{title}</span>
         <span className="col-count">{cards.length}</span>
@@ -103,60 +141,28 @@ function Column({ title, headerClass, cards, onCardClick }) {
   );
 }
 
-function SidePanel({ offer, onClose }) {
-  if (!offer) return null;
-
-  return (
-    <aside className="side-panel">
-      <div className="side-panel-header">
-        <div>
-          <span className="priority-tag priority-high">
-            Prioridad: {offer.priority}
-          </span>
-        </div>
-
-        <div className="side-panel-actions">
-          <button className="icon-btn">✏️</button>
-          <button className="icon-btn close" onClick={onClose}>✕</button>
-        </div>
-      </div>
-
-      <h2 className="side-panel-title">{offer.role}</h2>
-      <p className="side-panel-company">🏢 {offer.company}</p>
-
-      <section className="side-section">
-        <h4>📄 Descripción del Puesto</h4>
-        <p>Analista de ciberseguridad para protección de infraestructuras.</p>
-      </section>
-
-      <section className="side-section">
-        <h4>📋 Requisitos</h4>
-        <p>Seguridad informática, Pentesting, CISSP, 3+ años</p>
-      </section>
-
-      <section className="side-section">
-        <h4>📍 Detalles de la Oferta</h4>
-        <p><strong>Ubicación:</strong> Bilbao (Remoto)</p>
-        <p><strong>Salario:</strong> €40,000 - €50,000</p>
-      </section>
-
-      <section className="side-section">
-        <h4>🗓️ Fechas importantes</h4>
-        <p>Fecha de aplicación: 6 de enero de 2026</p>
-      </section>
-
-      <section className="side-section">
-        <h4>📝 Notas personales</h4>
-        <textarea defaultValue={offer.notes} />
-      </section>
-    </aside>
-  );
-}
-
-
 export default function Home() {
-  const [cards] = useState(INITIAL_CARDS);
+  const [cards, setCards] = useState(INITIAL_CARDS);
   const [selected, setSelected] = useState(null);
+
+  // Monitor global: al soltar, mueve la card a la columna destino
+  useEffect(() => {
+    return monitorForElements({
+      onDrop({ source, location }) {
+        const destination = location.current.dropTargets[0];
+        if (!destination) return; // soltado fuera
+
+        const { cardId } = source.data || {};
+        const { columnKey } = destination.data || {};
+
+        if (!cardId || !columnKey) return;
+
+        setCards((prev) =>
+          prev.map((c) => (c.id === cardId ? { ...c, status: columnKey } : c))
+        );
+      },
+    });
+  }, []);
 
   const grouped = useMemo(() => {
     const map = Object.fromEntries(COLUMNS.map((c) => [c.key, []]));
@@ -170,6 +176,7 @@ export default function Home() {
         {COLUMNS.map((col) => (
           <Column
             key={col.key}
+            columnKey={col.key}
             title={col.title}
             headerClass={col.headerClass}
             cards={grouped[col.key] ?? []}
