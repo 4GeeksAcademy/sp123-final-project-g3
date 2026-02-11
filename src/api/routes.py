@@ -12,6 +12,7 @@ import os
 import requests
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
+from datetime import datetime
 
 api = Blueprint('api', __name__)
 CORS(api)
@@ -28,7 +29,6 @@ def validate_password(password):
 
 @api.route("/signup", methods=["POST"])
 def signup():
-    response_body = {}
     email = request.json.get("email", None)
     password = request.json.get("password", None)
     name = request.json.get("name", None)
@@ -69,7 +69,6 @@ def signup():
 
 @api.route("/login", methods=["POST"])
 def login():
-    response_body = {}
     email = request.json.get("email", None)
     password = request.json.get("password", None)
     
@@ -77,7 +76,7 @@ def login():
         return {"message": "Email y contraseña son requeridos"}, 400
     
     row = db.session.execute(db.select(Users).where(Users.email == email.lower().strip())).scalar()
-    if not row or not row.password: # Checkeamos row.password por si es usuario de Google sin pass
+    if not row or not row.password:
         return {"message": "Credenciales inválidas"}, 401
     
     if not check_password_hash(row.password, password):
@@ -190,6 +189,24 @@ def update_user(user_id):
     db.session.commit()
     return {'results': row.serialize(), 'message': 'Actualizado exitosamente'}, 200
 
+@api.route('/users/<int:user_id>', methods=['DELETE'])
+@jwt_required()
+def delete_user(user_id):
+    current_user_id = get_jwt()['user_id']
+    if current_user_id != user_id:
+        return {'message': 'No autorizado'}, 403
+        
+    row = db.session.execute(db.select(Users).where(Users.id == user_id)).scalar()
+    if not row: return {'message': 'Usuario no encontrado'}, 404
+    
+    # SQLAlchemy borrará en cascada si está configurado, o borramos manualmente:
+    db.session.execute(db.delete(Postulations).where(Postulations.user_id == user_id))
+    db.session.execute(db.delete(CV).where(CV.user_id == user_id))
+    db.session.delete(row)
+    db.session.commit()
+    
+    return {'message': 'Usuario eliminado'}, 200
+
 # --- BUSCADOR DE EMPLEOS (Público - API Externa) ---
 
 @api.route('/search_jobs', methods=['GET'])
@@ -223,60 +240,159 @@ def search_jobs_external():
         print(f"Error API Externa: {e}")
         return jsonify({"message": "Error buscando empleos externos"}), 500
 
-# --- KANBAN / TRABAJOS GUARDADOS (Privado - DB Local) ---
+# --- KANBAN / POSTULACIONES ---
 
-@api.route('/jobs', methods=['GET'])
+@api.route('/postulations', methods=['GET'])
 @jwt_required()
-def get_user_jobs():
+def get_user_postulations():
     """
-    Obtiene SOLO los trabajos guardados por el usuario actual.
+    Trae todas las tarjetas del Kanban del usuario.
     """
-    current_user_id = get_jwt_identity() # Email (identity)
     claims = get_jwt()
-    user_id_db = claims['user_id'] # ID numérico
+    user_id = claims['user_id']
     
-    query = db.select(Job).where(Job.user_id == user_id_db)
-    
-    # Filtros opcionales dentro de mis guardados
-    location = request.args.get('location')
-    company = request.args.get('company')
-    if location: query = query.where(Job.location.ilike(f'%{location}%'))
-    if company: query = query.where(Job.company.ilike(f'%{company}%'))
-    
-    rows = db.session.execute(query).scalars()
+    rows = db.session.execute(db.select(Postulations).where(Postulations.user_id == user_id)).scalars()
     results = [row.serialize() for row in rows]
     
-    return {'results': results, 'message': 'Mis trabajos guardados'}, 200
+    return {'results': results, 'message': 'Mi Kanban'}, 200
 
-@api.route('/jobs', methods=['POST'])
+@api.route('/postulations', methods=['POST'])
 @jwt_required()
-def create_job():
+def add_to_kanban():
     """
-    Guarda un trabajo en el tablero del usuario.
+    Recibe un empleo (posiblemente de JSearch), lo guarda en Job y crea la Postulation.
     """
+    claims = get_jwt()
+    user_id = claims['user_id']
+    data = request.json
+    
+    job_payload = data.get('job', {})
+    
+    title = job_payload.get('job_title') or job_payload.get('title')
+    company = job_payload.get('employer_name') or job_payload.get('company')
+    
+    if not title or not company:
+        return {'message': 'Datos del trabajo incompletos'}, 400
+
+    existing_job = db.session.execute(
+        db.select(Job).where(Job.title == title, Job.company == company)
+    ).scalar()
+
+    if existing_job:
+        job_id = existing_job.id
+    else:
+        new_job = Job(
+            title=title,
+            company=company,
+            link=job_payload.get('job_apply_link') or job_payload.get('link', ''),
+            description=job_payload.get('job_description') or job_payload.get('description', ''),
+            location=job_payload.get('job_city') or job_payload.get('location', ''),
+            salary=job_payload.get('salary', '')
+        )
+        db.session.add(new_job)
+        db.session.commit()
+        job_id = new_job.id
+
+    existing_post = db.session.execute(
+        db.select(Postulations).where(Postulations.user_id == user_id, Postulations.job_id == job_id)
+    ).scalar()
+
+    if existing_post:
+        return {'message': 'Ya tienes este trabajo en tu tablero'}, 409
+
+    new_postulation = Postulations(
+        user_id=user_id,
+        job_id=job_id,
+        status=data.get('status', 'Pendiente'),
+        name=f"Candidatura a {company}",
+        cv_id=None # Inicialmente sin CV
+    )
+    
+    db.session.add(new_postulation)
+    db.session.commit()
+    
+    return {'results': new_postulation.serialize(), 'message': 'Agregado al Kanban'}, 201
+
+@api.route('/postulations/<int:postulation_id>', methods=['PUT'])
+@jwt_required()
+def update_postulation(postulation_id):
+    """
+    Mueve la tarjeta (cambia status) o agrega CV.
+    """
+    claims = get_jwt()
+    user_id = claims['user_id']
+    data = request.json
+    
+    row = db.session.execute(db.select(Postulations).where(Postulations.id == postulation_id)).scalar()
+    
+    if not row: return {'message': 'No encontrado'}, 404
+    if row.user_id != user_id: return {'message': 'No autorizado'}, 403
+    
+    if 'status' in data: row.status = data['status']
+    if 'cv_id' in data: row.cv_id = data['cv_id']
+    if 'interview_date' in data and data['interview_date']:
+        try:
+            row.interview_date = datetime.fromisoformat(data['interview_date'].replace('Z', '+00:00'))
+        except ValueError:
+            pass 
+            
+    db.session.commit()
+    return {'results': row.serialize(), 'message': 'Actualizado'}, 200
+
+@api.route('/postulations/<int:postulation_id>', methods=['DELETE'])
+@jwt_required()
+def delete_postulation(postulation_id):
+    claims = get_jwt()
+    user_id = claims['user_id']
+    
+    row = db.session.execute(db.select(Postulations).where(Postulations.id == postulation_id)).scalar()
+    if not row: return {'message': 'No encontrado'}, 404
+    if row.user_id != user_id: return {'message': 'No autorizado'}, 403
+    
+    db.session.delete(row)
+    db.session.commit()
+    return {'message': 'Eliminado del tablero'}, 200
+
+# --- CVS (Gestión de Curriculums) ---
+
+@api.route('/cv', methods=['POST'])
+@jwt_required()
+def create_cv():
     claims = get_jwt()
     current_user_id = claims['user_id']
     data = request.json
+    cv_url = data.get('cv_url')
     
-    if not data.get('title') or not data.get('company'):
-        return {'message': 'Título y compañía son requeridos'}, 400
-    
-    new_job = Job(
-        user_id=current_user_id, # Asignamos el dueño
-        title=data.get('title').strip(),
-        company=data.get('company').strip(),
-        link=data.get('link', '').strip(),
-        description=data.get('description', '').strip(),
-        location=data.get('location', '').strip(),
-        salary=data.get('salary', '').strip(),
-        notes=data.get('notes', '').strip(),
-        about_job=data.get('about_job', '').strip(),
-        accountabilities=data.get('accountabilities', '').strip(),
-        requirements=data.get('requirements', '').strip(),
-        benefits=data.get('benefits', '').strip()
-    )
-    
-    db.session.add(new_job)
+    if not cv_url: return {'message': 'URL requerida'}, 400
+        
+    new_cv = CV(cv_url=cv_url, user_id=current_user_id)
+    db.session.add(new_cv)
     db.session.commit()
+    return {'results': new_cv.serialize(), 'message': 'CV Agregado'}, 201
+
+@api.route('/users/<int:user_id>/cvs', methods=['GET'])
+@jwt_required()
+def get_user_cvs(user_id):
+    claims = get_jwt()
+    if claims['user_id'] != user_id: return {'message': 'No autorizado'}, 403
+        
+    rows = db.session.execute(db.select(CV).where(CV.user_id == user_id)).scalars()
+    return {'results': [row.serialize() for row in rows]}, 200
+
+@api.route('/cv/<int:cv_id>', methods=['DELETE'])
+@jwt_required()
+def delete_cv(cv_id):
+    claims = get_jwt()
+    row = db.session.execute(db.select(CV).where(CV.id == cv_id)).scalar()
     
-    return {'results': new_job.serialize(), 'message': 'Trabajo guardado exitosamente'}, 201
+    if not row: return {'message': 'No encontrado'}, 404
+    if row.user_id != claims['user_id']: return {'message': 'No autorizado'}, 403
+    
+    db.session.delete(row)
+    db.session.commit()
+    return {'message': 'CV eliminado'}, 200
+
+# --- UTILS ---
+@api.route('/hello', methods=['POST', 'GET'])
+def handle_hello():
+    return jsonify({'message': "Backend is running"}), 200
