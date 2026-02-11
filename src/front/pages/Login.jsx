@@ -5,13 +5,12 @@ import mascota from "../imagenes/robot.png";
 import mascotagif from "../imagenes/robotlogin.gif";
 import logo from "../imagenes/logo.png";
 
-
 export default function Login() {
     const navigate = useNavigate();
 
     const [form, setForm] = useState({
         email: "",
-        password: ""
+        password: "",
     });
 
     const [errors, setErrors] = useState({});
@@ -41,7 +40,7 @@ export default function Login() {
 
         setErrors({
             ...errors,
-            [name]: validate(name, value)
+            [name]: validate(name, value),
         });
 
         setLoginError("");
@@ -71,11 +70,7 @@ export default function Login() {
     return (
         <div className="login-container">
             <div className="login-wrapper">
-
-                {/* FORM */}
                 <div className="login-form">
-
-                    {/* Logo */}
                     <div className="login-logo-form d-flex align-items-center mb-3">
                         <div className="logo-shape-1"></div>
                         <div className="logo-shape-2"></div>
@@ -88,15 +83,9 @@ export default function Login() {
                         Inicia sesión para acceder a tu tablero de empleos
                     </p>
 
-                    {loginError && (
-                        <div className="alert alert-danger">
-                            {loginError}
-                        </div>
-                    )}
+                    {loginError && <div className="alert alert-danger">{loginError}</div>}
 
                     <form className="mt-4" onSubmit={handleSubmit}>
-
-                        {/* EMAIL */}
                         <div className="mb-3">
                             <label className="form-label">Correo electrónico</label>
                             <input
@@ -107,13 +96,10 @@ export default function Login() {
                                 onChange={handleChange}
                             />
                             {errors.email && (
-                                <div className="alert alert-danger mt-1">
-                                    {errors.email}
-                                </div>
+                                <div className="alert alert-danger mt-1">{errors.email}</div>
                             )}
                         </div>
 
-                        {/* PASSWORD */}
                         <div className="mb-3">
                             <label className="form-label">Contraseña</label>
                             <input
@@ -124,9 +110,7 @@ export default function Login() {
                                 onChange={handleChange}
                             />
                             {errors.password && (
-                                <div className="alert alert-danger mt-1">
-                                    {errors.password}
-                                </div>
+                                <div className="alert alert-danger mt-1">{errors.password}</div>
                             )}
                         </div>
 
@@ -168,24 +152,17 @@ export default function Login() {
                                 Apple
                             </button>
                         </div>
-
                     </form>
                 </div>
 
-                {/* IMAGEN + INDICADORES */}
                 <div className="d-flex flex-column align-items-center">
-                    <img
-                        src={mascotagif}
-                        alt="login visual"
-                        className="login-image"
-                    />
+                    <img src={mascotagif} alt="login visual" className="login-image" />
                     <div className="d-flex gap-2 mt-3 justify-content-center login-indicators">
                         <div className="indicator active"></div>
                         <div className="indicator active"></div>
                         <div className="indicator"></div>
                     </div>
                 </div>
-
             </div>
         </div>
     );

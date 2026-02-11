@@ -236,7 +236,9 @@
   align-items: center;
   gap: 0.5rem;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
 }
 
 .btn-new-postulation:hover {
@@ -493,11 +495,21 @@
   border-radius: 999px;
 }
 
-.progress-fill.is-gray { background: #6b6b6b; }
-.progress-fill.is-teal { background: #21616a; }
-.progress-fill.is-orange { background: #d48a2a; }
-.progress-fill.is-blue { background: #e1c719; }
-.progress-fill.is-purple { background: #533946; }
+.progress-fill.is-gray {
+  background: #6b6b6b;
+}
+.progress-fill.is-teal {
+  background: #21616a;
+}
+.progress-fill.is-orange {
+  background: #d48a2a;
+}
+.progress-fill.is-blue {
+  background: #e1c719;
+}
+.progress-fill.is-purple {
+  background: #533946;
+}
 
 @media (max-width: 768px) {
   .progress-row {
@@ -546,13 +558,25 @@
   align-items: center;
 }
 
-.col-header-gray { background: #7c8793; }
-.col-header-teal { background: #21616a; }
-.col-header-orange { background: #f39b1e; }
-.col-header-green { background: #2f8f62; }
-.col-header-maroon { background: #6d3c4f; }
+.col-header-gray {
+  background: #7c8793;
+}
+.col-header-teal {
+  background: #21616a;
+}
+.col-header-orange {
+  background: #f39b1e;
+}
+.col-header-green {
+  background: #2f8f62;
+}
+.col-header-maroon {
+  background: #6d3c4f;
+}
 
-.col-title { font-size: 0.95rem; }
+.col-title {
+  font-size: 0.95rem;
+}
 
 .col-count {
   background: rgba(255, 255, 255, 0.25);
@@ -568,6 +592,16 @@
   gap: 12px;
   min-height: 60vh;
 }
+/* Drag visual */
+.job-card.is-dragging {
+  opacity: 0.5;
+  transform: rotate(0.2deg);
+}
+
+.kanban-column.is-over {
+  outline: 2px dashed rgba(46, 156, 160, 0.8);
+  outline-offset: 4px;
+}
 
 /* TARJETAS */
 .job-card {
@@ -578,7 +612,9 @@
   border-radius: 10px;
   padding: 12px;
   cursor: pointer;
-  transition: transform 0.08s ease, box-shadow 0.12s ease;
+  transition:
+    transform 0.08s ease,
+    box-shadow 0.12s ease;
 }
 
 .job-card:hover {
@@ -633,13 +669,28 @@
   border: 1px solid rgba(15, 44, 51, 0.18);
 }
 
-.priority-high { background: #ffe3e3 !important; color: #8a1f1f; }
-.priority-medium { background: #fff0cc !important; color: #7a4f00; }
-.priority-low { background: #dfefff !important; color: #1d4e89; }
+.priority-high {
+  background: #ffe3e3 !important;
+  color: #8a1f1f;
+}
+.priority-medium {
+  background: #fff0cc !important;
+  color: #7a4f00;
+}
+.priority-low {
+  background: #dfefff !important;
+  color: #1d4e89;
+}
 
-.priority-dot.priority-high { background: #ff6b6b !important; }
-.priority-dot.priority-medium { background: #f39b1e !important; }
-.priority-dot.priority-low { background: #4d8dff !important; }
+.priority-dot.priority-high {
+  background: #ff6b6b !important;
+}
+.priority-dot.priority-medium {
+  background: #f39b1e !important;
+}
+.priority-dot.priority-low {
+  background: #4d8dff !important;
+}
 
 @media (max-width: 1100px) {
   .kanban-board {
@@ -721,8 +772,10 @@
 }
 
 /* =========================
-   MODAL NUEVA POSTULACION
+   POSTULACION MODAL - RESPONSIVE FIX
 ========================= */
+
+/* Overlay: centra y deja respirar en móvil */
 .post-modal-overlay {
   position: fixed;
   inset: 0;
@@ -730,122 +783,195 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2000;
-  padding: 24px;
+  padding: 16px; /* clave: margen interno para pantallas pequeñas */
+  z-index: 1200;
 }
 
+/* Card: ancho fluido + altura controlada */
 .post-modal-card {
-  width: 560px;
-  max-width: 100%;
-  background: #e6d1b4;
-  border: 1px solid rgba(15, 44, 51, 0.18);
+  width: min(920px, 100%); /* máximo 920, pero nunca se sale en móvil */
+  max-height: calc(100vh - 32px);
+  overflow: hidden; /* header/footer fijos y body scroll */
+  background: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
+  border: 1px solid rgba(15, 44, 51, 0.15);
+  display: flex;
+  flex-direction: column;
 }
 
+/* Header fijo arriba */
 .post-modal-header {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(15, 44, 51, 0.12);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 16px;
-  border-bottom: 1px solid rgba(15, 44, 51, 0.15);
+  gap: 12px;
+  background: #ffffff;
 }
 
 .post-modal-title {
   margin: 0;
   font-size: 1.1rem;
-  font-weight: 800;
+  font-weight: 700;
   color: #0f2c33;
 }
 
 .post-modal-close {
-  background: transparent;
   border: none;
-  font-size: 1.4rem;
-  cursor: pointer;
-  color: #0f2c33;
+  background: transparent;
+  font-size: 1.5rem;
   line-height: 1;
+  cursor: pointer;
+  color: #533946;
+  padding: 6px 10px;
+  border-radius: 8px;
 }
 
+.post-modal-close:hover {
+  background: rgba(83, 57, 70, 0.08);
+}
+
+/* Form ocupa el alto disponible */
 .post-modal-form {
-  padding: 14px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* clave para que el scroll funcione */
 }
 
+/* Body scrolleable */
 .post-modal-grid {
+  padding: 16px;
+  overflow: auto; /* scroll dentro del modal, no en toda la página */
+  min-height: 0;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* evita overflow */
   gap: 12px;
 }
 
+/* Campos */
+.post-field {
+  min-width: 0; /* evita que inputs se salgan */
+}
+
+.post-label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #533946;
+  font-size: 0.9rem;
+}
+
+.post-required {
+  color: #ef4444;
+}
+
+/* Span 2 columnas */
 .post-span-2 {
   grid-column: span 2;
 }
 
-.post-field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.post-label {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: #0f2c33;
-}
-
-.post-required {
-  color: #6d3c4f;
-}
-
+/* Textareas */
 .post-textarea {
-  min-height: 84px;
+  min-height: 96px;
   resize: vertical;
 }
 
+/* Footer fijo abajo */
 .post-modal-footer {
+  padding: 14px 16px;
+  border-top: 1px solid rgba(15, 44, 51, 0.12);
+  background: #ffffff;
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  margin-top: 14px;
-  padding-top: 12px;
-  border-top: 1px solid rgba(15, 44, 51, 0.15);
+  flex-wrap: wrap; /* en móvil se apilan si no caben */
 }
 
+/* Botones */
 .post-btn {
   border: none;
   border-radius: 10px;
   padding: 10px 14px;
-  font-weight: 700;
+  font-weight: 600;
   cursor: pointer;
 }
 
 .post-btn-secondary {
-  background: transparent;
-  border: 1px solid rgba(15, 44, 51, 0.4);
-  color: #0f2c33;
+  background: #f3eadb;
+  color: #533946;
+  border: 1px solid rgba(33, 97, 106, 0.35);
+}
+
+.post-btn-secondary:hover {
+  background: #ead6b8;
 }
 
 .post-btn-primary {
-  background: #1f5f66;
-  color: #ffffff;
+  background: #0f2c33;
+  color: #e6d1b4;
 }
 
 .post-btn-primary:hover {
-  opacity: 0.92;
+  background: #533946;
 }
 
-@media (max-width: 640px) {
+/* Inputs/Selects dentro del modal: evitar que bootstrap meta widths raros */
+.post-modal-card .form-control {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* =========================
+   BREAKPOINTS
+========================= */
+
+/* Tablet: un poco más compacto */
+@media (max-width: 992px) {
+  .post-modal-grid {
+    padding: 14px;
+    gap: 10px;
+  }
+}
+
+/* Mobile: 1 columna, footer a ancho completo */
+@media (max-width: 768px) {
+  .post-modal-overlay {
+    padding: 10px;
+  }
+
   .post-modal-card {
     width: 100%;
+    border-radius: 12px;
   }
 
   .post-modal-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* 1 columna */
+    padding: 12px;
   }
 
   .post-span-2 {
-    grid-column: span 1;
+    grid-column: auto; /* ya no hay 2 columnas */
+  }
+
+  .post-modal-footer {
+    justify-content: stretch;
+  }
+
+  .post-modal-footer .post-btn {
+    flex: 1 1 auto; /* botones ocupan el ancho */
+    width: 100%;
+  }
+}
+
+/* Pantallas muy pequeñas */
+@media (max-width: 420px) {
+  .post-modal-header {
+    padding: 12px;
+  }
+  .post-modal-grid {
+    padding: 10px;
   }
 }
 

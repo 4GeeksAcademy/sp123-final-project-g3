@@ -5,7 +5,6 @@ import robot from "../imagenes/roboregistro.png";
 import robotgif from "../imagenes/robotregistrogif.gif";
 import logo from "../imagenes/logo.png";
 
-
 export default function Registro() {
     const [form, setForm] = useState({
         nombre: "",
@@ -14,7 +13,7 @@ export default function Registro() {
         email: "",
         telefono: "",
         direccion: "",
-        fecha: ""
+        fecha: "",
     });
 
     const [errors, setErrors] = useState({});
@@ -36,8 +35,7 @@ export default function Registro() {
                 break;
 
             case "telefono":
-                if (!/^[0-9]{9}$/.test(value))
-                    error = "Debe tener 9 dígitos";
+                if (!/^[0-9]{9}$/.test(value)) error = "Debe tener 9 dígitos";
                 break;
 
             case "fecha":
@@ -58,7 +56,7 @@ export default function Registro() {
 
         setErrors({
             ...errors,
-            [name]: validate(name, value)
+            [name]: validate(name, value),
         });
     };
 
@@ -81,11 +79,7 @@ export default function Registro() {
     return (
         <div className="login-container">
             <div className="login-wrapper">
-
-                {/* Formulario */}
                 <div className="login-form">
-
-                    {/* Logo */}
                     <div className="login-logo-form d-flex align-items-center mb-3">
                         <div className="logo-shape-1"></div>
                         <div className="logo-shape-2"></div>
@@ -105,8 +99,6 @@ export default function Registro() {
                     )}
 
                     <form className="mt-4" onSubmit={handleSubmit}>
-
-                        {/* Nombre / Apellidos */}
                         <div className="row">
                             <div className="col-md-6 mb-3">
                                 <label className="form-label">Nombre</label>
@@ -117,9 +109,7 @@ export default function Registro() {
                                     onChange={handleChange}
                                 />
                                 {errors.nombre && (
-                                    <div className="alert alert-danger mt-1">
-                                        {errors.nombre}
-                                    </div>
+                                    <div className="alert alert-danger mt-1">{errors.nombre}</div>
                                 )}
                             </div>
 
@@ -139,7 +129,6 @@ export default function Registro() {
                             </div>
                         </div>
 
-                        {/* Usuario */}
                         <div className="mb-3">
                             <label className="form-label">Nombre de usuario</label>
                             <input
@@ -149,13 +138,10 @@ export default function Registro() {
                                 onChange={handleChange}
                             />
                             {errors.usuario && (
-                                <div className="alert alert-danger mt-1">
-                                    {errors.usuario}
-                                </div>
+                                <div className="alert alert-danger mt-1">{errors.usuario}</div>
                             )}
                         </div>
 
-                        {/* Email */}
                         <div className="mb-3">
                             <label className="form-label">Correo electrónico</label>
                             <input
@@ -165,13 +151,10 @@ export default function Registro() {
                                 onChange={handleChange}
                             />
                             {errors.email && (
-                                <div className="alert alert-danger mt-1">
-                                    {errors.email}
-                                </div>
+                                <div className="alert alert-danger mt-1">{errors.email}</div>
                             )}
                         </div>
 
-                        {/* Teléfono */}
                         <div className="mb-3">
                             <label className="form-label">Número de teléfono</label>
                             <input
@@ -181,13 +164,10 @@ export default function Registro() {
                                 onChange={handleChange}
                             />
                             {errors.telefono && (
-                                <div className="alert alert-danger mt-1">
-                                    {errors.telefono}
-                                </div>
+                                <div className="alert alert-danger mt-1">{errors.telefono}</div>
                             )}
                         </div>
 
-                        {/* Dirección */}
                         <div className="mb-3">
                             <label className="form-label">Dirección postal</label>
                             <input
@@ -203,7 +183,6 @@ export default function Registro() {
                             )}
                         </div>
 
-                        {/* Fecha */}
                         <div className="mb-4">
                             <label className="form-label">Fecha de nacimiento</label>
                             <input
@@ -213,15 +192,11 @@ export default function Registro() {
                                 onChange={handleChange}
                             />
                             {errors.fecha && (
-                                <div className="alert alert-danger mt-1">
-                                    {errors.fecha}
-                                </div>
+                                <div className="alert alert-danger mt-1">{errors.fecha}</div>
                             )}
                         </div>
 
-                        <button className="btn btn-primary w-100 mb-3">
-                            Crear cuenta
-                        </button>
+                        <button className="btn btn-primary w-100 mb-3">Crear cuenta</button>
 
                         <p className="text-center">
                             ¿Ya tienes cuenta?{" "}
@@ -232,20 +207,14 @@ export default function Registro() {
                     </form>
                 </div>
 
-                {/* Imagen + indicadores */}
                 <div className="d-flex flex-column align-items-center">
-                    <img
-                        src={robotgif}
-                        alt="register visual"
-                        className="login-image"
-                    />
+                    <img src={robotgif} alt="register visual" className="login-image" />
                     <div className="d-flex gap-2 mt-3 justify-content-center login-indicators">
                         <div className="indicator active"></div>
                         <div className="indicator"></div>
                         <div className="indicator"></div>
                     </div>
                 </div>
-
             </div>
         </div>
     );
