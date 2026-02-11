@@ -1,4 +1,3 @@
-
 import { NavLink, Link } from "react-router-dom";
 import { useState } from "react";
 import "../index.css";
@@ -9,22 +8,19 @@ import Postulacion from "./Postulacion.jsx";
 
 export default function Navbar() {
 	const [isPostulacionOpen, setIsPostulacionOpen] = useState(false);
-	
+
 	const handleOpen = () => setIsPostulacionOpen(true);
 	const handleClose = () => setIsPostulacionOpen(false);
-	
+
 	const handleCreate = (data) => {
-    console.log("Nueva postulación:", data);
-    setIsPostulacionOpen(false);
+		console.log("Nueva postulación:", data);
+		setIsPostulacionOpen(false);
 	};
-	
-return (
-		<>	
+
+	return (
+		<>
 			<nav className="top-navbar">
-				{/* FILA SUPERIOR */}
 				<div className="navbar-top-row">
-					
-					{/* IZQUIERDA: LOGO + TEXTO */}
 					<div className="navbar-left">
 						<div className="login-logo-form d-flex align-items-center mb-3">
 							<img src={logo} alt="logo" className="logo-image" />
@@ -36,14 +32,16 @@ return (
 						</div>
 					</div>
 
-					{/* DERECHA: BOTÓN */}
-					<button className="btn-new-postulation" onClick={handleOpen} type="button">
+					<button
+						className="btn-new-postulation"
+						onClick={handleOpen}
+						type="button"
+					>
 						<span className="btn-plus">+</span>
 						Nueva Postulación
 					</button>
 				</div>
 
-				{/* MENÚ */}
 				<ul className="navbar-menu">
 					<li>
 						<Link to="/" className="nav-item">
@@ -80,12 +78,11 @@ return (
 						</Link>
 					</li>
 				</ul>
-
 			</nav>
 			<Postulacion
-			isOpen={isPostulacionOpen}
-			onClose={handleClose}
-			onCreate={handleCreate}
+				isOpen={isPostulacionOpen}
+				onClose={handleClose}
+				onCreate={handleCreate}
 			/>
 		</>
 	);

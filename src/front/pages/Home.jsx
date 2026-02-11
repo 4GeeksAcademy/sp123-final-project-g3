@@ -150,7 +150,7 @@ export default function Home() {
     return monitorForElements({
       onDrop({ source, location }) {
         const destination = location.current.dropTargets[0];
-        if (!destination) return; // soltado fuera
+        if (!destination) return;
 
         const { cardId } = source.data || {};
         const { columnKey } = destination.data || {};
