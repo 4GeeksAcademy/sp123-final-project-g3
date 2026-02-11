@@ -1,0 +1,55 @@
+services:
+  # Flask Backend
+  backend:
+    build:
+      context: ..
+      dockerfile: docker-local/Dockerfile.dev
+    ports:
+      - "3001:3001"
+    env_file:
+      - ../.env
+    volumes:
+      # Mount source code for hot reload
+      - ../src/api:/app/src/api
+      - ../src/app.py:/app/src/app.py
+      - ../src/wsgi.py:/app/src/wsgi.py
+      - ../tests/test_api.py:/app/tests
+      - ../database.sh:/app/database.sh
+    networks:
+      - app-network
+    # Development command with auto-reload
+    command: >
+      bash -c "
+      ./database.sh &&
+      pipenv run start
+      "
+
+  # React Frontend (Vite)
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker-local/Dockerfile.frontend
+    ports:
+      - "3000:3000"
+    env_file:
+      - ../.env
+    volumes:
+      # Mount source code for hot reload
+      - ../src/front:/app/src/front
+      - ../vite.config.js:/app/vite.config.js
+      - ../index.html:/app/index.html
+    depends_on:
+      - backend
+    networks:
+      - app-network
+    # Development server with hot reload
+    command: ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "3000"]
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  node_modules:
+  migration_data:
