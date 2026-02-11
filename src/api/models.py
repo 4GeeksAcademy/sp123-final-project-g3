@@ -1,54 +1,54 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import String, Boolean
 from sqlalchemy.orm import Mapped, mapped_column
-from datetime import datetime
+from datetime import datetime, timezone
 
 db = SQLAlchemy()
-
 
 class Users(db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(255), unique=False, nullable=False)
+    # Autenticación: Password es nullable por si entra solo con Google
+    password = db.Column(db.String(255), unique=False, nullable=True)
+    google_id = db.Column(db.String(255), unique=True, nullable=True)
     name = db.Column(db.String(120), nullable=False)
     profesional_title = db.Column(db.String(120))
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     
     def __repr__(self):
         return f'<User {self.email}>'
 
     def serialize(self):
-        return {"id": self.id, 
-                "email": self.email,
-                "name": self.name,
-                "profesional_title": self.profesional_title,
-                "created_at": self.created_at
-                }
-
+        return {
+            "id": self.id, 
+            "email": self.email,
+            "name": self.name,
+            "profesional_title": self.profesional_title,
+            "created_at": self.created_at
+        }
 
 class CV(db.Model):
     __tablename__ = "cv"
 
     id = db.Column(db.Integer, primary_key=True)
     cv_url = db.Column(db.String(300), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+    
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     user_to = db.relationship("Users", 
                             foreign_keys = [user_id], 
                             backref= db.backref("user_cvs", lazy="select"))
     
-    
     def __repr__(self):
         return f'<CV {self.id}>'
     
     def serialize(self):
-        return {"id": self.id, 
-                "cv_url": self.cv_url,
-                "created_at": self.created_at
-                }
-        
+        return {
+            "id": self.id, 
+            "cv_url": self.cv_url,
+            "created_at": self.created_at
+        }
         
 class Job(db.Model):
     __tablename__ = "job"
@@ -64,32 +64,47 @@ class Job(db.Model):
     location = db.Column(db.String(120))
     notes = db.Column(db.Text)
     description = db.Column(db.Text)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     
+    # Vinculación con el usuario para el Kanban personal
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    user_to = db.relationship("Users", 
+                            foreign_keys = [user_id], 
+                            backref= db.backref("user_jobs", lazy="select"))
     
     def __repr__(self):
         return f'<Job {self.title}>'
     
     def serialize(self):
-        return {"id": self.id, 
-                "title": self.title,
-                "company": self.company,
-                "salary": self.salary,
-                "location": self.location,
-                "created_at": self.created_at
-                }
-        
+        return {
+            "id": self.id, 
+            "title": self.title,
+            "company": self.company,
+            "salary": self.salary,
+            "location": self.location,
+            "description": self.description,
+            "link": self.link,
+            "notes": self.notes,
+            "about_job": self.about_job,
+            "accountabilities": self.accountabilities,
+            "requirements": self.requirements,
+            "benefits": self.benefits,
+            "created_at": self.created_at
+        }
         
 class Postulations(db.Model):
     __tablename__ = "postulations"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), nullable=False)
     status = db.Column(db.String(100), nullable=False)
+    
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     job_id = db.Column(db.Integer, db.ForeignKey("job.id"), nullable=False)
     cv_id = db.Column(db.Integer, db.ForeignKey("cv.id"), nullable=False)
+    
     interview_date = db.Column(db.DateTime)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+    
     user_to = db.relationship("Users",
                               foreign_keys=[user_id],
                               backref = db.backref("user_postulation", lazy="select"))
@@ -100,19 +115,17 @@ class Postulations(db.Model):
                               foreign_keys=[job_id],
                               backref = db.backref("job_postulation", lazy="select"))
     
-    
     def __repr__(self):
         return f'<Postulation {self.name}>'
     
     def serialize(self):
-        return {"id": self.id, 
-                "name": self.name,
-                "status": self.status,
-                "user_id": self.user_id,
-                "job_id": self.job_id,
-                "cv_id": self.cv_id,
-                "interview_date": self.interview_date,
-                "created_at": self.created_at
-                }
-        
-        
+        return {
+            "id": self.id, 
+            "name": self.name,
+            "status": self.status,
+            "user_id": self.user_id,
+            "job_id": self.job_id,
+            "cv_id": self.cv_id,
+            "interview_date": self.interview_date,
+            "created_at": self.created_at
+        }
