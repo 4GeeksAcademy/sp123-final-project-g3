@@ -2,7 +2,6 @@ import "../index.css";
 import { useState } from "react";
 
 export default function MiPerfil() {
-
     const [cvFile, setCvFile] = useState(null);
 
     const handleFileChange = (e) => {
@@ -12,14 +11,10 @@ export default function MiPerfil() {
     return (
         <div className="profile-page">
             <div className="container">
-
-                {/* ================= INFORMACIÓN PERSONAL ================= */}
                 <div className="profile-card mb-4">
                     <div className="d-flex justify-content-between align-items-center mb-4">
                         <h4 className="fw-semibold mb-0">Información Personal</h4>
-                        <button className="btn btn-primary btn-sm">
-                            Guardar cambios
-                        </button>
+                        <button className="btn btn-primary btn-sm">Guardar cambios</button>
                     </div>
 
                     <div className="row g-3">
@@ -70,7 +65,6 @@ export default function MiPerfil() {
                     </div>
                 </div>
 
-                {/* ================= CURRÍCULUM ================= */}
                 <div className="profile-card mb-4">
                     <h4 className="fw-semibold mb-3">Currículum Vitae</h4>
 
@@ -78,9 +72,7 @@ export default function MiPerfil() {
                         <div className="mb-2 fs-1">📄</div>
 
                         {!cvFile ? (
-                            <p className="text-muted mb-3">
-                                No has subido tu CV aún
-                            </p>
+                            <p className="text-muted mb-3">No has subido tu CV aún</p>
                         ) : (
                             <p className="fw-medium mb-3">
                                 Archivo seleccionado: {cvFile.name}
@@ -94,13 +86,10 @@ export default function MiPerfil() {
                             onChange={handleFileChange}
                         />
 
-                        <button className="btn btn-outline-primary">
-                            Subir CV
-                        </button>
+                        <button className="btn btn-outline-primary">Subir CV</button>
                     </div>
                 </div>
 
-                {/* ================= ALERTAS ================= */}
                 <div className="profile-card">
                     <h4 className="fw-semibold mb-3">Alertas de Ofertas</h4>
 
@@ -142,18 +131,16 @@ export default function MiPerfil() {
                         </div>
                     </div>
 
-                    <button className="btn btn-primary w-100 mb-4">
-                        + Crear Alerta
-                    </button>
+                    <button className="btn btn-primary w-100 mb-4">+ Crear Alerta</button>
 
                     <div className="alerta-item d-flex justify-content-between align-items-center">
-                        <span>🔔 Activa · React · Remoto · Madrid</span>
+                        <span> Activa · React · Remoto · Madrid</span>
                         <button className="btn btn-sm btn-outline-danger">
-                            🗑
+                            <i className="bi bi-trash-fill"></i>
                         </button>
+
                     </div>
                 </div>
-
             </div>
         </div>
     );
