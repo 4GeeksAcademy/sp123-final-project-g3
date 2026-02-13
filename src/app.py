@@ -5,6 +5,7 @@ import os
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
+from flask_jwt_extended import JWTManager
 from api.utils import APIException, generate_sitemap
 from api.models import db
 from api.routes import api
@@ -16,15 +17,22 @@ ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../dist/')
 app = Flask(__name__)
 app.url_map.strict_slashes = False
-# Database condiguration
+
+# Database configuration
 db_url = os.getenv("DATABASE_URL")
 if db_url is not None:
     app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace("postgres://", "postgresql://")
 else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////tmp/test.db"
+    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# JWT configuration
+app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY", "your-secret-key-here")
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = False
 MIGRATE = Migrate(app, db, compare_type=True)
 db.init_app(app)
+jwt = JWTManager(app)
+
 # Other configuration
 setup_admin(app)  # Add the admin
 setup_commands(app)  # Add the admin

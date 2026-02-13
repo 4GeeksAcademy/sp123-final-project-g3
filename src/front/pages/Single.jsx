@@ -24,7 +24,7 @@ export const Single = props => {
         <span className="btn btn-primary btn-lg" href="#" role="button">
           Back home
         </span>
-      </Link>
+      </Link>https://meet.google.com/sca-wwxy-nid
     </div>
   );
 };
