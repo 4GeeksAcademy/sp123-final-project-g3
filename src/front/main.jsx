@@ -5,7 +5,7 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./routes";
 import { StoreProvider } from './hooks/useGlobalReducer';
 import { BackendURL } from './components/BackendURL';
-import { OfertasGuardadasProvider } from '../context/OfertasGuardadas.jsx';
+import { OfertasGuardadasProvider } from './context/OfertasGuardadas.jsx';
 
 const Main = () => {
 

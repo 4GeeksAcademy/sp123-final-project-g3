@@ -1,7 +1,7 @@
 import "../index.css";
 import React, { useEffect, useMemo, useState } from "react";
 import { CARD_PRUEBA } from "../mocks/jobsMock";
-import { useOfertasGuardadas } from "../../context/OfertasGuardadas";
+import { useOfertasGuardadas } from "../context/OfertasGuardadas";
 
 export default function Buscar() {
     const [jobs, setJobs] = useState([]);

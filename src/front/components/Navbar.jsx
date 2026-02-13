@@ -5,7 +5,7 @@ import logo from "../imagenes/logo.png";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 import Postulacion from "./Postulacion.jsx";
-import { useOfertasGuardadas } from "../../context/OfertasGuardadas.jsx";
+import { useOfertasGuardadas } from "../context/OfertasGuardadas.jsx";
 
 export default function Navbar() {
 	const [isPostulacionOpen, setIsPostulacionOpen] = useState(false);
