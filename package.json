@@ -54,9 +54,11 @@
     ]
   },
   "dependencies": {
+    "@react-oauth/google": "^0.13.4",
     "@atlaskit/pragmatic-drag-and-drop": "^1.7.7",
     "bootstrap-icons": "^1.13.1",
     "chart.js": "^4.5.1",
+    "jwt-decode": "^4.0.0",
     "lucide-react": "^0.563.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
