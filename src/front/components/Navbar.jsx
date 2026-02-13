@@ -1,21 +1,32 @@
 import { NavLink, Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../index.css";
 import logo from "../imagenes/logo.png";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 import Postulacion from "./Postulacion.jsx";
+import { useOfertasGuardadas } from "../../context/OfertasGuardadas.jsx";
 
 export default function Navbar() {
 	const [isPostulacionOpen, setIsPostulacionOpen] = useState(false);
+	const [isSavedOpen, setIsSavedOpen] = useState(false);
+
+	const { ofertasGuardadas, eliminarGuardada } = useOfertasGuardadas();
+
+	const dropdownRef = useRef(null);
+
+	useEffect(() => {
+		const handleClickOutside = (e) => {
+			if (!dropdownRef.current) return;
+			if (!dropdownRef.current.contains(e.target)) setIsSavedOpen(false);
+		};
+
+		document.addEventListener("mousedown", handleClickOutside);
+		return () => document.removeEventListener("mousedown", handleClickOutside);
+	}, []);
 
 	const handleOpen = () => setIsPostulacionOpen(true);
 	const handleClose = () => setIsPostulacionOpen(false);
-
-	const handleCreate = (data) => {
-		console.log("Nueva postulación:", data);
-		setIsPostulacionOpen(false);
-	};
 
 	return (
 		<>
@@ -32,14 +43,57 @@ export default function Navbar() {
 						</div>
 					</div>
 
-					<button
-						className="btn-new-postulation"
-						onClick={handleOpen}
-						type="button"
-					>
-						<span className="btn-plus">+</span>
-						Nueva Postulación
-					</button>
+					<div className="navbar-actions" ref={dropdownRef}>
+						<button
+							className="btn-saved"
+							onClick={() => setIsSavedOpen((v) => !v)}
+							type="button"
+							aria-label="Abrir guardados"
+						>
+							<i className="bi bi-bookmark-fill"></i>
+							{ofertasGuardadas.length > 0 && (
+								<span className="saved-badge">{ofertasGuardadas.length}</span>
+							)}
+						</button>
+
+						{isSavedOpen && (
+							<div className="saved-dropdown">
+								<h6 className="saved-dropdown-title">Ofertas Guardadas</h6>
+
+								{ofertasGuardadas.length === 0 ? (
+									<p className="saved-empty">No tienes ofertas guardadas</p>
+								) : (
+									<ul className="saved-list">
+										{ofertasGuardadas.map((job) => (
+											<li key={job.external_id} className="saved-item">
+												<div className="saved-item-text">
+													<span className="saved-title">{job.title}</span>
+													<span className="saved-company">{job.company}</span>
+												</div>
+
+												<i
+													className="bi bi-trash saved-trash"
+													onClick={() => eliminarGuardada(job.external_id)}
+													role="button"
+													aria-label="Eliminar guardado"
+													title="Eliminar"
+												/>
+											</li>
+										))}
+									</ul>
+								)}
+							</div>
+						)}
+
+						<button
+							className="btn-new-postulation"
+							onClick={handleOpen}
+							type="button"
+						>
+							<span className="btn-plus">+</span>
+							Nueva Postulación
+						</button>
+					</div>
 				</div>
 
 				<ul className="navbar-menu">
@@ -67,23 +121,10 @@ export default function Navbar() {
 							Buscar Postulaciones
 						</NavLink>
 					</li>
-					<li>
-						<Link to="/login" className="nav-item">
-							Login
-						</Link>
-					</li>
-					<li>
-						<Link to="/registro" className="nav-item">
-							Registro
-						</Link>
-					</li>
 				</ul>
 			</nav>
-			<Postulacion
-				isOpen={isPostulacionOpen}
-				onClose={handleClose}
-				onCreate={handleCreate}
-			/>
+
+			<Postulacion isOpen={isPostulacionOpen} onClose={handleClose} />
 		</>
 	);
 }

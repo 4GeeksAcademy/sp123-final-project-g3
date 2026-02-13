@@ -1084,3 +1084,286 @@
 .board-page .search-grid {
   padding: 0 1.5rem;
 }
+/* ===== Buscar: layout full fondo ===== */
+.buscar-page {
+  width: 100%;
+}
+
+.buscar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.buscar-title-wrap .buscar-subtitle {
+  opacity: 0.75;
+  font-size: 0.95rem;
+}
+
+.buscar-search {
+  position: relative;
+  width: min(520px, 100%);
+}
+
+.buscar-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.55;
+}
+
+.buscar-search-input {
+  padding-left: 38px !important;
+  padding-right: 44px !important;
+  border-radius: 14px !important;
+  border: 1px solid rgba(15, 44, 51, 0.12) !important;
+  background: rgba(255, 255, 255, 0.8) !important;
+}
+
+.buscar-search-input:focus {
+  border-color: rgba(33, 97, 106, 0.35) !important;
+  box-shadow: 0 0 0 0.2rem rgba(33, 97, 106, 0.12) !important;
+}
+
+.buscar-clear {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 10px;
+}
+
+.buscar-results-bar {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 12px;
+}
+
+.buscar-results-label {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(15, 44, 51, 0.1);
+  background: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+}
+
+/* ===== Lista full width ===== */
+.buscar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.buscar-rowcard {
+  width: 100%;
+  border-radius: 16px;
+  border: 1px solid rgba(15, 44, 51, 0.1);
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.buscar-rowcard-main {
+  padding: 14px 16px;
+}
+
+.buscar-rowcard-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.buscar-job-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f2c33;
+}
+
+.buscar-job-meta {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.buscar-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(15, 44, 51, 0.1);
+  background: rgba(255, 255, 255, 0.7);
+  font-size: 0.88rem;
+  color: #0f2c33;
+}
+
+.buscar-rowcard-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.buscar-rowcard-desc {
+  margin-top: 10px;
+  opacity: 0.85;
+  line-height: 1.35;
+}
+
+/* Empty state */
+.buscar-empty {
+  padding: 18px;
+  border-radius: 16px;
+  border: 1px dashed rgba(15, 44, 51, 0.18);
+  background: rgba(255, 255, 255, 0.55);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  opacity: 0.85;
+}
+
+.buscar-empty i {
+  font-size: 1.2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .buscar-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .buscar-rowcard-top {
+    flex-direction: column;
+  }
+  .buscar-rowcard-actions {
+    width: 100%;
+  }
+  .buscar-rowcard-actions .btn {
+    flex: 1;
+  }
+}
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+
+.saved-dropdown-wrapper {
+  position: relative;
+}
+
+.btn-saved {
+  background: white;
+  border: 1px solid rgba(15, 44, 51, 0.2);
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-saved:hover {
+  background: #f5f7f8;
+}
+
+.saved-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  background: #21616a;
+  color: white;
+}
+
+.saved-dropdown {
+  position: absolute;
+  right: 0;
+  top: 120%;
+  width: 300px;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+  padding: 14px;
+  z-index: 1000;
+}
+
+.saved-dropdown-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.saved-empty {
+  font-size: 0.92rem;
+  opacity: 0.65;
+}
+
+.saved-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.saved-item-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.saved-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #21616a; /* Azul principal del proyecto */
+}
+
+.saved-company {
+  font-size: 0.82rem;
+  opacity: 0.75;
+  color: #21616a;
+}
+
+.saved-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: #f7f9fa;
+  transition: background 0.2s ease;
+}
+.saved-item:hover {
+  background: #eef3f5;
+}
+
+.saved-trash {
+  font-size: 1rem;
+  color: #21616a;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.saved-trash:hover {
+  transform: scale(1.15);
+  opacity: 0.7;
+}

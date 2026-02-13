@@ -1,7 +1,6 @@
 import "../index.css";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import robot from "../imagenes/roboregistro.png";
 import robotgif from "../imagenes/robotregistrogif.gif";
 import logo from "../imagenes/logo.png";
 
@@ -12,7 +11,7 @@ export default function Registro() {
         usuario: "",
         email: "",
         telefono: "",
-        direccion: "",
+        password: "",
         fecha: "",
     });
 
@@ -26,7 +25,6 @@ export default function Registro() {
             case "nombre":
             case "apellidos":
             case "usuario":
-            case "direccion":
                 if (!value.trim()) error = "Este campo es obligatorio";
                 break;
 
@@ -36,6 +34,11 @@ export default function Registro() {
 
             case "telefono":
                 if (!/^[0-9]{9}$/.test(value)) error = "Debe tener 9 dígitos";
+                break;
+
+            case "password":
+                if (value.length < 6)
+                    error = "La contraseña debe tener al menos 6 caracteres";
                 break;
 
             case "fecha":
@@ -94,7 +97,7 @@ export default function Registro() {
 
                     {success && (
                         <div className="alert alert-success">
-                            Registro completado correctamente ✅
+                            Registro completado correctamente
                         </div>
                     )}
 
@@ -169,17 +172,15 @@ export default function Registro() {
                         </div>
 
                         <div className="mb-3">
-                            <label className="form-label">Dirección postal</label>
+                            <label className="form-label">Crear contraseña</label>
                             <input
-                                type="text"
-                                name="direccion"
+                                type="password"
+                                name="password"
                                 className="form-control"
                                 onChange={handleChange}
                             />
-                            {errors.direccion && (
-                                <div className="alert alert-danger mt-1">
-                                    {errors.direccion}
-                                </div>
+                            {errors.password && (
+                                <div className="alert alert-danger mt-1">{errors.password}</div>
                             )}
                         </div>
 
@@ -196,7 +197,9 @@ export default function Registro() {
                             )}
                         </div>
 
-                        <button className="btn btn-primary w-100 mb-3">Crear cuenta</button>
+                        <button className="btn btn-primary w-100 mb-3">
+                            Crear cuenta
+                        </button>
 
                         <p className="text-center">
                             ¿Ya tienes cuenta?{" "}

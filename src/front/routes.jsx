@@ -14,6 +14,7 @@ import Registro from "./pages/Registro.jsx";
 import Buscar from "./pages/Buscar.jsx";
 import Estadisticas from "./pages/Estadisticas.jsx";
 import Perfil from "./pages/Perfil.jsx";
+import RecuperarContraseña from "./pages/RecuperarContraseña.jsx";
 
 
 
@@ -39,6 +40,7 @@ export const router = createBrowserRouter(
       <Route path="/buscar" element={<Buscar />} />
       <Route path="/estadisticas" element={<Estadisticas />} />
       <Route path="/perfil" element={<Perfil />} />
+      <Route path="/recuperar-contrasena" element={<RecuperarContraseña />} />
 
 
 

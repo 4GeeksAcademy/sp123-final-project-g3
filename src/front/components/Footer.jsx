@@ -16,7 +16,7 @@ export default function Footer() {
 					<h5>Navegación</h5>
 					<ul>
 						<li>
-							<a href="/inicio">Inicio</a>
+							<a href="/">Inicio</a>
 						</li>
 						<li>
 							<a href="/estadisticas">Estadísticas</a>
@@ -25,7 +25,7 @@ export default function Footer() {
 							<a href="/perfil">Perfil</a>
 						</li>
 						<li>
-							<a href="/postulaciones">Postulaciones</a>
+							<a href="/buscar">Postulaciones</a>
 						</li>
 					</ul>
 				</div>
