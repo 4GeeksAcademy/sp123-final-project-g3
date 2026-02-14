@@ -5,42 +5,42 @@ export default function Footer() {
 		<footer className="app-footer">
 			<div className="footer-container">
 				<div className="footer-col">
-					<h4>¡Futuro nombre super chulo!</h4>
-					<p>
+					<h4 className="footer-col__title">¡Futuro nombre super chulo!</h4>
+					<p className="footer-col__text">
 						Gestiona y organiza tus postulaciones de empleo de forma sencilla y
 						visual.
 					</p>
 				</div>
 
 				<div className="footer-col">
-					<h5>Navegación</h5>
-					<ul>
-						<li>
-							<a href="/">Inicio</a>
+					<h5 className="footer-col__title">Navegación</h5>
+					<ul className="footer-col__list">
+						<li className="footer-col__item">
+							<a href="/" className="footer-col__link">Inicio</a>
 						</li>
-						<li>
-							<a href="/estadisticas">Estadísticas</a>
+						<li className="footer-col__item">
+							<a href="/estadisticas" className="footer-col__link">Estadísticas</a>
 						</li>
-						<li>
-							<a href="/perfil">Perfil</a>
+						<li className="footer-col__item">
+							<a href="/perfil" className="footer-col__link">Perfil</a>
 						</li>
-						<li>
-							<a href="/buscar">Postulaciones</a>
+						<li className="footer-col__item">
+							<a href="/buscar" className="footer-col__link">Postulaciones</a>
 						</li>
 					</ul>
 				</div>
 
 				<div className="footer-col">
-					<h5>Legal</h5>
-					<ul>
-						<li>
-							<a href="#">Términos y condiciones</a>
+					<h5 className="footer-col__title">Legal</h5>
+					<ul className="footer-col__list">
+						<li className="footer-col__item">
+							<a href="#" className="footer-col__link">Términos y condiciones</a>
 						</li>
-						<li>
-							<a href="#">Política de privacidad</a>
+						<li className="footer-col__item">
+							<a href="#" className="footer-col__link">Política de privacidad</a>
 						</li>
-						<li>
-							<a href="#">Contacto</a>
+						<li className="footer-col__item">
+							<a href="#" className="footer-col__link">Contacto</a>
 						</li>
 					</ul>
 				</div>

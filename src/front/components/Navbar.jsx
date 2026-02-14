@@ -38,8 +38,8 @@ export default function Navbar() {
 						</div>
 
 						<div className="navbar-text">
-							<h1>¡Futuro nombre super chulo!</h1>
-							<span>Gestiona tus postulaciones de empleo</span>
+							<h1 className="navbar__title">¡Futuro nombre super chulo!</h1>
+							<span className="navbar__subtitle">Gestiona tus postulaciones de empleo</span>
 						</div>
 					</div>
 
