@@ -7,17 +7,17 @@ import {
 } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 
 const PRIORITY_STYLES = {
-  Alta: { badgeClass: "priority-badge priority-high", dotClass: "priority-dot priority-high" },
-  Media: { badgeClass: "priority-badge priority-medium", dotClass: "priority-dot priority-medium" },
-  Baja: { badgeClass: "priority-badge priority-low", dotClass: "priority-dot priority-low" },
+  Alta: { badgeClass: "priority-badge priority-badge--high", dotClass: "priority-dot priority-dot--high" },
+  Media: { badgeClass: "priority-badge priority-badge--medium", dotClass: "priority-dot priority-dot--medium" },
+  Baja: { badgeClass: "priority-badge priority-badge--low", dotClass: "priority-dot priority-dot--low" },
 };
 
 const COLUMNS = [
-  { key: "por_aplicar", title: "Por Aplicar", headerClass: "col-header col-header-gray" },
-  { key: "aplicado", title: "Aplicado", headerClass: "col-header col-header-teal" },
-  { key: "entrevista", title: "Entrevista", headerClass: "col-header col-header-orange" },
-  { key: "oferta", title: "Oferta", headerClass: "col-header col-header-green" },
-  { key: "rechazado", title: "Rechazado", headerClass: "col-header col-header-maroon" },
+  { key: "por_aplicar", title: "Por Aplicar", headerClass: "col-header col-header--gray" },
+  { key: "aplicado", title: "Aplicado", headerClass: "col-header col-header--teal" },
+  { key: "entrevista", title: "Entrevista", headerClass: "col-header col-header--orange" },
+  { key: "oferta", title: "Oferta", headerClass: "col-header col-header--green" },
+  { key: "rechazado", title: "Rechazado", headerClass: "col-header col-header--maroon" },
 ];
 
 const INITIAL_CARDS = [
@@ -47,7 +47,7 @@ function Modal({ open, onClose, title, children }) {
 
   return (
     <div className="modal-overlay" onMouseDown={onClose} role="dialog" aria-modal="true">
-      <div className="modal-card" onMouseDown={(e) => e.stopPropagation()}>
+      <div className="modal-card modal-card--small" onMouseDown={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h3 className="modal-title">{title}</h3>
           <button className="modal-close" onClick={onClose} aria-label="Cerrar">
@@ -58,7 +58,7 @@ function Modal({ open, onClose, title, children }) {
         <div className="modal-body">{children}</div>
 
         <div className="modal-footer">
-          <button className="btn-primary modal-btn" onClick={onClose}>
+          <button className="modal-btn modal-btn--primary" onClick={onClose}>
             Cerrar
           </button>
         </div>

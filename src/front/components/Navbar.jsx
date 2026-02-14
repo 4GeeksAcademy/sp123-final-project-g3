@@ -5,7 +5,7 @@ import logo from "../imagenes/logo.png";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 import Postulacion from "./Postulacion.jsx";
-import { useOfertasGuardadas } from "../../context/OfertasGuardadas.jsx";
+import { useOfertasGuardadas } from "../context/OfertasGuardadas.jsx";
 
 export default function Navbar() {
 	const [isPostulacionOpen, setIsPostulacionOpen] = useState(false);
@@ -38,8 +38,8 @@ export default function Navbar() {
 						</div>
 
 						<div className="navbar-text">
-							<h1>¡Futuro nombre super chulo!</h1>
-							<span>Gestiona tus postulaciones de empleo</span>
+							<h1 className="navbar__title">¡Futuro nombre super chulo!</h1>
+							<span className="navbar__subtitle">Gestiona tus postulaciones de empleo</span>
 						</div>
 					</div>
 

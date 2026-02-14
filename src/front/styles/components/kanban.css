@@ -1,0 +1,207 @@
+.board-page {
+  background-color: var(--bg-primary);
+  min-height: 100vh;
+  padding: var(--space-16) var(--space-12) var(--space-2xl);
+  overflow-x: hidden;
+}
+
+@media (min-width: 640px) {
+  .board-page {
+    padding: var(--space-20) var(--space-24) var(--space-2xl);
+  }
+}
+
+.kanban-board {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-16);
+  align-items: flex-start;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+  .kanban-board {
+    max-width: var(--max-width-container);
+  }
+}
+
+@media (min-width: 640px) {
+  .kanban-board {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .kanban-board {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .kanban-board {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.kanban-column {
+  background: var(--bg-transparent);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+}
+
+.col-header {
+  padding: var(--space-12) 14px;
+  color: var(--text-white);
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.col-header--gray {
+  background: var(--color-col-gray);
+}
+
+.col-header--teal {
+  background: var(--color-accent-dark);
+}
+
+.col-header--orange {
+  background: var(--color-warning);
+}
+
+.col-header--green {
+  background: var(--color-success-light);
+}
+
+.col-header--maroon {
+  background: var(--color-col-maroon);
+}
+
+.col-title {
+  font-size: var(--font-size-lg);
+}
+
+.col-count {
+  background: var(--overlay-light);
+  padding: 2px var(--space-8);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+}
+
+.col-body {
+  padding: var(--space-12);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  min-height: auto;
+}
+
+.job-card.is-dragging {
+  opacity: 0.5;
+  transform: rotate(0.2deg);
+}
+
+.kanban-column.is-over {
+  outline: 2px dashed var(--overlay-accent-80);
+  outline-offset: var(--space-4);
+}
+
+.job-card {
+  width: 100%;
+  text-align: left;
+  background: var(--bg-white);
+  border: 1px solid var(--overlay-primary-18);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-12);
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-normal);
+}
+
+.job-card:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.job-card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.job-title {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.job-meta {
+  margin-top: var(--space-6);
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  opacity: 0.9;
+}
+
+.job-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.priority-badge {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  padding: 2px var(--space-8);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--overlay-primary-18);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.priority-dot {
+  width: var(--space-8);
+  height: var(--space-8);
+  border-radius: 50%;
+  display: inline-block;
+  border: 1px solid var(--overlay-primary-18);
+}
+
+.priority-badge.priority-badge--high {
+  background: var(--color-priority-high-bg);
+  color: var(--color-priority-high-text);
+}
+
+.priority-badge.priority-badge--medium {
+  background: var(--color-priority-medium-bg);
+  color: var(--color-priority-medium-text);
+}
+
+.priority-badge.priority-badge--low {
+  background: var(--color-priority-low-bg);
+  color: var(--color-priority-low-text);
+}
+
+.priority-dot.priority-dot--high {
+  background: var(--color-priority-high-dot);
+}
+
+.priority-dot.priority-dot--medium {
+  background: var(--color-priority-medium-dot);
+}
+
+.priority-dot.priority-dot--low {
+  background: var(--color-priority-low-dot);
+}
+
+@media (min-width: 1024px) {
+  .col-body {
+    min-height: 60vh;
+  }
+}

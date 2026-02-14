@@ -50,21 +50,21 @@ const Postulacion = ({ isOpen, onClose, onCreate }) => {
   };
 
   const handleOverlayClick = (e) => {
-    if (e.target.classList.contains("post-modal-overlay")) onClose?.();
+    if (e.target.classList.contains("modal-overlay--padded") || e.target.classList.contains("post-modal-overlay")) onClose?.();
   };
 
   return (
-    <div className="post-modal-overlay" onMouseDown={handleOverlayClick}>
-      <div className="post-modal-card" role="dialog" aria-modal="true">
-        <div className="post-modal-header">
-          <h2 className="post-modal-title">Nueva Postulación</h2>
-          <button type="button" className="post-modal-close" onClick={onClose} aria-label="Cerrar">
+    <div className="modal-overlay modal-overlay--padded modal-overlay--high post-modal-overlay" onMouseDown={handleOverlayClick}>
+      <div className="modal-card modal-card--large post-modal-card" role="dialog" aria-modal="true">
+        <div className="modal-header modal-header--bordered post-modal-header">
+          <h2 className="modal-title modal-title--primary post-modal-title">Nueva Postulación</h2>
+          <button type="button" className="modal-close modal-close--styled post-modal-close" onClick={onClose} aria-label="Cerrar">
             ×
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="post-modal-form">
-          <div className="post-modal-grid">
+        <form onSubmit={handleSubmit} className="modal__form post-modal-form">
+          <div className="modal-grid modal-grid--2col post-modal-grid">
             <div className="post-field">
               <label className="post-label">
                 Posición <span className="post-required">*</span>
@@ -224,11 +224,11 @@ const Postulacion = ({ isOpen, onClose, onCreate }) => {
             </div>
           </div>
 
-          <div className="post-modal-footer">
-            <button type="button" className="post-btn post-btn-secondary" onClick={onClose}>
+          <div className="modal-footer modal-footer--bordered post-modal-footer">
+            <button type="button" className="modal-btn modal-btn--secondary post-btn post-btn-secondary" onClick={onClose}>
               Cancelar
             </button>
-            <button type="submit" className="post-btn post-btn-primary">
+            <button type="submit" className="modal-btn modal-btn--primary post-btn post-btn-primary">
               Crear postulación
             </button>
           </div>

@@ -1,0 +1,158 @@
+:root {
+  --color-primary: #0f2c33;
+  --color-primary-dark: #12343b;
+  --color-secondary: #533946;
+  --color-accent: #2e9ca0;
+  --color-accent-dark: #21616a;
+  --color-success: #1f5f66;
+  --color-success-light: #2f8f62;
+  --color-warning: #f39b1e;
+  --color-warning-light: #d48a2a;
+  --color-warning-bright: #e1c719;
+  --color-error: #ef4444;
+
+  --color-white: #ffffff;
+  --color-gray-50: #f5f7f8;
+  --color-gray-100: #f7f9fa;
+  --color-gray-200: #eef3f5;
+  --color-gray-400: #7c8793;
+  --color-gray-500: #6b6b6b;
+  --color-gray-600: #6b7280;
+
+  --color-priority-high-bg: #ffe3e3;
+  --color-priority-high-text: #8a1f1f;
+  --color-priority-high-dot: #ff6b6b;
+  --color-priority-medium-bg: #fff0cc;
+  --color-priority-medium-text: #7a4f00;
+  --color-priority-medium-dot: var(--color-warning);
+  --color-priority-low-bg: #dfefff;
+  --color-priority-low-text: #1d4e89;
+  --color-priority-low-dot: #4d8dff;
+
+  --color-col-gray: #7c8793;
+  --color-col-maroon: #6d3c4f;
+
+  --bg-primary: #e6d1b4;
+  --bg-secondary: #ead6b8;
+  --bg-tertiary: #f3eadb;
+  --bg-white: #ffffff;
+  --bg-transparent: rgba(255, 255, 255, 0.35);
+  --bg-card: #f3eadb;
+
+  --overlay-dark: rgba(0, 0, 0, 0.35);
+  --overlay-light: rgba(255, 255, 255, 0.25);
+  --overlay-white-55: rgba(255, 255, 255, 0.55);
+  --overlay-white-70: rgba(255, 255, 255, 0.7);
+  --overlay-white-78: rgba(255, 255, 255, 0.78);
+  --overlay-white-80: rgba(255, 255, 255, 0.8);
+  --overlay-primary-8: rgba(83, 57, 70, 0.08);
+  --overlay-primary-15: rgba(15, 44, 51, 0.15);
+  --overlay-primary-18: rgba(15, 44, 51, 0.18);
+  --overlay-primary-25: rgba(255, 255, 255, 0.25);
+  --overlay-tertiary-35: rgba(243, 234, 219, 0.35);
+  --overlay-accent-12: rgba(33, 97, 106, 0.12);
+  --overlay-accent-25: rgba(46, 156, 160, 0.25);
+  --overlay-accent-80: rgba(46, 156, 160, 0.8);
+  --overlay-cream-20: rgba(230, 209, 180, 0.2);
+  --shadow-color: rgba(0, 0, 0, 0.06);
+  --shadow-color-dark: rgba(0, 0, 0, 0.12);
+
+  --text-primary: #0f2c33;
+  --text-secondary: #533946;
+  --text-light: #6b7280;
+  --text-white: #ffffff;
+  --text-muted: rgba(83, 57, 70, 0.85);
+
+  --border-light: rgba(15, 44, 51, 0.1);
+  --border-medium: rgba(15, 44, 51, 0.12);
+  --border-dark: rgba(15, 44, 51, 0.15);
+  --border-darker: rgba(15, 44, 51, 0.18);
+  --border-darkest: rgba(15, 44, 51, 0.25);
+  --border-accent: rgba(33, 97, 106, 0.35);
+  --border-dashed: rgba(15, 44, 51, 0.45);
+
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 0.75rem;
+  --space-lg: 1rem;
+  --space-xl: 1.5rem;
+  --space-2xl: 2rem;
+  --space-3xl: 2.5rem;
+
+  --space-6: 6px;
+  --space-8: 8px;
+  --space-10: 10px;
+  --space-12: 12px;
+  --space-14: 14px;
+  --space-16: 16px;
+  --space-18: 18px;
+  --space-20: 20px;
+  --space-22: 22px;
+  --space-24: 24px;
+  --space-28: 28px;
+  --space-32: 32px;
+  --space-36: 36px;
+  --space-38: 38px;
+  --space-40: 40px;
+  --space-44: 44px;
+  --space-90: 90px;
+  --space-120: 120px;
+  --space-150: 150px;
+  --space-220: 220px;
+  --space-260: 260px;
+  --space-300: 300px;
+  --space-512: 512px;
+  --space-616: 616px;
+  --space-816: 816px;
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.6rem;
+  --radius-lg: 0.7rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 10px;
+  --radius-3xl: 12px;
+  --radius-4xl: 14px;
+  --radius-5xl: 16px;
+  --radius-full: 999px;
+
+  --shadow-sm: 0 2px 8px var(--shadow-color-dark);
+  --shadow-md: 0 6px 18px rgba(15, 44, 51, 0.12);
+  --shadow-lg: 0 8px 24px var(--shadow-color-dark);
+  --shadow-xl: 0 10px 24px var(--shadow-color-dark);
+  --shadow-buscar: 0 10px 22px var(--shadow-color);
+
+  --transition-fast: 150ms ease;
+  --transition-normal: 200ms ease;
+  --transition-slow: 300ms ease;
+
+  --font-family-base: "Poppins", sans-serif;
+  --font-size-xs: 0.7rem;
+  --font-size-sm: 0.75rem;
+  --font-size-base: 0.85rem;
+  --font-size-md: 0.9rem;
+  --font-size-lg: 0.95rem;
+  --font-size-xl: 1.1rem;
+  --font-size-2xl: 1.25rem;
+  --font-size-3xl: 1.4rem;
+  --font-size-4xl: 1.6rem;
+
+  --font-size-78: 0.78rem;
+  --font-size-82: 0.82rem;
+  --font-size-92: 0.92rem;
+  --font-size-105: 1.05rem;
+  --font-size-12: 1.2rem;
+  --font-size-15: 1.5rem;
+
+  --z-modal: 1000;
+  --z-modal-high: 1200;
+  --z-dropdown: 1000;
+
+  --max-width-container: 1400px;
+  --max-width-content: 1200px;
+}
+
+html, body {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
