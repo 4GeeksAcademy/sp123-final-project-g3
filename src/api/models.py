@@ -11,7 +11,7 @@ class Users(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(255), unique=False, nullable=True)
     google_id = db.Column(db.String(255), unique=True, nullable=True)
-    name = db.Column(db.String(120), nullable=False)
+    name = db.Column(db.String(120), nullable=True)
     profesional_title = db.Column(db.String(120))
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     

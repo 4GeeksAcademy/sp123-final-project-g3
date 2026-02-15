@@ -10,11 +10,13 @@
   --color-warning-light: #d48a2a;
   --color-warning-bright: #e1c719;
   --color-error: #ef4444;
+  --color-error-light: rgba(239, 68, 68, 0.1);
 
   --color-white: #ffffff;
   --color-gray-50: #f5f7f8;
   --color-gray-100: #f7f9fa;
   --color-gray-200: #eef3f5;
+  --color-gray-300: #d1d5db;
   --color-gray-400: #7c8793;
   --color-gray-500: #6b6b6b;
   --color-gray-600: #6b7280;

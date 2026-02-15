@@ -1,11 +1,11 @@
 import "../index.css";
 import { useState } from "react";
 
-export default function MiPerfil() {
+export default function MyProfile() {
     const [cvFile, setCvFile] = useState(null);
 
-    const handleFileChange = (e) => {
-        setCvFile(e.target.files[0]);
+    const handleFileChange = (event) => {
+        setCvFile(event.target.files[0]);
     };
 
     return (
@@ -13,17 +13,17 @@ export default function MiPerfil() {
             <div className="container">
                 <div className="profile-card mb-4">
                     <div className="d-flex justify-content-between align-items-center mb-4">
-                        <h4 className="fw-semibold mb-0">Información Personal</h4>
-                        <button className="btn btn-primary btn-sm">Guardar cambios</button>
+                        <h4 className="fw-semibold mb-0">Personal Information</h4>
+                        <button className="btn btn-primary btn-sm">Save changes</button>
                     </div>
 
                     <div className="row g-3">
                         <div className="col-md-6">
-                            <label className="form-label">Nombre completo</label>
+                            <label className="form-label">Full name</label>
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="Juan Pérez"
+                                placeholder="John Doe"
                             />
                         </div>
 
@@ -32,16 +32,16 @@ export default function MiPerfil() {
                             <input
                                 type="email"
                                 className="form-control"
-                                placeholder="juan.perez@email.com"
+                                placeholder="john.doe@email.com"
                             />
                         </div>
 
                         <div className="col-md-6">
-                            <label className="form-label">Teléfono</label>
+                            <label className="form-label">Phone</label>
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="+34 600 123 456"
+                                placeholder="+1 600 123 456"
                             />
                         </div>
 
@@ -50,32 +50,32 @@ export default function MiPerfil() {
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="https://linkedin.com/in/juanperez"
+                                placeholder="https://linkedin.com/in/johndoe"
                             />
                         </div>
 
                         <div className="col-12">
-                            <label className="form-label">Portfolio / Sitio Web</label>
+                            <label className="form-label">Portfolio / Website</label>
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="https://miportfolio.com"
+                                placeholder="https://myportfolio.com"
                             />
                         </div>
                     </div>
                 </div>
 
                 <div className="profile-card mb-4">
-                    <h4 className="fw-semibold mb-3">Currículum Vitae</h4>
+                    <h4 className="fw-semibold mb-3">Curriculum Vitae</h4>
 
                     <div className="cv-box text-center">
                         <div className="mb-2 fs-1">📄</div>
 
                         {!cvFile ? (
-                            <p className="text-muted mb-3">No has subido tu CV aún</p>
+                            <p className="text-muted mb-3">You have not uploaded your CV yet</p>
                         ) : (
                             <p className="fw-medium mb-3">
-                                Archivo seleccionado: {cvFile.name}
+                                Selected file: {cvFile.name}
                             </p>
                         )}
 
@@ -86,43 +86,43 @@ export default function MiPerfil() {
                             onChange={handleFileChange}
                         />
 
-                        <button className="btn btn-outline-primary">Subir CV</button>
+                        <button className="btn btn-outline-primary">Upload CV</button>
                     </div>
                 </div>
 
                 <div className="profile-card">
-                    <h4 className="fw-semibold mb-3">Alertas de Ofertas</h4>
+                    <h4 className="fw-semibold mb-3">Job Alerts</h4>
 
                     <div className="row g-3 mb-4">
                         <div className="col-md-6">
-                            <label className="form-label">Ubicación</label>
+                            <label className="form-label">Location</label>
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="Madrid, Barcelona"
+                                placeholder="New York, Boston"
                             />
                         </div>
 
                         <div className="col-md-6">
-                            <label className="form-label">Salario mínimo</label>
+                            <label className="form-label">Minimum salary</label>
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="35.000€"
+                                placeholder="$35,000"
                             />
                         </div>
 
                         <div className="col-md-6">
-                            <label className="form-label">Tipo de contrato</label>
+                            <label className="form-label">Contract type</label>
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="Remoto, Híbrido"
+                                placeholder="Remote, Hybrid"
                             />
                         </div>
 
                         <div className="col-md-6">
-                            <label className="form-label">Palabras clave</label>
+                            <label className="form-label">Keywords</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -131,10 +131,10 @@ export default function MiPerfil() {
                         </div>
                     </div>
 
-                    <button className="btn btn-primary w-100 mb-4">+ Crear Alerta</button>
+                    <button className="btn btn-primary w-100 mb-4">+ Create Alert</button>
 
-                    <div className="alerta-item d-flex justify-content-between align-items-center">
-                        <span> Activa · React · Remoto · Madrid</span>
+                    <div className="alert-item d-flex justify-content-between align-items-center">
+                        <span> Active · React · Remote · New York</span>
                         <button className="btn btn-sm btn-outline-danger">
                             <i className="bi bi-trash-fill"></i>
                         </button>

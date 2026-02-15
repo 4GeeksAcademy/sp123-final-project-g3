@@ -7,39 +7,39 @@ import {
 } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 
 const PRIORITY_STYLES = {
-  Alta: { badgeClass: "priority-badge priority-badge--high", dotClass: "priority-dot priority-dot--high" },
-  Media: { badgeClass: "priority-badge priority-badge--medium", dotClass: "priority-dot priority-dot--medium" },
-  Baja: { badgeClass: "priority-badge priority-badge--low", dotClass: "priority-dot priority-dot--low" },
+  High: { badgeClass: "priority-badge priority-badge--high", dotClass: "priority-dot priority-dot--high" },
+  Medium: { badgeClass: "priority-badge priority-badge--medium", dotClass: "priority-dot priority-dot--medium" },
+  Low: { badgeClass: "priority-badge priority-badge--low", dotClass: "priority-dot priority-dot--low" },
 };
 
 const COLUMNS = [
-  { key: "por_aplicar", title: "Por Aplicar", headerClass: "col-header col-header--gray" },
-  { key: "aplicado", title: "Aplicado", headerClass: "col-header col-header--teal" },
-  { key: "entrevista", title: "Entrevista", headerClass: "col-header col-header--orange" },
-  { key: "oferta", title: "Oferta", headerClass: "col-header col-header--green" },
-  { key: "rechazado", title: "Rechazado", headerClass: "col-header col-header--maroon" },
+  { key: "to_apply", title: "To Apply", headerClass: "col-header col-header--gray" },
+  { key: "applied", title: "Applied", headerClass: "col-header col-header--teal" },
+  { key: "interview", title: "Interview", headerClass: "col-header col-header--orange" },
+  { key: "offer", title: "Offer", headerClass: "col-header col-header--green" },
+  { key: "rejected", title: "Rejected", headerClass: "col-header col-header--maroon" },
 ];
 
 const INITIAL_CARDS = [
-  { id: "c1", status: "por_aplicar", role: "React Developer", company: "Digital Agency", priority: "Media", notes: "Preparar CV enfocado a React + Vite." },
-  { id: "c2", status: "por_aplicar", role: "DevOps Engineer", company: "DataFlow Inc.", priority: "Alta", notes: "Revisar requisitos: Kubernetes, CI/CD, AWS." },
-  { id: "c3", status: "por_aplicar", role: "UX/UI Designer", company: "Creative Studio", priority: "Baja", notes: "Actualizar portfolio con casos de estudio." },
-  { id: "c4", status: "por_aplicar", role: "Scrum Master", company: "Agile Team", priority: "Media", notes: "Certificaciones: PSM / CSM." },
+  { id: "c1", status: "to_apply", role: "React Developer", company: "Digital Agency", priority: "Medium", notes: "Prepare CV focused on React + Vite." },
+  { id: "c2", status: "to_apply", role: "DevOps Engineer", company: "DataFlow Inc.", priority: "High", notes: "Review requirements: Kubernetes, CI/CD, AWS." },
+  { id: "c3", status: "to_apply", role: "UX/UI Designer", company: "Creative Studio", priority: "Low", notes: "Update portfolio with case studies." },
+  { id: "c4", status: "to_apply", role: "Scrum Master", company: "Agile Team", priority: "Medium", notes: "Certifications: PSM / CSM." },
 
-  { id: "c5", status: "aplicado", role: "Desarrollador Frontend Senior", company: "TechCorp Solutions", priority: "Alta", notes: "Aplicación enviada el 20/01. Hacer follow-up si no responden." },
-  { id: "c6", status: "aplicado", role: "Product Manager", company: "TechCorp Solutions", priority: "Media", notes: "Investigar producto y métricas clave." },
-  { id: "c7", status: "aplicado", role: "Data Scientist", company: "AI Solutions", priority: "Alta", notes: "Repasar proyectos de NLP y métricas." },
-  { id: "c8", status: "aplicado", role: "Cloud Architect", company: "CloudFirst", priority: "Alta", notes: "Preparar arquitectura de referencia y casos." },
+  { id: "c5", status: "applied", role: "Senior Frontend Developer", company: "TechCorp Solutions", priority: "High", notes: "Application sent on 01/20. Follow up if no response." },
+  { id: "c6", status: "applied", role: "Product Manager", company: "TechCorp Solutions", priority: "Medium", notes: "Research product and key metrics." },
+  { id: "c7", status: "applied", role: "Data Scientist", company: "AI Solutions", priority: "High", notes: "Review NLP projects and metrics." },
+  { id: "c8", status: "applied", role: "Cloud Architect", company: "CloudFirst", priority: "High", notes: "Prepare reference architecture and cases." },
 
-  { id: "c9", status: "entrevista", role: "Full Stack Developer", company: "StartupXYZ", priority: "Alta", notes: "Entrevista técnica: React + Node + DB. Practicar." },
-  { id: "c10", status: "entrevista", role: "Mobile Developer", company: "AppWorks", priority: "Media", notes: "Revisar RN/Flutter, patrones y testing." },
-  { id: "c11", status: "entrevista", role: "Tech Lead", company: "StartupXYZ", priority: "Alta", notes: "Preparar ejemplos de liderazgo y decisiones técnicas." },
+  { id: "c9", status: "interview", role: "Full Stack Developer", company: "StartupXYZ", priority: "High", notes: "Technical interview: React + Node + DB. Practice." },
+  { id: "c10", status: "interview", role: "Mobile Developer", company: "AppWorks", priority: "Medium", notes: "Review RN/Flutter, patterns and testing." },
+  { id: "c11", status: "interview", role: "Tech Lead", company: "StartupXYZ", priority: "High", notes: "Prepare leadership examples and technical decisions." },
 
-  { id: "c12", status: "oferta", role: "Software Engineer", company: "InnovateTech", priority: "Alta", notes: "Revisar rango salarial y beneficios. Negociación." },
-  { id: "c13", status: "oferta", role: "Cybersecurity Analyst", company: "SecureNet", priority: "Alta", notes: "Validar rol, turnos, y certificaciones requeridas." },
+  { id: "c12", status: "offer", role: "Software Engineer", company: "InnovateTech", priority: "High", notes: "Review salary range and benefits. Negotiation." },
+  { id: "c13", status: "offer", role: "Cybersecurity Analyst", company: "SecureNet", priority: "High", notes: "Validate role, shifts, and required certifications." },
 
-  { id: "c14", status: "rechazado", role: "Backend Developer", company: "CloudSystems", priority: "Media", notes: "Pedir feedback si es posible." },
-  { id: "c15", status: "rechazado", role: "QA Automation Engineer", company: "TestLab", priority: "Baja", notes: "Revisar qué faltó: Cypress/Playwright, CI." },
+  { id: "c14", status: "rejected", role: "Backend Developer", company: "CloudSystems", priority: "Medium", notes: "Ask for feedback if possible." },
+  { id: "c15", status: "rejected", role: "QA Automation Engineer", company: "TestLab", priority: "Low", notes: "Review what was missing: Cypress/Playwright, CI." },
 ];
 
 function Modal({ open, onClose, title, children }) {
@@ -47,10 +47,10 @@ function Modal({ open, onClose, title, children }) {
 
   return (
     <div className="modal-overlay" onMouseDown={onClose} role="dialog" aria-modal="true">
-      <div className="modal-card modal-card--small" onMouseDown={(e) => e.stopPropagation()}>
+      <div className="modal-card modal-card--small" onMouseDown={(event) => event.stopPropagation()}>
         <div className="modal-header">
           <h3 className="modal-title">{title}</h3>
-          <button className="modal-close" onClick={onClose} aria-label="Cerrar">
+          <button className="modal-close" onClick={onClose} aria-label="Close">
             ×
           </button>
         </div>
@@ -59,7 +59,7 @@ function Modal({ open, onClose, title, children }) {
 
         <div className="modal-footer">
           <button className="modal-btn modal-btn--primary" onClick={onClose}>
-            Cerrar
+            Close
           </button>
         </div>
       </div>
@@ -68,27 +68,26 @@ function Modal({ open, onClose, title, children }) {
 }
 
 function JobCard({ card, onClick }) {
-  const styles = PRIORITY_STYLES[card.priority] ?? PRIORITY_STYLES.Media;
-  const ref = useRef(null);
-  const [isDragging, setIsDragging] = useState(false);
+  const styles = PRIORITY_STYLES[card.priority] ?? PRIORITY_STYLES.Medium;
+  const reference = useRef(null);
+  const [dragging, setDragging] = useState(false);
 
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
+    const element = reference.current;
+    if (!element) return;
 
-    // Hacemos la card draggable + metemos data para recuperarla en el drop
     return draggable({
-      element: el,
+      element: element,
       getInitialData: () => ({ cardId: card.id }),
-      onDragStart: () => setIsDragging(true),
-      onDrop: () => setIsDragging(false),
+      onDragStart: () => setDragging(true),
+      onDrop: () => setDragging(false),
     });
   }, [card.id]);
 
   return (
     <button
-      ref={ref}
-      className={`job-card ${isDragging ? "is-dragging" : ""}`}
+      ref={reference}
+      className={`job-card ${dragging ? "is-dragging" : ""}`}
       onClick={() => onClick(card)}
       type="button"
     >
@@ -108,33 +107,32 @@ function JobCard({ card, onClick }) {
 }
 
 function Column({ columnKey, title, headerClass, cards, onCardClick }) {
-  const ref = useRef(null);
-  const [isOver, setIsOver] = useState(false);
+  const reference = useRef(null);
+  const [over, setOver] = useState(false);
 
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
+    const element = reference.current;
+    if (!element) return;
 
-    // Hacemos la columna "drop target" + metemos data (columna destino)
     return dropTargetForElements({
-      element: el,
+      element: element,
       getData: () => ({ columnKey }),
-      onDragEnter: () => setIsOver(true),
-      onDragLeave: () => setIsOver(false),
-      onDrop: () => setIsOver(false),
+      onDragEnter: () => setOver(true),
+      onDragLeave: () => setOver(false),
+      onDrop: () => setOver(false),
     });
   }, [columnKey]);
 
   return (
-    <section ref={ref} className={`kanban-column ${isOver ? "is-over" : ""}`}>
+    <section ref={reference} className={`kanban-column ${over ? "is-over" : ""}`}>
       <div className={headerClass}>
         <span className="col-title">{title}</span>
         <span className="col-count">{cards.length}</span>
       </div>
 
       <div className="col-body">
-        {cards.map((c) => (
-          <JobCard key={c.id} card={c} onClick={onCardClick} />
+        {cards.map((card) => (
+          <JobCard key={card.id} card={card} onClick={onCardClick} />
         ))}
       </div>
     </section>
@@ -145,7 +143,6 @@ export default function Home() {
   const [cards, setCards] = useState(INITIAL_CARDS);
   const [selected, setSelected] = useState(null);
 
-  // Monitor global: al soltar, mueve la card a la columna destino
   useEffect(() => {
     return monitorForElements({
       onDrop({ source, location }) {
@@ -157,29 +154,29 @@ export default function Home() {
 
         if (!cardId || !columnKey) return;
 
-        setCards((prev) =>
-          prev.map((c) => (c.id === cardId ? { ...c, status: columnKey } : c))
+        setCards((previous) =>
+          previous.map((card) => (card.id === cardId ? { ...card, status: columnKey } : card))
         );
       },
     });
   }, []);
 
   const grouped = useMemo(() => {
-    const map = Object.fromEntries(COLUMNS.map((c) => [c.key, []]));
-    for (const c of cards) map[c.status]?.push(c);
+    const map = Object.fromEntries(COLUMNS.map((column) => [column.key, []]));
+    for (const card of cards) map[card.status]?.push(card);
     return map;
   }, [cards]);
 
   return (
     <div className="board-page">
       <div className="kanban-board">
-        {COLUMNS.map((col) => (
+        {COLUMNS.map((column) => (
           <Column
-            key={col.key}
-            columnKey={col.key}
-            title={col.title}
-            headerClass={col.headerClass}
-            cards={grouped[col.key] ?? []}
+            key={column.key}
+            columnKey={column.key}
+            title={column.title}
+            headerClass={column.headerClass}
+            cards={grouped[column.key] ?? []}
             onCardClick={setSelected}
           />
         ))}
@@ -189,22 +186,22 @@ export default function Home() {
         {selected && (
           <div className="modal-grid">
             <div className="modal-field">
-              <div className="modal-label">Empresa</div>
+              <div className="modal-label">Company</div>
               <div className="modal-value">{selected.company}</div>
             </div>
 
             <div className="modal-field">
-              <div className="modal-label">Estado</div>
-              <div className="modal-value">{COLUMNS.find((c) => c.key === selected.status)?.title}</div>
+              <div className="modal-label">Status</div>
+              <div className="modal-value">{COLUMNS.find((column) => column.key === selected.status)?.title}</div>
             </div>
 
             <div className="modal-field">
-              <div className="modal-label">Prioridad</div>
+              <div className="modal-label">Priority</div>
               <div className="modal-value">{selected.priority}</div>
             </div>
 
             <div className="modal-field modal-field-full">
-              <div className="modal-label">Notas</div>
+              <div className="modal-label">Notes</div>
               <div className="modal-value">{selected.notes || "—"}</div>
             </div>
           </div>

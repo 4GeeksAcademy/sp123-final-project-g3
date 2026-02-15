@@ -18,7 +18,7 @@
   background-color: var(--bg-tertiary);
 }
 
-.alerta-item {
+.alert-item {
   background-color: var(--bg-tertiary);
   border-radius: var(--space-8);
   padding: var(--space-md) var(--space-lg);

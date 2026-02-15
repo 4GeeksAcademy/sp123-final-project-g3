@@ -285,3 +285,409 @@
     gap: var(--space-lg);
   }
 }
+
+/* Styles for locked buttons when there is no session */
+.btn-saved--locked {
+  background: var(--color-gray-200);
+  border-color: var(--color-gray-300);
+  opacity: 0.7;
+  cursor: pointer;
+  position: relative;
+}
+
+.btn-saved--locked:hover {
+  background: var(--color-gray-300);
+}
+
+.btn-saved--locked i {
+  color: var(--color-gray-500);
+}
+
+.btn-new-postulation--locked {
+  background-color: var(--color-gray-300);
+  color: var(--color-gray-500);
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.btn-new-postulation--locked:hover {
+  background-color: var(--color-gray-400);
+  transform: none;
+}
+
+.btn-new-postulation--locked .btn-plus {
+  color: var(--color-gray-500);
+}
+
+/* Authentication alert */
+.auth-alert-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.2s ease;
+}
+
+.auth-alert {
+  background: var(--color-white);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-20);
+  text-align: center;
+  box-shadow: var(--shadow-xl);
+  max-width: var(--space-300);
+  margin: var(--space-16);
+  animation: slideUp 0.3s ease;
+}
+
+.auth-alert-icon {
+  font-size: var(--font-size-5xl);
+  color: var(--color-primary);
+  margin-bottom: var(--space-12);
+}
+
+.auth-alert-message {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-8);
+}
+
+.auth-alert-subtitle {
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-16);
+}
+
+.auth-alert-close {
+  position: absolute;
+  top: var(--space-12);
+  right: var(--space-12);
+  background: none;
+  border: none;
+  font-size: var(--font-size-2xl);
+  color: var(--text-secondary);
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  width: var(--space-32);
+  height: var(--space-32);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  transition: background-color var(--transition-fast);
+}
+
+.auth-alert-close:hover {
+  background-color: var(--color-gray-100);
+  color: var(--text-primary);
+}
+
+.auth-alert-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  margin-bottom: var(--space-12);
+}
+
+.auth-alert-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-12) var(--space-16);
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  width: 100%;
+}
+
+.auth-alert-btn--primary {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.auth-alert-btn--primary:hover {
+  background-color: var(--color-accent-dark);
+}
+
+.auth-alert-btn--secondary {
+  background-color: var(--color-gray-100);
+  color: var(--text-primary);
+}
+
+.auth-alert-btn--secondary:hover {
+  background-color: var(--color-gray-200);
+}
+
+.auth-alert-btn--link {
+  background: none;
+  color: var(--text-secondary);
+  font-weight: 500;
+  padding: var(--space-8);
+}
+
+.auth-alert-btn--link:hover {
+  color: var(--text-primary);
+  text-decoration: underline;
+}
+
+@media (min-width: 480px) {
+  .auth-alert-actions {
+    flex-direction: row;
+  }
+
+  .auth-alert-btn {
+    width: auto;
+    flex: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Style for menu links locked when there is no session */
+.nav-item--locked {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.nav-item--locked:hover {
+  background-color: transparent;
+  color: var(--text-white);
+}
+
+/* ========================================
+   LOGIN BUTTON
+   ======================================== */
+
+.btn-login {
+  background-color: transparent;
+  color: var(--text-white);
+  border: 2px solid var(--text-white);
+  padding: 0.65rem 1.2rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: var(--font-size-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  cursor: pointer;
+  transition: all var(--transition-slow);
+  width: 100%;
+  justify-content: center;
+}
+
+.btn-login:hover {
+  background-color: var(--text-white);
+  color: var(--color-primary);
+  transform: translateY(-1px);
+}
+
+.btn-login i {
+  font-size: var(--font-size-lg);
+}
+
+@media (min-width: 768px) {
+  .btn-login {
+    width: auto;
+    justify-content: flex-start;
+  }
+}
+
+/* ========================================
+   USER MENU (LOGGED IN)
+   ======================================== */
+
+.user-menu {
+  position: relative;
+}
+
+.btn-user {
+  background-color: var(--bg-white);
+  color: var(--color-primary);
+  border: none;
+  padding: 0.65rem 1rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: var(--font-size-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  cursor: pointer;
+  transition: all var(--transition-slow);
+  width: 100%;
+  justify-content: center;
+}
+
+.btn-user:hover {
+  background-color: var(--bg-primary);
+  transform: translateY(-1px);
+}
+
+.btn-user i:first-child {
+  font-size: var(--font-size-xl);
+}
+
+.btn-user-text {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-menu-arrow {
+  font-size: var(--font-size-sm);
+  opacity: 0.7;
+  transition: transform 0.2s ease;
+}
+
+@media (min-width: 768px) {
+  .btn-user {
+    width: auto;
+    justify-content: flex-start;
+  }
+
+  .btn-user-text {
+    max-width: 150px;
+  }
+}
+
+/* ========================================
+   USER DROPDOWN
+   ======================================== */
+
+.user-dropdown {
+  position: absolute;
+  right: 0;
+  top: 120%;
+  width: min(280px, calc(100vw - 1rem));
+  background: var(--color-white);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-xl);
+  padding: var(--space-16);
+  z-index: var(--z-dropdown);
+  animation: slideDown 0.2s ease;
+}
+
+@media (max-width: 359px) {
+  .user-dropdown {
+    position: fixed;
+    left: 0.5rem;
+    right: 0.5rem;
+    top: auto;
+    width: auto;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.user-dropdown-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  margin-bottom: var(--space-14);
+}
+
+.user-dropdown-avatar {
+  font-size: var(--font-size-4xl);
+  color: var(--color-primary);
+}
+
+.user-dropdown-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.user-dropdown-name {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-dropdown-email {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-dropdown-divider {
+  height: 1px;
+  background-color: var(--color-gray-200);
+  margin: var(--space-12) 0;
+}
+
+.user-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  padding: var(--space-10) var(--space-12);
+  border-radius: var(--radius-lg);
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  text-align: left;
+}
+
+.user-dropdown-item:hover {
+  background-color: var(--color-gray-100);
+}
+
+.user-dropdown-item i {
+  font-size: var(--font-size-lg);
+  color: var(--color-accent-dark);
+}
+
+.user-dropdown-item--logout {
+  color: var(--color-error);
+}
+
+.user-dropdown-item--logout i {
+  color: var(--color-error);
+}
+
+.user-dropdown-item--logout:hover {
+  background-color: var(--color-error-light);
+}

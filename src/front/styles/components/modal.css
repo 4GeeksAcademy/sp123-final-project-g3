@@ -62,15 +62,15 @@
 .modal-close {
   background: none;
   border: none;
-  font-size: 1.4rem;
+  font-size: var(--font-size-2xl);
   cursor: pointer;
 }
 
 .modal-close--styled {
-  font-size: 1.5rem;
+  font-size: var(--font-size-15);
   line-height: 1;
   color: var(--text-secondary);
-  padding: var(--space-6) 10px;
+  padding: var(--space-6) var(--space-10);
   border-radius: var(--space-8);
 }
 

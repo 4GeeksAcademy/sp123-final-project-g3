@@ -1,13 +1,12 @@
 import "../index.css";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
-import mascotgif from "../imagenes/robotlogin.gif";
+import robotgif from "../imagenes/robotregistrogif.gif";
 import logo from "../imagenes/logo.png";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 
-export default function Login() {
+export default function Register() {
     const navigate = useNavigate();
-    const location = useLocation();
     const { dispatch } = useGlobalReducer();
 
     const [form, setForm] = useState({
@@ -16,21 +15,32 @@ export default function Login() {
     });
 
     const [errors, setErrors] = useState({});
-    const [loginError, setLoginError] = useState("");
+    const [success, setSuccess] = useState(false);
+    const [registerError, setRegisterError] = useState("");
     const [loading, setLoading] = useState(false);
 
     const validate = (name, value) => {
         let error = "";
 
-        if (!value.trim()) {
-            error = "This field is required";
-        } else {
-            if (name === "email" && !value.includes("@")) {
-                error = "Invalid email address";
-            }
-            if (name === "password" && value.length < 6) {
-                error = "Minimum 6 characters";
-            }
+        switch (name) {
+            case "email":
+                if (!value.trim()) {
+                    error = "This field is required";
+                } else if (!value.includes("@")) {
+                    error = "Invalid email";
+                }
+                break;
+
+            case "password":
+                if (!value.trim()) {
+                    error = "This field is required";
+                } else if (value.length < 6) {
+                    error = "Password must be at least 6 characters";
+                }
+                break;
+
+            default:
+                break;
         }
 
         return error;
@@ -46,7 +56,7 @@ export default function Login() {
             [name]: validate(name, value),
         });
 
-        setLoginError("");
+        setRegisterError("");
     };
 
     const handleSubmit = async (event) => {
@@ -62,8 +72,10 @@ export default function Login() {
 
         if (Object.keys(newErrors).length === 0) {
             setLoading(true);
+            setRegisterError("");
+
             try {
-                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/login`, {
+                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/signup`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -88,14 +100,16 @@ export default function Login() {
                         }
                     });
 
-                    const from = location.state?.from?.pathname || "/";
-                    navigate(from, { replace: true });
+                    setSuccess(true);
+                    setTimeout(() => {
+                        navigate("/", { replace: true });
+                    }, 2000);
                 } else {
-                    setLoginError(data.message || "Invalid credentials");
+                    setRegisterError(data.message || "Error registering user");
                 }
             } catch (error) {
-                console.error("Login error:", error);
-                setLoginError("Connection error. Please try again.");
+                console.error("Registration error:", error);
+                setRegisterError("Connection error. Please try again.");
             } finally {
                 setLoading(false);
             }
@@ -113,12 +127,20 @@ export default function Login() {
                         <h3 className="fw-bold ms-2">Super cool future name!</h3>
                     </div>
 
-                    <h1 className="fw-semibold ms-3">Login</h1>
+                    <h1 className="fw-semibold ms-3">Create your account</h1>
                     <p className="login-subtitle ms-3">
-                        Log in to access your job board
+                        Create your new account to get started
                     </p>
 
-                    {loginError && <div className="alert alert-danger">{loginError}</div>}
+                    {success && (
+                        <div className="alert alert-success">
+                            Registration completed! Redirecting...
+                        </div>
+                    )}
+
+                    {registerError && (
+                        <div className="alert alert-danger">{registerError}</div>
+                    )}
 
                     <form className="mt-4" onSubmit={handleSubmit}>
                         <div className="mb-3">
@@ -130,15 +152,15 @@ export default function Login() {
                                 placeholder="john.doe@gmail.com"
                                 value={form.email}
                                 onChange={handleChange}
-                                disabled={loading}
+                                disabled={loading || success}
                             />
                             {errors.email && (
                                 <div className="alert alert-danger mt-1">{errors.email}</div>
                             )}
                         </div>
 
-                        <div className="mb-3">
-                            <label className="form-label">Password</label>
+                        <div className="mb-4">
+                            <label className="form-label">Create password</label>
                             <input
                                 type="password"
                                 name="password"
@@ -146,52 +168,42 @@ export default function Login() {
                                 placeholder="••••••••••••"
                                 value={form.password}
                                 onChange={handleChange}
-                                disabled={loading}
+                                disabled={loading || success}
                             />
                             {errors.password && (
                                 <div className="alert alert-danger mt-1">{errors.password}</div>
                             )}
                         </div>
 
-                        <div className="d-flex justify-content-between align-items-center mb-4">
-                            <div className="form-check">
-                                <input className="form-check-input" type="checkbox" />
-                                <label className="form-check-label">Remember me</label>
-                            </div>
-                            <Link to="/recover-password" className="fw-medium">
-                                Forgot your password?
-                            </Link>
-                        </div>
-
                         <button
                             className="btn btn-primary w-100 mb-3"
                             type="submit"
-                            disabled={loading}
+                            disabled={loading || success}
                         >
-                            {loading ? "Logging in..." : "Log in"}
+                            {loading ? "Creating account..." : "Create account"}
                         </button>
 
                         <p className="text-center">
-                            Don't have an account yet?{" "}
-                            <Link to="/register" className="fw-semibold">
-                                Sign up
+                            Already have an account?{" "}
+                            <Link to="/" className="fw-semibold">
+                                Log in
                             </Link>
                         </p>
 
                         <div className="d-flex align-items-center my-4">
                             <hr className="flex-grow-1" />
-                            <span className="mx-3 text-muted">Or log in with</span>
+                            <span className="mx-3 text-muted">Or register with</span>
                             <hr className="flex-grow-1" />
                         </div>
 
                         <div className="d-flex gap-3">
-                            <button className="btn btn-outline-primary flex-fill" type="button" disabled>
+                            <button className="btn btn-outline-primary flex-fill" type="button">
                                 Facebook
                             </button>
-                            <button className="btn btn-outline-primary flex-fill" type="button" disabled>
+                            <button className="btn btn-outline-primary flex-fill" type="button">
                                 Google
                             </button>
-                            <button className="btn btn-outline-primary flex-fill" type="button" disabled>
+                            <button className="btn btn-outline-primary flex-fill" type="button">
                                 Apple
                             </button>
                         </div>
@@ -199,10 +211,10 @@ export default function Login() {
                 </div>
 
                 <div className="d-flex flex-column align-items-center">
-                    <img src={mascotgif} alt="login visual" className="login-image" />
+                    <img src={robotgif} alt="register visual" className="login-image" />
                     <div className="d-flex gap-2 mt-3 justify-content-center login-indicators">
                         <div className="indicator active"></div>
-                        <div className="indicator active"></div>
+                        <div className="indicator"></div>
                         <div className="indicator"></div>
                     </div>
                 </div>

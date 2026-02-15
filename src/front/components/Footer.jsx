@@ -5,27 +5,26 @@ export default function Footer() {
 		<footer className="app-footer">
 			<div className="footer-container">
 				<div className="footer-col">
-					<h4 className="footer-col__title">¡Futuro nombre super chulo!</h4>
+					<h4 className="footer-col__title">Super cool future name!</h4>
 					<p className="footer-col__text">
-						Gestiona y organiza tus postulaciones de empleo de forma sencilla y
-						visual.
+						Manage and organize your job applications easily and visually.
 					</p>
 				</div>
 
 				<div className="footer-col">
-					<h5 className="footer-col__title">Navegación</h5>
+					<h5 className="footer-col__title">Navigation</h5>
 					<ul className="footer-col__list">
 						<li className="footer-col__item">
-							<a href="/" className="footer-col__link">Inicio</a>
+							<a href="/" className="footer-col__link">Home</a>
 						</li>
 						<li className="footer-col__item">
-							<a href="/estadisticas" className="footer-col__link">Estadísticas</a>
+							<a href="/statistics" className="footer-col__link">Statistics</a>
 						</li>
 						<li className="footer-col__item">
-							<a href="/perfil" className="footer-col__link">Perfil</a>
+							<a href="/profile" className="footer-col__link">Profile</a>
 						</li>
 						<li className="footer-col__item">
-							<a href="/buscar" className="footer-col__link">Postulaciones</a>
+							<a href="/search" className="footer-col__link">Postulations</a>
 						</li>
 					</ul>
 				</div>
@@ -34,21 +33,20 @@ export default function Footer() {
 					<h5 className="footer-col__title">Legal</h5>
 					<ul className="footer-col__list">
 						<li className="footer-col__item">
-							<a href="#" className="footer-col__link">Términos y condiciones</a>
+							<a href="#" className="footer-col__link">Terms and conditions</a>
 						</li>
 						<li className="footer-col__item">
-							<a href="#" className="footer-col__link">Política de privacidad</a>
+							<a href="#" className="footer-col__link">Privacy policy</a>
 						</li>
 						<li className="footer-col__item">
-							<a href="#" className="footer-col__link">Contacto</a>
+							<a href="#" className="footer-col__link">Contact</a>
 						</li>
 					</ul>
 				</div>
 			</div>
 
 			<div className="footer-bottom">
-				© {new Date().getFullYear()} "Futuro nombre". Todos los derechos
-				reservados.
+				© {new Date().getFullYear()} "Future name". All rights reserved.
 			</div>
 		</footer>
 	);

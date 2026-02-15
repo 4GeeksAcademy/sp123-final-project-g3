@@ -54,7 +54,7 @@
 }
 
 .col-header {
-  padding: var(--space-12) 14px;
+  padding: var(--space-12) var(--space-14);
   color: var(--text-white);
   font-weight: 700;
   display: flex;
@@ -88,7 +88,7 @@
 
 .col-count {
   background: var(--overlay-light);
-  padding: 2px var(--space-8);
+  padding: var(--space-6) var(--space-8);
   border-radius: var(--radius-full);
   font-size: var(--font-size-xs);
 }
@@ -157,7 +157,7 @@
 .priority-badge {
   font-size: var(--font-size-xs);
   font-weight: 700;
-  padding: 2px var(--space-8);
+  padding: var(--space-6) var(--space-8);
   border-radius: var(--radius-full);
   border: 1px solid var(--overlay-primary-18);
   background: var(--bg-tertiary);
@@ -168,7 +168,7 @@
 .priority-dot {
   width: var(--space-8);
   height: var(--space-8);
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   display: inline-block;
   border: 1px solid var(--overlay-primary-18);
 }
