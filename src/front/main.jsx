@@ -21,7 +21,7 @@ const Main = () => {
         <React.StrictMode>
             <SavedOffersProvider>
                 <StoreProvider>
-                    <RouterProvider router={router} />
+                    <RouterProvider router={router} future={{ v7_startTransition: true }} />
                 </StoreProvider>
             </SavedOffersProvider>
         </React.StrictMode>
