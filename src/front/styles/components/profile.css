@@ -1,0 +1,39 @@
+.profile-page {
+  background-color: var(--bg-secondary);
+  min-height: 100vh;
+  padding: var(--space-lg) 0;
+}
+
+.profile-card {
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-3xl);
+  padding: var(--space-lg);
+  border: 1px solid var(--overlay-primary-15);
+}
+
+.cv-box {
+  border: 2px dashed var(--overlay-primary-25);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-xl);
+  background-color: var(--bg-tertiary);
+}
+
+.alert-item {
+  background-color: var(--bg-tertiary);
+  border-radius: var(--space-8);
+  padding: var(--space-md) var(--space-lg);
+}
+
+@media (min-width: 768px) {
+  .profile-page {
+    padding: var(--space-3xl) 0;
+  }
+
+  .profile-card {
+    padding: var(--space-2xl);
+  }
+
+  .cv-box {
+    padding: var(--space-3xl);
+  }
+}

@@ -5,7 +5,7 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./routes";
 import { StoreProvider } from './hooks/useGlobalReducer';
 import { BackendURL } from './components/BackendURL';
-import { OfertasGuardadasProvider } from '../context/OfertasGuardadas.jsx';
+import { SavedOffersProvider } from './context/SavedOffers.jsx';
 
 const Main = () => {
 
@@ -19,11 +19,11 @@ const Main = () => {
 
     return (
         <React.StrictMode>
-            <OfertasGuardadasProvider>
+            <SavedOffersProvider>
                 <StoreProvider>
-                    <RouterProvider router={router} />
+                    <RouterProvider router={router} future={{ v7_startTransition: true }} />
                 </StoreProvider>
-            </OfertasGuardadasProvider>
+            </SavedOffersProvider>
         </React.StrictMode>
     );
 }

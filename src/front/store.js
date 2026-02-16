@@ -1,16 +1,11 @@
 export const initialStore = () => {
   return {
     message: null,
-    // AUTENTICACIÓN
-    user: null, 
-    token: localStorage.getItem("token") || null, 
-    
-    // EMPLEOS
-    jobs: [],     
-    myKanban: [], 
-
-    // TUS TODOS
-    todos: [
+    user: null,
+    token: localStorage.getItem("token") || null,
+    jobs: [],
+    myKanban: [],
+    tasks: [
       {
         id: 1,
         title: "Make the bed",
@@ -22,8 +17,8 @@ export const initialStore = () => {
         background: null,
       }
     ]
-  }
-}
+  };
+};
 
 export default function storeReducer(store, action = {}) {
   switch(action.type){
@@ -32,17 +27,16 @@ export default function storeReducer(store, action = {}) {
         ...store,
         message: action.payload
       };
-      
+
     case 'add_task':
-      const { id,  color } = action.payload
+      const { id, color } = action.payload;
       return {
         ...store,
-        todos: store.todos.map((todo) => (todo.id === id ? { ...todo, background: color } : todo))
+        tasks: store.tasks.map((task) => (task.id === id ? { ...task, background: color } : task))
       };
 
-
     case 'login':
-      localStorage.setItem("token", action.payload.token); 
+      localStorage.setItem("token", action.payload.token);
       return {
         ...store,
         user: action.payload.user,
@@ -51,11 +45,12 @@ export default function storeReducer(store, action = {}) {
 
     case 'logout':
       localStorage.removeItem("token");
+      localStorage.removeItem("user");
       return {
         ...store,
         user: null,
         token: null,
-        myKanban: [] 
+        myKanban: []
       };
 
     case 'set_jobs':
@@ -71,6 +66,6 @@ export default function storeReducer(store, action = {}) {
       };
 
     default:
-      throw Error('Unknown action.');
-  }    
+      return store;
+  }
 }

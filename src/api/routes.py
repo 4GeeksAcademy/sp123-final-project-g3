@@ -31,11 +31,11 @@ def validate_password(password):
 def signup():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    name = request.json.get("name", None)
+    name = request.json.get("name", "")
     profesional_title = request.json.get("profesional_title", "")
     
-    if not email or not password or not name:
-        return {"message": "Email, password y nombre son requeridos"}, 400
+    if not email or not password:
+        return {"message": "Email y password son requeridos"}, 400
     
     if not validate_email(email):
         return {"message": "Formato de email inválido"}, 400
@@ -51,8 +51,8 @@ def signup():
     new_user = Users(
         email=email.lower().strip(),
         password=hashed_password,
-        name=name.strip(),
-        profesional_title=profesional_title.strip()
+        name=name.strip() if name else "",
+        profesional_title=profesional_title.strip() if profesional_title else ""
     )
     
     db.session.add(new_user)
