@@ -76,6 +76,32 @@ export default function Register() {
 
             // Validación explícita según metodología 4Geeks (Flux Pattern)
             const success = await actions.signup(form.email, form.password);
+            try {
+                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/signup`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        email: form.email,
+                        password: form.password,
+                    }),
+                });
+                console.log(response)
+                const data = await response.json();
+
+
+                if (response.ok) {
+                    localStorage.setItem("token", data.access_token);
+                    localStorage.setItem("user", JSON.stringify(data.results));
+
+                    dispatch({
+                        type: "login",
+                        payload: {
+                            user: data.results,
+                            token: data.access_token
+                        }
+                    });
 
             if (success) {
                 const loginSuccess = await actions.login(form.email, form.password);

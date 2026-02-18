@@ -43,10 +43,12 @@ def signup():
     if not validate_password(password):
         return {"message": "La contraseña debe tener al menos 6 caracteres"}, 400
     
+    print(email)
+    
     row = db.session.execute(db.select(Users).where(Users.email == email)).scalar()
     if row:
         return {"message": "El email ya está registrado"}, 409
-    
+    print(row)
     hashed_password = generate_password_hash(password)
     new_user = Users(
         email=email.lower().strip(),
@@ -54,6 +56,8 @@ def signup():
         name=name.strip() if name else "",
         profesional_title=profesional_title.strip() if profesional_title else ""
     )
+    
+    print(new_user)
     
     db.session.add(new_user)
     db.session.commit()
@@ -185,6 +189,10 @@ def update_user(user_id):
     data = request.json
     if 'name' in data: row.name = data['name'].strip()
     if 'profesional_title' in data: row.profesional_title = data['profesional_title'].strip()
+    if 'phone' in data: row.phone = data['phone'].strip() if data['phone'] else None
+    if 'linkedin_url' in data: row.linkedin_url = data['linkedin_url'].strip() if data['linkedin_url'] else None
+    if 'portfolio_url' in data: row.portfolio_url = data['portfolio_url'].strip() if data['portfolio_url'] else None
+    if 'photo_url' in data: row.photo_url = data['photo_url'].strip() if data['photo_url'] else None
     
     db.session.commit()
     return {'results': row.serialize(), 'message': 'Actualizado exitosamente'}, 200
@@ -417,6 +425,99 @@ def delete_cv(cv_id):
     db.session.delete(row)
     db.session.commit()
     return {'message': 'CV eliminado'}, 200
+
+# --- UPLOADS (Foto de Perfil y CV) ---
+
+import base64
+import uuid
+
+@api.route('/users/<int:user_id>/upload_photo', methods=['POST'])
+@jwt_required()
+def upload_user_photo(user_id):
+    """
+    Sube una foto de perfil en base64 y guarda la URL/data URI.
+    """
+    current_user_id = get_jwt()['user_id']
+    if current_user_id != user_id:
+        return {'message': 'No autorizado'}, 403
+    
+    data = request.json
+    photo_base64 = data.get('photo_base64')
+    
+    if not photo_base64:
+        return {'message': 'No se proporcionó imagen'}, 400
+    
+    try:
+        # Verificar que es un base64 válido
+        if ',' in photo_base64:
+            header, encoded = photo_base64.split(',', 1)
+        else:
+            encoded = photo_base64
+        
+        # Validar que es una imagen decodificable
+        decoded = base64.b64decode(encoded)
+        if len(decoded) > 5 * 1024 * 1024:  # Máximo 5MB
+            return {'message': 'La imagen es demasiado grande (máx 5MB)'}, 400
+        
+        # Guardar la data URI completa
+        row = db.session.execute(db.select(Users).where(Users.id == user_id)).scalar()
+        if not row:
+            return {'message': 'Usuario no encontrado'}, 404
+        
+        row.photo_url = photo_base64
+        db.session.commit()
+        
+        return {'results': row.serialize(), 'message': 'Foto actualizada'}, 200
+    
+    except Exception as e:
+        return {'message': f'Error procesando imagen: {str(e)}'}, 400
+
+
+@api.route('/cv/upload', methods=['POST'])
+@jwt_required()
+def upload_cv_file():
+    """
+    Sube un archivo CV (PDF/DOC/DOCX) en base64 y lo guarda.
+    """
+    claims = get_jwt()
+    user_id = claims['user_id']
+    
+    data = request.json
+    file_base64 = data.get('file_base64')
+    filename = data.get('filename', 'cv.pdf')
+    
+    if not file_base64:
+        return {'message': 'No se proporcionó archivo'}, 400
+    
+    # Validar extensión
+    allowed_extensions = ['.pdf', '.doc', '.docx']
+    file_ext = filename.lower()[filename.rfind('.'):] if '.' in filename else ''
+    if file_ext not in allowed_extensions:
+        return {'message': 'Formato no permitido. Use PDF, DOC o DOCX'}, 400
+    
+    try:
+        # Verificar que es base64 válido
+        if ',' in file_base64:
+            header, encoded = file_base64.split(',', 1)
+        else:
+            encoded = file_base64
+        
+        decoded = base64.b64decode(encoded)
+        if len(decoded) > 10 * 1024 * 1024:  # Máximo 10MB
+            return {'message': 'El archivo es demasiado grande (máx 10MB)'}, 400
+        
+        # Guardar como data URI completa
+        cv_url = file_base64 if ',' in file_base64 else f"data:application/pdf;base64,{file_base64}"
+        
+        new_cv = CV(cv_url=cv_url, user_id=user_id)
+        db.session.add(new_cv)
+        db.session.commit()
+        
+        return {'results': new_cv.serialize(), 'message': 'CV subido exitosamente'}, 201
+    
+    except Exception as e:
+        return {'message': f'Error procesando archivo: {str(e)}'}, 400
+
 
 # --- UTILS ---
 @api.route('/hello', methods=['POST', 'GET'])

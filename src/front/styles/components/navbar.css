@@ -111,9 +111,64 @@
   align-items: center;
   gap: var(--space-sm);
   cursor: pointer;
-  transition: background-color var(--transition-slow), transform 0.1s ease;
+  transition:
+    background-color var(--transition-slow),
+    transform 0.1s ease;
   width: 100%;
   justify-content: center;
+}
+
+.post-modal-overlay {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+
+  padding: clamp(12px, 3vh, 28px);
+}
+
+.post-modal-card {
+  width: min(980px, 96vw);
+
+  max-height: calc(100vh - 2 * clamp(12px, 3vh, 28px));
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+}
+
+.post-modal-form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.post-modal-grid {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  padding-right: 6px;
+}
+
+.post-modal-footer {
+  flex-shrink: 0;
+}
+.post-modal-grid::-webkit-scrollbar {
+  width: 10px;
+}
+.post-modal-grid::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.18);
+  border-radius: 999px;
+}
+.post-modal-grid::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 999px;
 }
 
 .btn-new-postulation:hover {
@@ -260,7 +315,9 @@
   font-size: var(--font-size-lg);
   color: var(--color-accent-dark);
   cursor: pointer;
-  transition: transform 0.15s ease, opacity 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease;
 }
 
 .saved-trash:hover {
@@ -452,8 +509,12 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {

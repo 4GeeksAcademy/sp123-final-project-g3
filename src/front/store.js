@@ -86,6 +86,19 @@ export default function storeReducer(store, action = {}) {
         message: action.payload,
       };
 
+    case 'update_user':
+      localStorage.setItem("user", JSON.stringify(action.payload));
+      return {
+        ...store,
+        user: action.payload
+      };
+
+    case 'set_user_cvs':
+      return {
+        ...store,
+        userCVs: action.payload
+      };
+
     default:
       return store;
   }
