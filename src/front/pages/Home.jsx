@@ -42,27 +42,137 @@ const INITIAL_CARDS = [
   { id: "c15", status: "rejected", role: "QA Automation Engineer", company: "TestLab", priority: "Low", notes: "Review what was missing: Cypress/Playwright, CI." },
 ];
 
-function Modal({ open, onClose, title, children }) {
+// ✅ Drawer lateral
+function SidePanel({ open, onClose, data, statusLabel, statusKey }) {
+
   if (!open) return null;
 
+  const title = data?.title ?? data?.role ?? "—";
+
+  const formatDate = (value) => {
+    if (!value) return "—";
+    const d = new Date(value);
+    if (Number.isNaN(d.getTime())) return String(value);
+    return d.toLocaleDateString();
+  };
+
+  const link = data?.link;
+
   return (
-    <div className="modal-overlay" onMouseDown={onClose} role="dialog" aria-modal="true">
-      <div className="modal-card modal-card--small" onMouseDown={(event) => event.stopPropagation()}>
-        <div className="modal-header">
-          <h3 className="modal-title">{title}</h3>
-          <button className="modal-close" onClick={onClose} aria-label="Close">
-            ×
-          </button>
+    <div
+      className="sp-overlay"
+      role="dialog"
+      aria-modal="true"
+      onMouseDown={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <aside
+        className={`sp-panel sp-panel--${statusKey || "to_apply"}`}
+        onMouseDown={(e) => e.stopPropagation()}
+      >
+        <div className="sp-header">
+          <div className="sp-header-left">
+            <div className="sp-kicker">
+              <span className="sp-kicker-label">Priority:</span>{" "}
+              <span className="sp-kicker-value">{data?.priority ?? "—"}</span>
+            </div>
+
+            <h3 className="sp-title">{title}</h3>
+
+            <div className="sp-company">
+              <i className="bi bi-building me-2" />
+              {data?.company ?? "—"}
+            </div>
+          </div>
+
+          <div className="sp-header-actions">
+            <button className="sp-icon-btn" type="button" onClick={onClose} aria-label="Close">
+              <i className="bi bi-x-lg" />
+            </button>
+          </div>
         </div>
 
-        <div className="modal-body">{children}</div>
+        <div className="sp-body">
+          <div className="sp-section">
+            <div className="sp-section-title">
+              <i className="bi bi-card-text me-2" />
+              Descripción del Puesto
+            </div>
+            <div className="sp-box">
+              {data?.description ?? "—"}
+            </div>
+          </div>
 
-        <div className="modal-footer">
-          <button className="modal-btn modal-btn--primary" onClick={onClose}>
-            Close
-          </button>
+          <div className="sp-section">
+            <div className="sp-section-title">
+              <i className="bi bi-info-circle me-2" />
+              Detalles de la Oferta
+            </div>
+
+            <div className="sp-details">
+              <div className="sp-detail">
+                <div className="sp-detail-label">
+                  <i className="bi bi-geo-alt me-2" />
+                  Ubicación
+                </div>
+                <div className="sp-detail-value">{data?.location ?? "—"}</div>
+              </div>
+
+              <div className="sp-detail">
+                <div className="sp-detail-label">
+                  <i className="bi bi-cash-coin me-2" />
+                  Salario
+                </div>
+                <div className="sp-detail-value">{data?.salary ?? "—"}</div>
+              </div>
+
+              <div className="sp-detail">
+                <div className="sp-detail-label">
+                  <i className="bi bi-flag me-2" />
+                  Status
+                </div>
+                <div className="sp-detail-value">{statusLabel}</div>
+              </div>
+
+              <div className="sp-detail">
+                <div className="sp-detail-label">
+                  <i className="bi bi-calendar-event me-2" />
+                  Created
+                </div>
+                <div className="sp-detail-value">{formatDate(data?.created_at)}</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="sp-section">
+            <div className="sp-section-title">
+              <i className="bi bi-link-45deg me-2" />
+              Link
+            </div>
+
+            <div className="sp-box sp-box--link">
+              {link ? (
+                <a href={link} target="_blank" rel="noreferrer" className="sp-link">
+                  {link}
+                </a>
+              ) : (
+                "—"
+              )}
+            </div>
+          </div>
+
+          <div className="sp-section">
+            <div className="sp-section-title">
+              <i className="bi bi-journal-text me-2" />
+              Notes
+            </div>
+            <div className="sp-box sp-box--notes">
+              {data?.notes ?? "—"}
+            </div>
+          </div>
         </div>
-      </div>
+      </aside>
     </div>
   );
 }
@@ -77,7 +187,7 @@ function JobCard({ card, onClick }) {
     if (!element) return;
 
     return draggable({
-      element: element,
+      element,
       getInitialData: () => ({ cardId: card.id }),
       onDragStart: () => setDragging(true),
       onDrop: () => setDragging(false),
@@ -115,7 +225,7 @@ function Column({ columnKey, title, headerClass, cards, onCardClick }) {
     if (!element) return;
 
     return dropTargetForElements({
-      element: element,
+      element,
       getData: () => ({ columnKey }),
       onDragEnter: () => setOver(true),
       onDragLeave: () => setOver(false),
@@ -151,7 +261,6 @@ export default function Home() {
 
         const { cardId } = source.data || {};
         const { columnKey } = destination.data || {};
-
         if (!cardId || !columnKey) return;
 
         setCards((previous) =>
@@ -166,6 +275,11 @@ export default function Home() {
     for (const card of cards) map[card.status]?.push(card);
     return map;
   }, [cards]);
+
+  const selectedStatusLabel = useMemo(() => {
+    if (!selected) return "—";
+    return COLUMNS.find((c) => c.key === selected.status)?.title ?? "—";
+  }, [selected]);
 
   return (
     <div className="board-page">
@@ -182,31 +296,14 @@ export default function Home() {
         ))}
       </div>
 
-      <Modal open={!!selected} onClose={() => setSelected(null)} title={selected ? selected.role : ""}>
-        {selected && (
-          <div className="modal-grid">
-            <div className="modal-field">
-              <div className="modal-label">Company</div>
-              <div className="modal-value">{selected.company}</div>
-            </div>
+      <SidePanel
+        open={!!selected}
+        onClose={() => setSelected(null)}
+        data={selected}
+        statusLabel={selectedStatusLabel}
+        statusKey={selected?.status}
+      />
 
-            <div className="modal-field">
-              <div className="modal-label">Status</div>
-              <div className="modal-value">{COLUMNS.find((column) => column.key === selected.status)?.title}</div>
-            </div>
-
-            <div className="modal-field">
-              <div className="modal-label">Priority</div>
-              <div className="modal-value">{selected.priority}</div>
-            </div>
-
-            <div className="modal-field modal-field-full">
-              <div className="modal-label">Notes</div>
-              <div className="modal-value">{selected.notes || "—"}</div>
-            </div>
-          </div>
-        )}
-      </Modal>
     </div>
   );
 }

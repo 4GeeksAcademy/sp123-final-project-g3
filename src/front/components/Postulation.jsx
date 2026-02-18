@@ -29,6 +29,8 @@ const Postulation = ({ isOpen, onClose, onCreate }) => {
         };
 
         document.addEventListener("keydown", onKeyDown);
+
+        // Bloqueas el fondo (perfecto). El scroll debe vivir en el modal.
         document.body.style.overflow = "hidden";
 
         return () => {
@@ -50,20 +52,44 @@ const Postulation = ({ isOpen, onClose, onCreate }) => {
     };
 
     const handleOverlayClick = (event) => {
-        if (event.target.classList.contains("modal-overlay--padded") || event.target.classList.contains("post-modal-overlay")) onClose?.();
+        // Cierra solo si clickas el overlay (no el contenido)
+        if (
+            event.target.classList.contains("post-modal-overlay") ||
+            event.target.classList.contains("modal-overlay--padded")
+        ) {
+            onClose?.();
+        }
     };
 
     return (
-        <div className="modal-overlay modal-overlay--padded modal-overlay--high post-modal-overlay" onMouseDown={handleOverlayClick}>
-            <div className="modal-card modal-card--large post-modal-card" role="dialog" aria-modal="true">
+        <div
+            className="modal-overlay modal-overlay--padded modal-overlay--high post-modal-overlay"
+            onMouseDown={handleOverlayClick}
+            role="presentation"
+        >
+            <div
+                className="modal-card modal-card--large post-modal-card"
+                role="dialog"
+                aria-modal="true"
+                aria-label="New Postulation"
+                onMouseDown={(event) => event.stopPropagation()}
+            >
                 <div className="modal-header modal-header--bordered post-modal-header">
-                    <h2 className="modal-title modal-title--primary post-modal-title">New Postulation</h2>
-                    <button type="button" className="modal-close modal-close--styled post-modal-close" onClick={onClose} aria-label="Close">
+                    <h2 className="modal-title modal-title--primary post-modal-title">
+                        New Postulation
+                    </h2>
+                    <button
+                        type="button"
+                        className="modal-close modal-close--styled post-modal-close"
+                        onClick={onClose}
+                        aria-label="Close"
+                    >
                         ×
                     </button>
                 </div>
 
                 <form onSubmit={handleSubmit} className="modal__form post-modal-form">
+                    {/* ✅ Esta zona será la scrollable */}
                     <div className="modal-grid modal-grid--2col post-modal-grid">
                         <div className="post-field">
                             <label className="post-label">
@@ -161,7 +187,12 @@ const Postulation = ({ isOpen, onClose, onCreate }) => {
 
                         <div className="post-field">
                             <label className="post-label">Status</label>
-                            <select className="form-control" name="status" value={form.status} onChange={handleChange}>
+                            <select
+                                className="form-control"
+                                name="status"
+                                value={form.status}
+                                onChange={handleChange}
+                            >
                                 <option>To apply</option>
                                 <option>Applied</option>
                                 <option>Interview</option>
@@ -172,7 +203,12 @@ const Postulation = ({ isOpen, onClose, onCreate }) => {
 
                         <div className="post-field">
                             <label className="post-label">Priority</label>
-                            <select className="form-control" name="priority" value={form.priority} onChange={handleChange}>
+                            <select
+                                className="form-control"
+                                name="priority"
+                                value={form.priority}
+                                onChange={handleChange}
+                            >
                                 <option>Low</option>
                                 <option>Medium</option>
                                 <option>High</option>
@@ -224,11 +260,19 @@ const Postulation = ({ isOpen, onClose, onCreate }) => {
                         </div>
                     </div>
 
+                    {/* Footer fijo (no se pierde) */}
                     <div className="modal-footer modal-footer--bordered post-modal-footer">
-                        <button type="button" className="modal-btn modal-btn--secondary post-btn post-btn-secondary" onClick={onClose}>
+                        <button
+                            type="button"
+                            className="modal-btn modal-btn--secondary post-btn post-btn-secondary"
+                            onClick={onClose}
+                        >
                             Cancel
                         </button>
-                        <button type="submit" className="modal-btn modal-btn--primary post-btn post-btn-primary">
+                        <button
+                            type="submit"
+                            className="modal-btn modal-btn--primary post-btn post-btn-primary"
+                        >
                             Create postulation
                         </button>
                     </div>

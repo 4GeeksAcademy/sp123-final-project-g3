@@ -85,8 +85,9 @@ export default function Register() {
                         password: form.password,
                     }),
                 });
-
+                console.log(response)
                 const data = await response.json();
+
 
                 if (response.ok) {
                     localStorage.setItem("token", data.access_token);
