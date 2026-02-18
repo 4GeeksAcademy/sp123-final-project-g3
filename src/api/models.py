@@ -13,6 +13,10 @@ class Users(db.Model):
     google_id = db.Column(db.String(255), unique=True, nullable=True)
     name = db.Column(db.String(120), nullable=True)
     profesional_title = db.Column(db.String(120))
+    phone = db.Column(db.String(20), nullable=True)
+    linkedin_url = db.Column(db.String(300), nullable=True)
+    portfolio_url = db.Column(db.String(300), nullable=True)
+    photo_url = db.Column(db.String(300), nullable=True)
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     
     def __repr__(self):
@@ -20,10 +24,14 @@ class Users(db.Model):
 
     def serialize(self):
         return {
-            "id": self.id, 
+            "id": self.id,
             "email": self.email,
             "name": self.name,
             "profesional_title": self.profesional_title,
+            "phone": self.phone,
+            "linkedin_url": self.linkedin_url,
+            "portfolio_url": self.portfolio_url,
+            "photo_url": self.photo_url,
             "created_at": self.created_at
         }
 
