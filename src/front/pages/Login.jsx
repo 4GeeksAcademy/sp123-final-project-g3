@@ -4,11 +4,12 @@ import { useState } from "react";
 import mascotgif from "../imagenes/robotlogin.gif";
 import logo from "../imagenes/logo.png";
 import useGlobalReducer from "../hooks/useGlobalReducer";
+import { GoogleLogin } from '@react-oauth/google';
 
 export default function Login() {
     const navigate = useNavigate();
     const location = useLocation();
-    const { dispatch } = useGlobalReducer();
+    const { actions } = useGlobalReducer();
 
     const [form, setForm] = useState({
         email: "",
@@ -62,42 +63,16 @@ export default function Login() {
 
         if (Object.keys(newErrors).length === 0) {
             setLoading(true);
-            try {
-                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/login`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        email: form.email,
-                        password: form.password,
-                    }),
-                });
 
-                const data = await response.json();
+            // Validación explícita según metodología 4Geeks (Flux Pattern)
+            const success = await actions.login(form.email, form.password);
+            setLoading(false);
 
-                if (response.ok) {
-                    localStorage.setItem("token", data.access_token);
-                    localStorage.setItem("user", JSON.stringify(data.results));
-
-                    dispatch({
-                        type: "login",
-                        payload: {
-                            user: data.results,
-                            token: data.access_token
-                        }
-                    });
-
-                    const from = location.state?.from?.pathname || "/";
-                    navigate(from, { replace: true });
-                } else {
-                    setLoginError(data.message || "Invalid credentials");
-                }
-            } catch (error) {
-                console.error("Login error:", error);
-                setLoginError("Connection error. Please try again.");
-            } finally {
-                setLoading(false);
+            if (success) {
+                const from = location.state?.from?.pathname || "/";
+                navigate(from, { replace: true });
+            } else {
+                setLoginError("Invalid credentials");
             }
         }
     };
@@ -184,16 +159,21 @@ export default function Login() {
                             <hr className="flex-grow-1" />
                         </div>
 
-                        <div className="d-flex gap-3">
-                            <button className="btn btn-outline-primary flex-fill" type="button" disabled>
-                                Facebook
-                            </button>
-                            <button className="btn btn-outline-primary flex-fill" type="button" disabled>
-                                Google
-                            </button>
-                            <button className="btn btn-outline-primary flex-fill" type="button" disabled>
-                                Apple
-                            </button>
+                        <div className="d-flex justify-content-center">
+                            <GoogleLogin
+                                onSuccess={async (credentialResponse) => {
+                                    const success = await actions.loginWithGoogle(credentialResponse.credential);
+                                    if (success) {
+                                        const from = location.state?.from?.pathname || "/";
+                                        navigate(from, { replace: true });
+                                    } else {
+                                        setLoginError("Google Login Failed");
+                                    }
+                                }}
+                                onError={() => {
+                                    setLoginError("Google Login Failed");
+                                }}
+                            />
                         </div>
                     </form>
                 </div>

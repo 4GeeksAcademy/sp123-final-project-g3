@@ -20,27 +20,7 @@ const COLUMNS = [
   { key: "rejected", title: "Rejected", headerClass: "col-header col-header--maroon" },
 ];
 
-const INITIAL_CARDS = [
-  { id: "c1", status: "to_apply", role: "React Developer", company: "Digital Agency", priority: "Medium", notes: "Prepare CV focused on React + Vite." },
-  { id: "c2", status: "to_apply", role: "DevOps Engineer", company: "DataFlow Inc.", priority: "High", notes: "Review requirements: Kubernetes, CI/CD, AWS." },
-  { id: "c3", status: "to_apply", role: "UX/UI Designer", company: "Creative Studio", priority: "Low", notes: "Update portfolio with case studies." },
-  { id: "c4", status: "to_apply", role: "Scrum Master", company: "Agile Team", priority: "Medium", notes: "Certifications: PSM / CSM." },
 
-  { id: "c5", status: "applied", role: "Senior Frontend Developer", company: "TechCorp Solutions", priority: "High", notes: "Application sent on 01/20. Follow up if no response." },
-  { id: "c6", status: "applied", role: "Product Manager", company: "TechCorp Solutions", priority: "Medium", notes: "Research product and key metrics." },
-  { id: "c7", status: "applied", role: "Data Scientist", company: "AI Solutions", priority: "High", notes: "Review NLP projects and metrics." },
-  { id: "c8", status: "applied", role: "Cloud Architect", company: "CloudFirst", priority: "High", notes: "Prepare reference architecture and cases." },
-
-  { id: "c9", status: "interview", role: "Full Stack Developer", company: "StartupXYZ", priority: "High", notes: "Technical interview: React + Node + DB. Practice." },
-  { id: "c10", status: "interview", role: "Mobile Developer", company: "AppWorks", priority: "Medium", notes: "Review RN/Flutter, patterns and testing." },
-  { id: "c11", status: "interview", role: "Tech Lead", company: "StartupXYZ", priority: "High", notes: "Prepare leadership examples and technical decisions." },
-
-  { id: "c12", status: "offer", role: "Software Engineer", company: "InnovateTech", priority: "High", notes: "Review salary range and benefits. Negotiation." },
-  { id: "c13", status: "offer", role: "Cybersecurity Analyst", company: "SecureNet", priority: "High", notes: "Validate role, shifts, and required certifications." },
-
-  { id: "c14", status: "rejected", role: "Backend Developer", company: "CloudSystems", priority: "Medium", notes: "Ask for feedback if possible." },
-  { id: "c15", status: "rejected", role: "QA Automation Engineer", company: "TestLab", priority: "Low", notes: "Review what was missing: Cypress/Playwright, CI." },
-];
 
 function Modal({ open, onClose, title, children }) {
   if (!open) return null;
@@ -139,9 +119,23 @@ function Column({ columnKey, title, headerClass, cards, onCardClick }) {
   );
 }
 
+import useGlobalReducer from "../hooks/useGlobalReducer";
 export default function Home() {
-  const [cards, setCards] = useState(INITIAL_CARDS);
+  const { store, actions } = useGlobalReducer();
+  // Usamos el estado local para el Drag & Drop visual inmediato, 
+  // pero lo iniciamos/sincronizamos con store.myKanban
+  const [cards, setCards] = useState([]);
   const [selected, setSelected] = useState(null);
+
+  useEffect(() => {
+    // Cargar datos al montar
+    actions.getMyPostulations();
+  }, []);
+
+  useEffect(() => {
+    // Sincronizar cuando el store cambia
+    setCards(store.myKanban || []);
+  }, [store.myKanban]);
 
   useEffect(() => {
     return monitorForElements({
@@ -154,9 +148,13 @@ export default function Home() {
 
         if (!cardId || !columnKey) return;
 
+        // Actualización Optimista Local
         setCards((previous) =>
           previous.map((card) => (card.id === cardId ? { ...card, status: columnKey } : card))
         );
+
+        // Call API to persist change
+        actions.updatePostulation(cardId, columnKey);
       },
     });
   }, []);
@@ -204,6 +202,14 @@ export default function Home() {
               <div className="modal-label">Notes</div>
               <div className="modal-value">{selected.notes || "—"}</div>
             </div>
+
+            {selected.link && (
+              <div className="modal-field modal-field-full mt-3">
+                <a href={selected.link} target="_blank" rel="noopener noreferrer" className="btn btn-primary d-block text-center">
+                  Go to Apply
+                </a>
+              </div>
+            )}
           </div>
         )}
       </Modal>
