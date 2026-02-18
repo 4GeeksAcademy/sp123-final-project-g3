@@ -7,7 +7,7 @@ import useGlobalReducer from "../hooks/useGlobalReducer";
 
 export default function Register() {
     const navigate = useNavigate();
-    const { dispatch } = useGlobalReducer();
+    const { actions } = useGlobalReducer();
 
     const [form, setForm] = useState({
         email: "",
@@ -74,6 +74,8 @@ export default function Register() {
             setLoading(true);
             setRegisterError("");
 
+            // Validación explícita según metodología 4Geeks (Flux Pattern)
+            const success = await actions.signup(form.email, form.password);
             try {
                 const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/signup`, {
                     method: "POST",
@@ -101,19 +103,20 @@ export default function Register() {
                         }
                     });
 
+            if (success) {
+                const loginSuccess = await actions.login(form.email, form.password);
+                if (loginSuccess) {
                     setSuccess(true);
                     setTimeout(() => {
                         navigate("/", { replace: true });
                     }, 2000);
                 } else {
-                    setRegisterError(data.message || "Error registering user");
+                    setRegisterError("Registration successful but login failed.");
                 }
-            } catch (error) {
-                console.error("Registration error:", error);
-                setRegisterError("Connection error. Please try again.");
-            } finally {
-                setLoading(false);
+            } else {
+                setRegisterError("Error registering user");
             }
+            setLoading(false);
         }
     };
 

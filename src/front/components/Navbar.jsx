@@ -15,7 +15,7 @@ export default function Navbar() {
 	const [authMessage, setAuthMessage] = useState("");
 
 	const { savedOffers, removeSaved } = useSavedOffers();
-	const { store, dispatch } = useGlobalReducer();
+	const { store, actions } = useGlobalReducer(); // Destructure actions, not dispatch
 	const navigate = useNavigate();
 
 	const isAuthenticated = !!(store.token || localStorage.getItem("token"));
@@ -64,7 +64,7 @@ export default function Navbar() {
 	};
 
 	const handleLogout = () => {
-		dispatch({ type: 'logout' });
+		actions.logout(); // Use actions.logout()
 		setUserMenuOpen(false);
 		navigate('/search');
 	};

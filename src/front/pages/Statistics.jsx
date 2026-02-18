@@ -1,4 +1,5 @@
 import "../index.css";
+import React, { useEffect } from "react";
 import {
     Chart as ChartJS,
     ArcElement,
@@ -19,15 +20,23 @@ ChartJS.register(
     Legend
 );
 
+import useGlobalReducer from "../hooks/useGlobalReducer";
+
 const Statistics = () => {
+    const { store, actions } = useGlobalReducer();
+    const { pending, interview, rejected, offer, total } = store.statistics || { pending: 0, interview: 0, rejected: 0, offer: 0, total: 0 };
+
+    useEffect(() => {
+        actions.getMyPostulations();
+    }, []);
+
     const pieData = {
-        labels: ["To apply", "Applied", "Interview", "Offer", "Rejected"],
+        labels: ["To apply / Pending", "Interview", "Offer", "Rejected"],
         datasets: [
             {
-                data: [4, 4, 3, 2, 2],
+                data: [pending, interview, offer, rejected],
                 backgroundColor: [
                     "#6b6b6b",
-                    "#21616a",
                     "#d48a2a",
                     "#2e9ca0",
                     "#533946",
@@ -37,22 +46,39 @@ const Statistics = () => {
         ],
     };
 
-    const total = pieData.datasets[0].data.reduce((accumulator, number) => accumulator + number, 0);
+    // Derived KPIs
+    const interviewRate = total > 0 ? ((interview / total) * 100).toFixed(0) : 0;
+    const offerRate = interview > 0 ? ((offer / interview) * 100).toFixed(0) : 0; // Offer rate from interviews
 
     const progressElements = [
-        { key: "To apply", value: pieData.datasets[0].data[0], colorClass: "is-gray" },
-        { key: "Applied", value: pieData.datasets[0].data[1], colorClass: "is-teal" },
-        { key: "Interview", value: pieData.datasets[0].data[2], colorClass: "is-orange" },
-        { key: "Offer", value: pieData.datasets[0].data[3], colorClass: "is-blue" },
-        { key: "Rejected", value: pieData.datasets[0].data[4], colorClass: "is-purple" },
+        { key: "Pending", value: pending, colorClass: "is-gray" },
+        { key: "Interview", value: interview, colorClass: "is-orange" },
+        { key: "Offer", value: offer, colorClass: "is-blue" },
+        { key: "Rejected", value: rejected, colorClass: "is-purple" },
     ];
 
+    // Calculate top companies from myKanban
+    const myKanban = store.myKanban || [];
+    const companyCounts = {};
+    myKanban.forEach(card => {
+        const company = card.company || "Unknown";
+        companyCounts[company] = (companyCounts[company] || 0) + 1;
+    });
+
+    // Sort and take top 3
+    const sortedCompanies = Object.entries(companyCounts)
+        .sort(([, a], [, b]) => b - a)
+        .slice(0, 3);
+
+    const topCompaniesLabels = sortedCompanies.map(([name]) => name);
+    const topCompaniesData = sortedCompanies.map(([, count]) => count);
+
     const barData = {
-        labels: ["StartupXYZ", "InnovateTech", "CloudSystems"],
+        labels: topCompaniesLabels.length > 0 ? topCompaniesLabels : ["No Data"],
         datasets: [
             {
                 label: "Postulations",
-                data: [2, 1, 1],
+                data: topCompaniesData.length > 0 ? topCompaniesData : [0],
                 backgroundColor: "#21616a",
                 borderRadius: 6,
             },
@@ -81,7 +107,7 @@ const Statistics = () => {
                         </div>
                         <div className="kpi-content">
                             <p className="kpi-label">Total Postulations</p>
-                            <h3 className="kpi-value">15</h3>
+                            <h3 className="kpi-value">{total}</h3>
                         </div>
                     </article>
 
@@ -91,7 +117,7 @@ const Statistics = () => {
                         </div>
                         <div className="kpi-content">
                             <p className="kpi-label">Interview Rate</p>
-                            <h3 className="kpi-value">75%</h3>
+                            <h3 className="kpi-value">{interviewRate}%</h3>
                         </div>
                     </article>
 
@@ -100,8 +126,8 @@ const Statistics = () => {
                             <i className="bi bi-file-earmark-text-fill"></i>
                         </div>
                         <div className="kpi-content">
-                            <p className="kpi-label">Offer Rate</p>
-                            <h3 className="kpi-value">67%</h3>
+                            <p className="kpi-label">Offer Rate (from Itw)</p>
+                            <h3 className="kpi-value">{offerRate}%</h3>
                         </div>
                     </article>
 
@@ -110,8 +136,8 @@ const Statistics = () => {
                             <i className="bi bi-clock-history"></i>
                         </div>
                         <div className="kpi-content">
-                            <p className="kpi-label">Average Response Time</p>
-                            <h3 className="kpi-value">7 days</h3>
+                            <p className="kpi-label">Avg Response</p>
+                            <h3 className="kpi-value">-</h3>
                         </div>
                     </article>
                 </div>

@@ -22,13 +22,15 @@ const ACCENT_SEQUENCE = [
 const getAccentColor = (index) => ACCENT_SEQUENCE[index % ACCENT_SEQUENCE.length];
 
 export default function Search() {
+    // const [jobs, setJobs] = useState([]); // Removed local state
+    const [query, setQuery] = useState("Developer");
     const [jobs, setJobs] = useState([]);
     const [query, setQuery] = useState("");
     const [activeFilter, setActiveFilter] = useState("All");
     const [showAuthAlert, setShowAuthAlert] = useState(false);
 
     const { isSaved, toggleSave } = useSavedOffers();
-    const { store } = useGlobalReducer();
+    const { store, actions } = useGlobalReducer();
     const navigate = useNavigate();
 
     const isAuthenticated = !!(store.token || localStorage.getItem("token"));
@@ -56,6 +58,37 @@ export default function Search() {
         navigate("/register");
     };
 
+    useEffect(() => {
+        // Call getJobs on mount as requested
+        actions.getJobs(query);
+    }, []);
+
+    const handleSearch = async (e) => {
+        if (e.key === 'Enter') {
+            // Remotive API in this exercise is static list, 
+            // so we could implement local filtering here if needed.
+            // For now, we just reload the jobs.
+            actions.getJobs(query);
+        }
+    };
+
+    const handleSave = async (job) => {
+        if (!isAuthenticated) {
+            showAuthFeedback();
+            return;
+        }
+
+        const success = await actions.saveJob(job);
+        if (success) {
+            toggleSave({ ...job, external_id: job.id });
+        }
+    };
+
+    // Filter locally if query exists, otherwise show all store.jobs
+    const filteredJobs = store.jobs.filter(job =>
+        job.title.toLowerCase().includes(query.toLowerCase()) ||
+        (job.company_name && job.company_name.toLowerCase().includes(query.toLowerCase()))
+    );
     const normalize = (v) => String(v ?? "").toLowerCase();
 
     const jobSkills = (job) => {
@@ -138,6 +171,16 @@ export default function Search() {
                         </div>
                     </div>
 
+                    <div className="search-search">
+                        <button className="search-icon-btn" onClick={() => handleSearch({ key: 'Enter' })}>
+                            <i className="bi bi-search search-search-icon" />
+                        </button>
+                        <input
+                            className="form-control search-search-input"
+                            placeholder="Search by position or company..."
+                            value={query}
+                            onChange={(event) => setQuery(event.target.value)}
+                            onKeyDown={handleSearch}
                     <div className="sv2-hero-right" aria-hidden="true">
                         <img
                             src={searchIllustration}
@@ -148,6 +191,13 @@ export default function Search() {
                     </div>
                 </header>
 
+                <div className="search-results-bar">
+                    Results: <strong>{filteredJobs.length}</strong>
+                </div>
+
+                <div className="search-list">
+                    {filteredJobs.map((job) => {
+                        const jobId = job.id;
                 <div className="sv2-grid">
                     {filteredJobs.map((job, index) => {
                         const jobId = job.external_id ?? job.id;
@@ -155,6 +205,49 @@ export default function Search() {
                         const skills = jobSkills(job).slice(0, 6);
 
                         return (
+                            <article className="search-rowcard" key={jobId}>
+                                <div className="search-rowcard-main">
+                                    <div className="search-rowcard-top">
+                                        <div>
+                                            <h3 className="search-job-title">{job.title}</h3>
+                                            <div className="search-job-meta">
+                                                <span className="search-chip">
+                                                    <i className="bi bi-building" /> {job.company_name || job.company}
+                                                </span>
+                                                <span className="search-chip">
+                                                    <i className="bi bi-geo-alt" /> {job.location || "Remote"}
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <button
+                                            className={`btn btn-sm ${saved ? "btn-success" : isAuthenticated ? "btn-outline-primary" : "btn-outline-secondary"
+                                                } ${!isAuthenticated ? "btn-save-locked" : ""}`}
+                                            onClick={() => handleSave(job)}
+                                            type="button"
+                                            title={isAuthenticated ? (saved ? "Offer saved" : "Save offer") : "Log in to save offers"}
+                                        >
+                                            {saved ? (
+                                                <>
+                                                    <i className="bi bi-bookmark-check-fill me-1" />
+                                                    Saved
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <i className={`bi me-1 ${isAuthenticated ? 'bi-bookmark-plus' : 'bi-lock-fill'}`} />
+                                                    {isAuthenticated ? 'Save' : 'Log in'}
+                                                </>
+                                            )}
+                                        </button>
+                                    </div>
+
+                                    {/* Remotive jobs sometimes only have URL, or html description. 
+                                        We check for apply_url or render snippet */}
+                                    <div className="mt-2">
+                                        <a href={job.apply_url || job.url} target="_blank" rel="noopener noreferrer" className="btn-link text-decoration-none">
+                                            Read more / Apply <i className="bi bi-box-arrow-up-right ms-1"></i>
+                                        </a>
+                                    </div>
                             <article
                                 className="sv2-card"
                                 key={jobId}
