@@ -43,10 +43,12 @@ def signup():
     if not validate_password(password):
         return {"message": "La contraseña debe tener al menos 6 caracteres"}, 400
     
+    print(email)
+    
     row = db.session.execute(db.select(Users).where(Users.email == email)).scalar()
     if row:
         return {"message": "El email ya está registrado"}, 409
-    
+    print(row)
     hashed_password = generate_password_hash(password)
     new_user = Users(
         email=email.lower().strip(),
@@ -54,6 +56,8 @@ def signup():
         name=name.strip() if name else "",
         profesional_title=profesional_title.strip() if profesional_title else ""
     )
+    
+    print(new_user)
     
     db.session.add(new_user)
     db.session.commit()
