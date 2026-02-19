@@ -156,6 +156,10 @@ export const actionCreators = (dispatch, getStore) => {
       return true;
     },
 
+    updateUser: (userData) => {
+      dispatch({ type: "update_user", payload: userData });
+    },
+
     getPrivateData: async () => {
       const store = getStore();
       const token = store.token || localStorage.getItem("token");

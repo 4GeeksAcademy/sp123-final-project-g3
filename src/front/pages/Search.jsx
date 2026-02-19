@@ -1,6 +1,5 @@
 import "../index.css";
 import React, { useEffect, useMemo, useState } from "react";
-import { CARD_PRUEBA } from "../mocks/jobsMock";
 import { useSavedOffers } from "../context/SavedOffers";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 import { useNavigate } from "react-router-dom";
@@ -16,15 +15,11 @@ const ACCENT_SEQUENCE = [
     "#3c8f63",
     "#0f2c33",
     "#6d3c4f"
-
 ];
 
 const getAccentColor = (index) => ACCENT_SEQUENCE[index % ACCENT_SEQUENCE.length];
 
 export default function Search() {
-    // const [jobs, setJobs] = useState([]); // Removed local state
-    const [query, setQuery] = useState("Developer");
-    const [jobs, setJobs] = useState([]);
     const [query, setQuery] = useState("");
     const [activeFilter, setActiveFilter] = useState("All");
     const [showAuthAlert, setShowAuthAlert] = useState(false);
@@ -35,8 +30,9 @@ export default function Search() {
 
     const isAuthenticated = !!(store.token || localStorage.getItem("token"));
 
+    // Load jobs from backend on mount
     useEffect(() => {
-        setJobs(CARD_PRUEBA);
+        actions.getJobs(query);
     }, []);
 
     useEffect(() => {
@@ -58,37 +54,6 @@ export default function Search() {
         navigate("/register");
     };
 
-    useEffect(() => {
-        // Call getJobs on mount as requested
-        actions.getJobs(query);
-    }, []);
-
-    const handleSearch = async (e) => {
-        if (e.key === 'Enter') {
-            // Remotive API in this exercise is static list, 
-            // so we could implement local filtering here if needed.
-            // For now, we just reload the jobs.
-            actions.getJobs(query);
-        }
-    };
-
-    const handleSave = async (job) => {
-        if (!isAuthenticated) {
-            showAuthFeedback();
-            return;
-        }
-
-        const success = await actions.saveJob(job);
-        if (success) {
-            toggleSave({ ...job, external_id: job.id });
-        }
-    };
-
-    // Filter locally if query exists, otherwise show all store.jobs
-    const filteredJobs = store.jobs.filter(job =>
-        job.title.toLowerCase().includes(query.toLowerCase()) ||
-        (job.company_name && job.company_name.toLowerCase().includes(query.toLowerCase()))
-    );
     const normalize = (v) => String(v ?? "").toLowerCase();
 
     const jobSkills = (job) => {
@@ -113,12 +78,30 @@ export default function Search() {
         return [];
     };
 
+    const handleSearch = async (e) => {
+        if (e.key === 'Enter') {
+            actions.getJobs(query);
+        }
+    };
+
+    const handleSave = async (job) => {
+        if (!isAuthenticated) {
+            showAuthFeedback();
+            return;
+        }
+
+        const success = await actions.saveJob(job);
+        if (success) {
+            toggleSave({ ...job, external_id: job.id });
+        }
+    };
+
     const filteredJobs = useMemo(() => {
         const q = query.trim().toLowerCase();
 
-        return jobs.filter((job) => {
+        return (store.jobs || []).filter((job) => {
             const title = normalize(job.title);
-            const company = normalize(job.company);
+            const company = normalize(job.company_name || job.company);
             const skills = jobSkills(job).join(" ").toLowerCase();
 
             const matchesQuery = !q || `${title} ${company} ${skills}`.includes(q);
@@ -128,7 +111,7 @@ export default function Search() {
             const category = normalize(job.category ?? job.area ?? job.type);
             return matchesQuery && category.includes(activeFilter.toLowerCase());
         });
-    }, [jobs, query, activeFilter]);
+    }, [store.jobs, query, activeFilter]);
 
     return (
         <main className="dashboard-page">
@@ -147,7 +130,15 @@ export default function Search() {
                                 placeholder="Search by position, company or skill..."
                                 value={query}
                                 onChange={(e) => setQuery(e.target.value)}
+                                onKeyDown={handleSearch}
                             />
+                            <button
+                                className="sv2-search-btn"
+                                onClick={() => handleSearch({ key: 'Enter' })}
+                                title="Search"
+                            >
+                                <i className="bi bi-arrow-right" />
+                            </button>
                         </div>
 
                         <div className="sv2-filters">
@@ -171,16 +162,6 @@ export default function Search() {
                         </div>
                     </div>
 
-                    <div className="search-search">
-                        <button className="search-icon-btn" onClick={() => handleSearch({ key: 'Enter' })}>
-                            <i className="bi bi-search search-search-icon" />
-                        </button>
-                        <input
-                            className="form-control search-search-input"
-                            placeholder="Search by position or company..."
-                            value={query}
-                            onChange={(event) => setQuery(event.target.value)}
-                            onKeyDown={handleSearch}
                     <div className="sv2-hero-right" aria-hidden="true">
                         <img
                             src={searchIllustration}
@@ -191,13 +172,6 @@ export default function Search() {
                     </div>
                 </header>
 
-                <div className="search-results-bar">
-                    Results: <strong>{filteredJobs.length}</strong>
-                </div>
-
-                <div className="search-list">
-                    {filteredJobs.map((job) => {
-                        const jobId = job.id;
                 <div className="sv2-grid">
                     {filteredJobs.map((job, index) => {
                         const jobId = job.external_id ?? job.id;
@@ -205,49 +179,6 @@ export default function Search() {
                         const skills = jobSkills(job).slice(0, 6);
 
                         return (
-                            <article className="search-rowcard" key={jobId}>
-                                <div className="search-rowcard-main">
-                                    <div className="search-rowcard-top">
-                                        <div>
-                                            <h3 className="search-job-title">{job.title}</h3>
-                                            <div className="search-job-meta">
-                                                <span className="search-chip">
-                                                    <i className="bi bi-building" /> {job.company_name || job.company}
-                                                </span>
-                                                <span className="search-chip">
-                                                    <i className="bi bi-geo-alt" /> {job.location || "Remote"}
-                                                </span>
-                                            </div>
-                                        </div>
-
-                                        <button
-                                            className={`btn btn-sm ${saved ? "btn-success" : isAuthenticated ? "btn-outline-primary" : "btn-outline-secondary"
-                                                } ${!isAuthenticated ? "btn-save-locked" : ""}`}
-                                            onClick={() => handleSave(job)}
-                                            type="button"
-                                            title={isAuthenticated ? (saved ? "Offer saved" : "Save offer") : "Log in to save offers"}
-                                        >
-                                            {saved ? (
-                                                <>
-                                                    <i className="bi bi-bookmark-check-fill me-1" />
-                                                    Saved
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <i className={`bi me-1 ${isAuthenticated ? 'bi-bookmark-plus' : 'bi-lock-fill'}`} />
-                                                    {isAuthenticated ? 'Save' : 'Log in'}
-                                                </>
-                                            )}
-                                        </button>
-                                    </div>
-
-                                    {/* Remotive jobs sometimes only have URL, or html description. 
-                                        We check for apply_url or render snippet */}
-                                    <div className="mt-2">
-                                        <a href={job.apply_url || job.url} target="_blank" rel="noopener noreferrer" className="btn-link text-decoration-none">
-                                            Read more / Apply <i className="bi bi-box-arrow-up-right ms-1"></i>
-                                        </a>
-                                    </div>
                             <article
                                 className="sv2-card"
                                 key={jobId}
@@ -256,8 +187,17 @@ export default function Search() {
                                 <div className="sv2-card-top">
                                     <div className="sv2-card-titlewrap">
                                         <h3 className="sv2-card-title">{job.title}</h3>
-                                        {job.company && (
-                                            <p className="sv2-card-company">{job.company}</p>
+                                        {(job.company || job.company_name) && (
+                                            <p className="sv2-card-company">
+                                                <i className="bi bi-building me-1" />
+                                                {job.company_name || job.company}
+                                            </p>
+                                        )}
+                                        {job.location && (
+                                            <p className="sv2-card-location">
+                                                <i className="bi bi-geo-alt me-1" />
+                                                {job.location}
+                                            </p>
                                         )}
                                     </div>
 
@@ -268,13 +208,7 @@ export default function Search() {
                                                 ? "btn-outline-primary"
                                                 : "btn-outline-secondary"
                                             } ${!isAuthenticated ? "sv2-save-locked" : ""}`}
-                                        onClick={() => {
-                                            if (!isAuthenticated) {
-                                                showAuthFeedback();
-                                                return;
-                                            }
-                                            toggleSave({ ...job, external_id: jobId });
-                                        }}
+                                        onClick={() => handleSave(job)}
                                         type="button"
                                         title={
                                             isAuthenticated
@@ -313,6 +247,18 @@ export default function Search() {
                                             No skills listed
                                         </span>
                                     )}
+                                </div>
+
+                                <div className="sv2-card-actions">
+                                    <a
+                                        href={job.apply_url || job.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="sv2-apply-link"
+                                    >
+                                        Read more / Apply
+                                        <i className="bi bi-box-arrow-up-right ms-1" />
+                                    </a>
                                 </div>
 
                                 <div className="sv2-footer">

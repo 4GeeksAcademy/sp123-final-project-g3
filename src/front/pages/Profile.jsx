@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 
 export default function MyProfile() {
-    const { store, dispatch } = useGlobalReducer();
+    const { store, actions } = useGlobalReducer();
     const [isLoading, setIsLoading] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
     const [message, setMessage] = useState({ type: "", text: "" });
@@ -59,10 +59,7 @@ export default function MyProfile() {
                     });
 
                     // Update store with fresh data
-                    dispatch({
-                        type: "update_user",
-                        payload: userData
-                    });
+                    actions.updateUser(userData);
                 } else {
                     setMessage({ type: "error", text: "Error cargando datos del perfil" });
                 }
@@ -145,10 +142,7 @@ export default function MyProfile() {
 
             if (response.ok) {
                 const data = await response.json();
-                dispatch({
-                    type: "update_user",
-                    payload: data.results
-                });
+                actions.updateUser(data.results);
                 setMessage({ type: "success", text: "Perfil actualizado exitosamente" });
             } else {
                 const error = await response.json();

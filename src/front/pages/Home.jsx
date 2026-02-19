@@ -20,8 +20,6 @@ const COLUMNS = [
   { key: "rejected", title: "Rejected", headerClass: "col-header col-header--maroon" },
 ];
 
-
-
 // ✅ Drawer lateral
 function SidePanel({ open, onClose, data, statusLabel, statusKey }) {
 
@@ -302,26 +300,6 @@ export default function Home() {
         statusKey={selected?.status}
       />
 
-            <div className="modal-field">
-              <div className="modal-label">Priority</div>
-              <div className="modal-value">{selected.priority}</div>
-            </div>
-
-            <div className="modal-field modal-field-full">
-              <div className="modal-label">Notes</div>
-              <div className="modal-value">{selected.notes || "—"}</div>
-            </div>
-
-            {selected.link && (
-              <div className="modal-field modal-field-full mt-3">
-                <a href={selected.link} target="_blank" rel="noopener noreferrer" className="btn btn-primary d-block text-center">
-                  Go to Apply
-                </a>
-              </div>
-            )}
-          </div>
-        )}
-      </Modal>
     </div>
   );
 }
