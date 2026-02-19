@@ -7,7 +7,7 @@ import useGlobalReducer from "../hooks/useGlobalReducer";
 
 export default function Register() {
     const navigate = useNavigate();
-    const { dispatch } = useGlobalReducer();
+    const { actions } = useGlobalReducer();
 
     const [form, setForm] = useState({
         email: "",
@@ -74,46 +74,23 @@ export default function Register() {
             setLoading(true);
             setRegisterError("");
 
-            try {
-                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/signup`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        email: form.email,
-                        password: form.password,
-                    }),
-                });
-                console.log(response)
-                const data = await response.json();
+            // Validación explícita según metodología 4Geeks (Flux Pattern)
+            const success = await actions.signup(form.email, form.password);
 
-
-                if (response.ok) {
-                    localStorage.setItem("token", data.access_token);
-                    localStorage.setItem("user", JSON.stringify(data.results));
-
-                    dispatch({
-                        type: "login",
-                        payload: {
-                            user: data.results,
-                            token: data.access_token
-                        }
-                    });
-
+            if (success) {
+                const loginSuccess = await actions.login(form.email, form.password);
+                if (loginSuccess) {
                     setSuccess(true);
                     setTimeout(() => {
                         navigate("/", { replace: true });
                     }, 2000);
                 } else {
-                    setRegisterError(data.message || "Error registering user");
+                    setRegisterError("Registration successful but login failed.");
                 }
-            } catch (error) {
-                console.error("Registration error:", error);
-                setRegisterError("Connection error. Please try again.");
-            } finally {
-                setLoading(false);
+            } else {
+                setRegisterError("Error registering user");
             }
+            setLoading(false);
         }
     };
 
